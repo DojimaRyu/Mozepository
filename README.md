@@ -22,6 +22,10 @@ Turns out that my build was all wrong; apparently, you need *something something
 3. **A loadout menu, where you can save & create different loadouts for Moze**. Factors in gear, skills, mayhem modifiers, and guardian rank.
 > On this page, stats will be displayed showing weapon's DPS across different elements & how your build & game affects your damage output. This is meant to be in the same vein as the *STATUS* menu from Nioh 2 that showsall of the stats currently boosting your character.
 
+## TODO
+1. Fix skill trees to include icons
+2. Fix skill trees to scale description depending on point investment
+
 ## Resources
 - HUGE shoutout to [LootLemon](https://www.lootlemon.com/class/moze#xxxx_0000000000000_0000000000000_0000000000000_0000000000000) for the motivation & framework for the this project! This was what originally got me interested in making my own builds.
 - Another shoutout to the [Borderlands Wiki](https://borderlands.fandom.com/wiki/Borderlands_Wiki) for sourcing information on gear, drops, & stats - wouldn't be possible without them!

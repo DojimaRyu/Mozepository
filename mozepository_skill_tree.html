@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mozepository – Skill Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+ *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0e0e0e;
+    color: #e8e0d0;
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(180deg, #1a1208 0%, #0e0e0e 100%);
+    border-bottom: 2px solid #c97b12;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    color: #f0a020;
+    text-transform: uppercase;
+  }
+  .logo span { color: #e8e0d0; }
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .level-badge {
+    background: #1e1a12;
+    border: 1px solid #c97b12;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c0a060;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sp-counter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f0a020;
+  }
+  .sp-counter .label { color: #888; font-weight: 400; font-size: 0.8rem; margin-right: 4px; }
+  .reset-btn {
+    background: transparent;
+    border: 1px solid #555;
+    color: #aaa;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .reset-btn:hover { border-color: #c97b12; color: #f0a020; }
+
+  /* Trees layout */
+  .trees-container {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-height: calc(100vh - 70px);
+  }
+
+  .tree-column {
+    flex: 1;
+    min-width: 260px;
+    border-right: 1px solid #1e1e1e;
+    display: flex;
+    flex-direction: column;
+  }
+  .tree-column:last-child { border-right: none; }
+
+  /* Tree header */
+  .tree-header {
+    padding: 1rem 1rem 0.75rem;
+    border-bottom: 1px solid #222;
+    position: relative;
+    overflow: hidden;
+  }
+  .tree-header::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .tree-col-bm .tree-header::before { background: #6a9e3a; }
+  .tree-col-dw .tree-header::before { background: #3a8fbf; }
+  .tree-col-sor .tree-header::before { background: #d44f30; }
+  .tree-col-ic .tree-header::before { background: #c229ba; }
+
+  .tree-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .tree-col-bm .tree-name { color: #88c050; }
+  .tree-col-dw .tree-name { color: #5bb8e8; }
+  .tree-col-sor .tree-name { color: #e87050; }
+  .tree-col-ic .tree-name { color: #9953ca; }
+
+  .tree-subtitle { font-size: 0.75rem; color: #666; margin-top: 2px; }
+
+  .tree-action-skill {
+    margin-top: 0.6rem;
+    background: #181510;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 0.5rem 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .action-skill-icon {
+    width: 28px; height: 28px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .tree-col-sor .action-skill-icon { background: #2a1508; color: #e87050; }
+  .tree-col-bm .action-skill-icon { background: #152008; color: #88c050; }
+  .tree-col-dw .action-skill-icon { background: #0e2a38; color: #5bb8e8; }
+  .tree-col-ic .action-skill-icon { background: #251331; color: #9953ca; }
+
+  .action-skill-info {}
+  .action-skill-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; }
+  .action-skill-desc { color: #777; font-size: 0.7rem; line-height: 1.3; margin-top: 1px; }
+
+  /* Points in tree */
+  .tree-pts {
+    font-size: 0.72rem;
+    color: #666;
+    margin-top: 0.5rem;
+  }
+  .tree-pts span { font-weight: 600; color: #aaa; }
+
+  /* DLC badge */
+  .dlc-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-top: 3px;
+    background: #2a1808;
+    color: #f08838;
+    border: 1px solid #5a3010;
+  }
+
+  /* Tiers */
+  .tier {
+    border-bottom: 1px solid #181818;
+    padding: 0.6rem 0.75rem;
+  }
+  .tier-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #444;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tier-label::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #282828;
+  }
+  .tier-locked .tier-label { color: #333; }
+
+  .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Skill node */
+  .skill-node {
+    background: #151510;
+    border: 1px solid #2a2a22;
+    border-radius: 4px;
+    padding: 0.45rem 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s;
+    user-select: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .skill-node.augment {
+    border-left: 2px solid #3a3a28;
+    background: #1a1a0e;
+  }
+  .skill-node.weapon-node {
+    background: #0e0e18;
+    border-color: #2a2a40;
+    cursor: default;
+  }
+
+  .skill-node.unlocked { border-color: #3a3020; background: #1a1810; }
+  .skill-node.maxed {
+    border-color: #f0a020;
+    background: #1e1a0e;
+  }
+  .skill-node.locked { opacity: 0.4; cursor: not-allowed; }
+  .skill-node.augment.maxed { border-left-width: 2px; }
+
+  .tree-col-dw .skill-node.maxed { border-color: #3a8fbf; background: #0a1e2a; }
+  .tree-col-sor .skill-node.maxed { border-color: #d44f30; background: #1e0e08; }
+  .tree-col-bm .skill-node.maxed { border-color: #6a9e3a; background: #0e1a08; }
+  .tree-col-ic .skill-node.maxed { border-color: #9953ca; background: #251331; }
+
+  .tree-col-dw .skill-node.unlocked { background: #0a1520; border-color: #1e3a50; }
+  .tree-col-sor .skill-node.unlocked { background: #1a0e08; border-color: #3a2018; }
+  .tree-col-bm .skill-node.unlocked { background: #0a1508; border-color: #1e3018; }
+  .tree-col-ic .skill-node.unlocked { background: #22112e; border-color: #2b092a; }
+
+  .tree-col-ic .skill-node.augment { background: #1a1208; border-left-color: #5a3010; }
+  .tree-col-ic .skill-node.augment.maxed { background: #221408; border-left-color: #d44f20; }
+
+  .skill-icon {
+    width: 22px; height: 22px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    background: #202018;
+    color: #888;
+    transition: all 0.12s;
+    margin-top: 1px;
+  }
+  .skill-node.maxed .skill-icon { background: #2a2010; color: #f0a020; }
+  .skill-node.unlocked .skill-icon { background: #1a1810; color: #c09040; }
+  .tree-col-dw .skill-node.maxed .skill-icon { background: #0e2030; color: #5bb8e8; }
+  .tree-col-sor .skill-node.maxed .skill-icon { background: #2a1008; color: #e87050; }
+  .tree-col-bm .skill-node.maxed .skill-icon { background: #102008; color: #88c050; }
+  .tree-col-ic .skill-node.maxed .skill-icon { background: #2a0828; color: #f038d4; }
+
+  .skill-info { flex: 1; min-width: 0; }
+  .skill-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    color: #d0c8b8;
+    line-height: 1.1;
+  }
+  .skill-node.maxed .skill-name { color: #f0e8d0; }
+  .skill-node.locked .skill-name { color: #555; }
+
+  .skill-type-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1px 4px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  .badge-augment { background: #1e1e10; color: #888; border: 1px solid #333; }
+  .badge-weapon { background: #101020; color: #7080c0; border: 1px solid #2a2a50; }
+
+  .skill-desc {
+    font-size: 0.7rem;
+    color: #666;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .skill-node.maxed .skill-desc { color: #888; }
+
+  .skill-pts-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .pts-pip {
+    width: 10px; height: 4px;
+    border-radius: 1px;
+    background: #2a2a22;
+    transition: background 0.1s;
+  }
+  .pts-pip.filled { background: #c0a040; }
+  .tree-col-dw .pts-pip.filled { background: #3a8fbf; }
+  .tree-col-sor .pts-pip.filled { background: #d44f30; }
+  .tree-col-bm .pts-pip.filled { background: #6a9e3a; }
+  .tree-col-ic .pts-pip.filled { background: #9953ca; }
+
+  .pts-label {
+    font-size: 0.65rem;
+    color: #555;
+    margin-left: 2px;
+  }
+  .skill-node.maxed .pts-label { color: #888; }
+
+  /* Tooltip */
+  .tooltip-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .tooltip-box {
+    position: absolute;
+    background: #1a1810;
+    border: 1px solid #c97b12;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    max-width: 280px;
+    min-width: 200px;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+  }
+  .tooltip-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #f0e0b0;
+    margin-bottom: 4px;
+  }
+  .tooltip-meta { font-size: 0.72rem; color: #888; margin-bottom: 6px; }
+  .tooltip-meta .pts { color: #f0a020; font-weight: 600; }
+  .tooltip-desc { font-size: 0.78rem; color: #c0b898; line-height: 1.4; }
+  .tooltip-effect { font-size: 0.75rem; color: #90c0a0; margin-top: 6px; font-style: italic; }
+
+  /* Info panel */
+  .info-bar {
+    background: #0e0e0e;
+    border-top: 1px solid #1a1a1a;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .info-item { font-size: 0.75rem; color: #555; }
+  .info-item strong { color: #888; font-weight: 500; }
+  .info-hint {
+    font-size: 0.72rem;
+    color: #444;
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* Scrollable tree body */
+  .tree-body { overflow-y: auto; flex: 1; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Moze<span>pository</span></div>
+  <div class="header-info">
+    <div class="level-badge">Moze — The Gunner</div>
+    <div class="sp-counter"><span class="label">SKILL POINTS</span><span id="sp-used">0</span> / <span id="sp-total">70</span></div>
+    <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="trees-container" id="trees"></div>
+
+<div class="info-bar">
+  <div class="info-item">Left-click to add · Right-click to remove</div>
+  <div class="info-item">Each tier requires <strong>5 pts</strong> in the tree to unlock</div>
+  <div class="info-hint">Base level 72 = 70 skill points available</div>
+</div>
+
+<div class="tooltip-overlay" id="tooltip-overlay">
+  <div class="tooltip-box" id="tooltip-box">
+    <div class="tooltip-name" id="tt-name"></div>
+    <div class="tooltip-meta" id="tt-meta"></div>
+    <div class="tooltip-desc" id="tt-desc"></div>
+    <div class="tooltip-effect" id="tt-effect"></div>
+  </div>
+</div>
+
+<script>
+const TREES = [
+  {
+    id: 'bm',
+    name: 'Bottomless Mags',
+    subtitle: 'Ammo sustain & fire damage',
+    color: '#5bb8e8', 
+    icon: '🔫',
+    actionSkill: { name: 'Minigun', desc: 'Sustained rapid fire; overheats with prolonged use', icon: '🔥' },
+    tiers: [
+      { required: 0, skills: [
+        { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: '💨', desc: 'Occasionally deals bonus Fire Damage and consumes no ammo on shots for Moze and Iron Bear.' },
+        { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: '🗼', desc: 'Adds a manned turret to the back of Iron Bear for an ally or Moze to operate.' },
+        { id: 'bm_matched', name: 'Matched Set', maxPts: 5, icon: '🔧', desc: 'Gains stacking Magazine Size bonus and reduced Heat per Shot for each equipped item from the same manufacturer.' },
+      ]},
+      { required: 5, skills: [
+        { id: 'bm_salamander', name: 'Salamander', maxPts: 1, icon: '🦎', type: 'weapon', desc: '[Iron Bear Weapon] Flamethrower that deals Fire Damage at close range. Uses Fuel.' },
+        { id: 'bm_letoff', name: 'Let Off Some Steam', maxPts: 1, icon: '♨️', type: 'augment', desc: '[Minigun Augment] Minigun deals more damage as heat increases, and can fire longer before overheating.' },
+        { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: '🔥', desc: 'Increases Fire Damage for Moze and Iron Bear.' },
+        { id: 'bm_redist', name: 'Redistribution', maxPts: 1, icon: '↩', desc: 'After scoring a Critical Hit, Moze regenerates ammo for a few seconds.' },
+        { id: 'bm_scrappy', name: 'Scrappy', maxPts: 5, icon: '💨', desc: 'Increases Handling. While moving, Weapon Swap and Mode Switch Speed are increased.' }
+      ]},
+      { required: 10, skills: [
+        { id: 'bm_genwinter', name: 'General Winter', maxPts: 1, icon: '❄️', type: 'augment', desc: '[Minigun Augment] Fires Cryo rounds — less heat/fuel drain but reduced damage.' },
+        { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: '⛽', type: 'augment', desc: '[Salamander Augment] Reduced Fuel Drain. Iron Bear movement speed increases after hitting an enemy.' },
+        { id: 'bm_rushin', name: "Rushin' Offensive", maxPts: 1, icon: '🏃', desc: 'Moze can sprint and shoot simultaneously.' },
+        { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: '🎯', desc: 'Increases Fire Rate and Critical Hit Damage for Moze. Iron Bear gains increased Hard Point Damage.' },
+      ]},
+      { required: 15, skills: [
+        { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: '💥', type: 'augment', desc: '[Minigun Augment] Fires Explosive Rounds with bonus Splash Damage but reduced Fire Rate.' },
+        { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: '☣️', type: 'augment', desc: '[Salamander Augment] Converts damage to Corrosive and increases Melt Damage.' },
+        { id: 'bm_ironbank', name: 'The Iron Bank', maxPts: 5, icon: '🏦', desc: "Increases Moze's Magazine Size." },
+        { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: '⭐', desc: 'Equipping the same weapon in both Iron Bear hardpoints increases their damage.' },
+      ]},
+      { required: 20, skills: [
+        { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: '🌋', type: 'augment', desc: '[Salamander Augment] Burst-fires 3 projectiles; the first leaves a large Fire area on the ground.' },
+        { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: '🛣️', desc: 'Moze gains infinite ammo for a few seconds after exiting Iron Bear.' },
+        { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: '📉', desc: 'Gun Damage increases as the magazine empties — greater bonus at lower ammo. COV weapons gain Gun Daamge as heat increases.' },
+      ]},
+      { required: 25, skills: [
+        { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: '⚒️', desc: 'Moze constantly regenerates ammo for her currently equipped weapon.' },
+      ]},
+    ]
+  },
+   {
+    id: 'dw',
+    name: 'Demolition Woman',
+    subtitle: 'Splash damage & explosions',
+    color: '#e87050',
+    icon: '💣',
+    actionSkill: { name: 'V-35 Grenade Launcher', desc: 'The V-35 is a semi-automatic Grenade Launcher. Its grenades are not affected by Moze\'s equipped grenade mod. (Magazine size: 15.) <br> <i> For when the V-34 just isn\'t enough. </i> ', icon: '💣' },
+    tiers: [
+      { required: 0, skills: [
+        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: '🔥', desc: 'Whenever Moze deals Splash Damage, she deals bonus Fire Damage. Receives Mayhem Scaling.', effect: 'KEY META SKILL — core to splash builds' },
+        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: '⏱', desc: 'Iron Bear weapons drain less Fuel. Killing enemies while Iron Bear is active restores Fuel.' },
+        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: '🐻', desc: '<span style="color: #ba0f3c"><Strong> Kill Skill. </Strong></span> Killing enemies reduces Iron Bear cooldown.' },
+      ]},
+      { required: 5, skills: [
+        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: '🚀', type: 'weapon', desc: '[Iron Bear Weapon] Fires a volley of rockets that deal Splash Damage on impact.' },
+        { id: 'dw_heatseeker', name: 'Heatseeker', maxPts: 1, icon: '🎯', type: 'augment', desc: '[V-35 Augment] Grenades now track the nearest enemy and deal increased Splash Damage.' },
+        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: '♻️', desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
+        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: '💥', desc: 'Increases Splash Damage dealt by Moze and Iron Bear. Also has a chance to double Splash Radius.' },
+        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: '🐻', desc: 'Increases Skill Damage, Maximum Fuel, and Health For Iron Bear. The Maximum Fuel effect is doubled for Iron Cub.' },
+      ]},
+      { required: 10, skills: [
+        { id: 'dw_stickybombs', name: 'Stiky Bombs', maxPts: 1, icon: '📌', type: 'augment', desc: '[V-35 Augment] Grenades stick to surfaces and enemies before detonating, reducing radius but increasing damage.' },
+        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: '☢️', type: 'augment', desc: '[Rocket Pods Augment] Fires a single nuclear rocket dealing massive Radiation Splash Damage.' },
+        { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 5, icon: '📿', desc: 'Grenades can now Critically Hit, which doubles their damage. This is unaffected by Crit Damage Bonuses.' },
+        { id: 'dw_autobear', name: 'Auto Bear', maxPts: 5, icon: '🤖', desc: 'After exiting Iron Bear or Iron Cub runs out of fuel, Iron Bear / Cub will stand in place for 15 seconds and attack enemies before charging at an enemy and self destructing. \n Note that this is the only way to use Dakka Bear in solo mode!' },
+      ]},
+        { required: 15, skills: [
+        { id: 'dw_longdead', name: 'Long-Range Rider', maxPts: 1, icon: '🎯', type: 'augment', desc: '[V-35 Augment] V-35 fires a single, long-range high-damage grenade.' },
+        { id: 'dw_heatseekhome', name: 'Targeting Scope', maxPts: 1, icon: '🔭', type: 'augment', desc: '[Rocket Pods Augment] Rockets become heat-seeking and travel further.' },
+        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: '🩸', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
+        { id: 'dw_explosive', name: 'Why Can\'t I Carry All These Grenades?', maxPts: 5, icon: '🧨', desc: 'Increases Grenade carrying capacity and grants additional grenades on pickup.' },
+      ]},
+      { required: 20, skills: [
+        { id: 'dw_torguerev', name: 'Short Fuse', maxPts: 5, icon: '⚡', desc: 'Whenever Moze deals Gun Damage, there is a chance to trigger a secondary explosion near the enemy.', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper' },
+        { id: 'dw_torgue2', name: 'Stainless Steel Bear', maxPts: 5, icon: '🔩', desc: "Increases Iron Bear's Fuel capacity and Armor." },
+      ]},
+      { required: 25, skills: [
+        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: '🩸', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
+      ]},
+    ]
+  },
+  {
+    id: 'sor',
+    name: 'Shield of Retribution',
+    subtitle: 'Defense & shield bonuses',
+    color: '#e87050',
+    icon: '🛡️',
+    actionSkill: { name: 'Railgun', desc: 'High-velocity Shock projectiles; needs to recharge between shots', icon: '⚡' },
+    tiers: [
+      { required: 0, skills: [
+        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: '🛡', desc: 'While shields are active, Moze gains Damage Reduction and increased Gun Damage.' },
+        { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: '🔵', desc: "Iron Bear gains a Bubble Shield that reduces incoming damage. Reactivates after a short cooldown if destroyed." },
+        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: '❤️', desc: 'On reload, Moze loses some health but grants bonus Fire Damage to her and nearby allies.' },
+      ]},
+      { required: 5, skills: [
+        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: '👊', type: 'weapon', desc: '[Iron Bear Weapon] Iron Bear gains a powerful melee punch.' },
+        { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: '🔥', type: 'augment', desc: '[Railgun Augment] Converts Railgun to Fire Damage at the cost of increased Fuel Drain.' },
+        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: '🔋', desc: 'Increases Maximum Shield and grants Shock Damage Resistance.' },
+        { id: 'sor_force', name: 'Forced Feedback', maxPts: 1, icon: '💪', desc: 'Killing an enemy while the shield is recharging immediately restores a portion of the shield.' },
+      ]},
+      { required: 10, skills: [
+        { id: 'sor_shocktorail', name: 'Capacitor', maxPts: 1, icon: '⚡', type: 'augment', desc: '[Railgun Augment] Railgun overcharges, firing additional Shock orbs on hit.' },
+        { id: 'sor_superconductor', name: 'Superconductor', maxPts: 1, icon: '⚡', type: 'augment', desc: '[Capacitance Augment] Melee hit triggers a Shock AoE explosion that chains to nearby enemies.' },
+        { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: '📊', desc: '<span style="color: #ba0f3c"><Strong> Kill Skill. </Strong></span> Each kill grants a stack increasing Maximum Shield and Gun Damage. Stacks decay over time.' },
+        { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: '❤️', desc: 'Converts a portion of Max Health into Max Shield. Moze\'s shield becomes significantly larger.' },
+      ]},
+      { required: 15, skills: [
+        { id: 'sor_electric', name: 'Electrical Burn', maxPts: 1, icon: '🔥', type: 'augment', desc: '[Railgun Augment] Shots have a chance to burn enemies, dealing bonus Fire Damage.' },
+        { id: 'sor_groundpounder', name: 'Ground Pounder', maxPts: 1, icon: '👊', type: 'augment', desc: "[Capacitance Augment] Iron Bear's melee becomes a ground slam hitting a wide area." },
+        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: '⚡', desc: 'Increases Shield Recharge Rate and decreases Shield Recharge Delay.' },
+        { id: 'sor_ironshield', name: 'Iron Bear: Fuel Drain Shield', maxPts: 5, icon: '⛽', desc: "Iron Bear's Fuel Drain is reduced while its shields are active." },
+      ]},
+      { required: 20, skills: [
+        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: '🔰', desc: 'When the shield is fully depleted, it triggers: restores 40% of Max Shield and grants +30% Gun Damage for 30 seconds.', effect: 'KEY META SKILL — powerful shield pop trigger' },
+        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: '📈', desc: 'The lower Moze\'s health, the greater her Gun Damage bonus.' },
+      ]},
+      { required: 25, skills: [
+        { id: 'sor_ironclad', name: 'Full Can of Whoop-Ass', maxPts: 1, icon: '💪', desc: 'Activating Iron Bear immediately fully replenishes Moze\'s Shield.' },
+      ]},
+    ]
+  },
+  {
+    id: 'ic',
+    name: 'Bear Mother',
+    subtitle: 'Iron Cub companion & incendiary',
+    dlc: true,
+    icon: '🐾',
+    actionSkill: { name: 'Iron Cub', desc: 'Mini-mech companion that follows Moze and dual-wields the weapon in your other hardpoint slot. Less damage and fuel than Iron Bear, but fully autonomous.', icon: '🐾' },
+    tiers: [
+      { required: 0, skills: [
+        { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: '🔥', desc: 'Whenever Moze or Iron Bear/Cub ignites an enemy, both Moze and Iron Cub regenerate health for a short time.' },
+        { id: 'ic_cub_passive', name: 'Scorched Earth', maxPts: 1, icon: '☄️', desc: 'While Moze\'s Action Skill is on cooldown, all damage she deals adds bonus Incendiary Skill Damage.' },
+        { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: '🦾', desc: 'Increases Iron Bear/Cub\'s Damage. Auto Bear is not affected by this skill.' },
+      ]},
+      { required: 5, skills: [
+        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: '👊', type: 'weapon', desc: '[Iron Bear/Cub Weapon] Iron Bear/Cub gains a powerful flaming melee punch. Deals Fire Damage and staggers enemies.' },
+        { id: 'ic_fuelforfire', name: 'Fuel for the Fire', maxPts: 1, icon: '🛡️', type: 'augment', desc: '[Iron Cub Augment] Whenever Moze or Iron Cub inflicts a Status Effect on an enemy, Iron Cub\'s armor is restored.' },
+        { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: '💨', desc: 'While Iron Cub is deployed, both Moze and Iron Bear/Cub gain increased Movement Speed.' },
+        { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: '💥', desc: 'Increases Status Effect Damage and Status Effect Chance for Moze and Iron Bear. Note: currently bugged and bonuses may not apply correctly.' },
+        { id: 'ic_matchedelement', name: 'Matched Elements', maxPts: 5, icon: '🔮', desc: 'Increases Gun Damage with elemental weapons. Each equipped item that shares the primary element of your held gun increases this bonus.' },
+      ]},
+      { required: 10, skills: [
+        { id: 'ic_babynukes', name: 'Baby Nukes', maxPts: 1, icon: '☢️', type: 'augment', desc: '[Iron Cub Augment] Whenever Iron Cub is deployed or destroyed, it triggers a nuclear explosion dealing massive Radiation Damage to nearby enemies.' },
+        { id: 'ic_hamfist', name: 'Hamfisted', maxPts: 1, icon: '🥊', type: 'augment', desc: '[Bear Fist Augment] Bear Fist hits generate a Shock shockwave that damages nearby enemies.' },
+        { id: 'ic_fire_rate', name: 'Pull the Pin', maxPts: 5, icon: '📿', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Fire Rate and reduced Burst-Fire Delay for a short time (max 5 stacks, 12s duration).' },
+        { id: 'ic_cooldown', name: 'Cub Down', maxPts: 5, icon: '⏬', desc: 'Increases Moze\'s Skill Cooldown Rate and Iron Bear\'s Maximum Fuel.' },
+      ]},
+      { required: 15, skills: [
+        { id: 'ic_myleaf', name: 'My Little Friend', maxPts: 1, icon: '🔫', type: 'augment', desc: '[Iron Cub Augment] Iron Cub spawns equipped with an additional Incendiary Vladof Assault Rifle alongside its other weapons.' },
+        { id: 'ic_emberfist', name: 'Ember\'s Purge', maxPts: 1, icon: '🌋', type: 'augment', desc: '[Bear Fist Augment] Bear Fist ignites enemies on hit, dealing Fire Damage over time.' },
+        { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: '⛽', desc: 'Whenever Moze or Iron Bear applies a Status Effect to an enemy, Iron Bear gains Fuel. This effect has diminishing returns.' },
+        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 1, icon: '🌟', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Status Effect Damage and Cryo Damage bonuses for a short time (max 5 stacks, 8s duration).' },
+      ]},
+      { required: 20, skills: [
+        { id: 'ic_efficiency', name: 'Efficiency Engine', maxPts: 5, icon: '📈', desc: 'Moze gains increased Gun Damage. The bonus scales up the longer Iron Cub has been continuously active.', effect: 'Key skill — rewards keeping Iron Cub alive for sustained damage' },
+        { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: '🛡', desc: 'Increases Iron Bear/Cub\'s Damage and Damage Resistance. Auto Bear is not affected by this skill.' },
+        { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: '⏩', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Skill Cooldown Rate for a short time (max 10 stacks, 12s duration).' },
+      ]},
+      { required: 25, skills: [
+        { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: '⚗️', desc: 'Whenever Moze or Iron Bear ignites an enemy, Iron Bear stops passively consuming Fuel for 6 seconds. Can effectively make Iron Cub run indefinitely against groups of flammable enemies.', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds' },
+      ]},
+    ]
+  },
+];
+
+const state = {};
+TREES.forEach(tree => {
+  tree.tiers.forEach(tier => {
+    tier.skills.forEach(skill => {
+      state[skill.id] = 0;
+    });
+  });
+});
+
+function getTreePts(tree) {
+  let total = 0;
+  tree.tiers.forEach(tier => {
+    tier.skills.forEach(skill => {
+      if (skill.type !== 'augment' && skill.type !== 'weapon') total += state[skill.id];
+    });
+  });
+  return total;
+}
+
+function getTotalUsed() {
+  let total = 0;
+  Object.values(state).forEach(v => total += v);
+  return total;
+}
+
+function getAvailable() { return 70 - getTotalUsed(); }
+
+function isTierUnlocked(tree, tierIdx) {
+  if (tierIdx === 0) return true;
+  return getTreePts(tree) >= tree.tiers[tierIdx].required;
+}
+
+function canAddPoint(tree, skill) {
+  if (skill.type === 'weapon' || skill.type === 'augment') return false;
+  if (state[skill.id] >= skill.maxPts) return false;
+  if (getAvailable() <= 0) return false;
+  const tierIdx = tree.tiers.findIndex(t => t.skills.find(s => s.id === skill.id));
+  if (!isTierUnlocked(tree, tierIdx)) return false;
+  if (skill.type === 'augment') {
+    if (state[skill.id] >= 1) return false;
+  }
+  return true;
+}
+
+function canRemovePoint(tree, skill) {
+  if (state[skill.id] <= 0) return false;
+  const tierIdx = tree.tiers.findIndex(t => t.skills.find(s => s.id === skill.id));
+  const pts = getTreePts(tree);
+  let wouldBe = pts;
+  if (skill.type !== 'augment' && skill.type !== 'weapon') wouldBe = pts - 1;
+  for (let i = tierIdx + 1; i < tree.tiers.length; i++) {
+    const hasSpentInHigher = tree.tiers[i].skills.some(s => state[s.id] > 0);
+    if (hasSpentInHigher && wouldBe < tree.tiers[i].required) return false;
+  }
+  return true;
+}
+
+function handleSkillClick(e, treeId, skillId) {
+  e.preventDefault();
+  const tree = TREES.find(t => t.id === treeId);
+  const skill = tree.tiers.flatMap(t => t.skills).find(s => s.id === skillId);
+  if (e.type === 'contextmenu') {
+    if (canRemovePoint(tree, skill)) { state[skillId]--; render(); }
+  } else {
+    if (canAddPoint(tree, skill)) { state[skillId]++; render(); }
+  }
+}
+
+function resetAll() {
+  Object.keys(state).forEach(k => state[k] = 0);
+  render();
+}
+
+function showTooltip(e, skill) {
+  const overlay = document.getElementById('tooltip-overlay');
+  const box = document.getElementById('tooltip-box');
+  overlay.style.display = 'block';
+  document.getElementById('tt-name').textContent = skill.name;
+  let meta = '';
+  if (skill.type === 'augment') meta += 'Augment · ';
+  else if (skill.type === 'weapon') meta += 'Iron Bear Weapon · ';
+  else if (skill.maxPts > 1) meta += `Max ${skill.maxPts} pts · `;
+  meta += `${state[skill.id]}/${skill.maxPts} points`;
+  document.getElementById('tt-meta').innerHTML = `<span class="pts">${meta}</span>`;
+  document.getElementById('tt-desc').textContent = skill.desc.replace(/<[^>]*>/g, '');;
+  document.getElementById('tt-effect').textContent = skill.effect || '';
+
+  const rect = e.currentTarget.getBoundingClientRect();
+  const bw = 280, bh = 160;
+  let left = rect.right + 8;
+  let top = rect.top;
+  if (left + bw > window.innerWidth - 16) left = rect.left - bw - 8;
+  if (top + bh > window.innerHeight - 16) top = window.innerHeight - bh - 16;
+  box.style.left = left + 'px';
+  box.style.top = Math.max(8, top) + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip-overlay').style.display = 'none';
+}
+
+function render() {
+  const container = document.getElementById('trees');
+  container.innerHTML = '';
+
+  TREES.forEach(tree => {
+    const treePts = getTreePts(tree);
+    const col = document.createElement('div');
+    col.className = `tree-column tree-col-${tree.id}`;
+
+    let html = `
+      <div class="tree-header">
+        <div class="tree-name">${tree.name}</div>
+        <div class="tree-subtitle">${tree.subtitle}</div>
+        <div class="tree-action-skill">
+          <div class="action-skill-icon">${tree.actionSkill.icon}</div>
+          <div class="action-skill-info">
+            <div class="action-skill-name">${tree.actionSkill.name}</div>
+            <div class="action-skill-desc">${tree.actionSkill.desc}</div>
+          </div>
+        </div>
+        <div class="tree-pts">Tree points: <span>${treePts}</span></div>
+      </div>
+      <div class="tree-body">`;
+
+    tree.tiers.forEach((tier, tierIdx) => {
+      const unlocked = isTierUnlocked(tree, tierIdx);
+      html += `<div class="tier${unlocked ? '' : ' tier-locked'}">
+        <div class="tier-label">Tier ${tierIdx + 1}${tier.required > 0 ? ' · ' + tier.required + ' pts' : ''}</div>
+        <div class="skills-grid">`;
+
+      tier.skills.forEach(skill => {
+        const pts = state[skill.id];
+        const isMaxed = pts >= skill.maxPts;
+        const isLocked = !unlocked || skill.type === 'classmod';
+        let nodeClass = 'skill-node';
+        if (skill.type === 'augment') nodeClass += ' augment';
+        if (skill.type === 'weapon') nodeClass += ' weapon-node';
+        if (isMaxed) nodeClass += ' maxed';
+        else if (pts > 0) nodeClass += ' unlocked';
+        else if (isLocked) nodeClass += ' locked';
+
+        let pipsHtml = '';
+        if (skill.maxPts > 1) {
+          pipsHtml = '<div class="skill-pts-row">';
+          for (let i = 0; i < skill.maxPts; i++) {
+            pipsHtml += `<div class="pts-pip${i < pts ? ' filled' : ''}"></div>`;
+          }
+          pipsHtml += `<span class="pts-label">${pts}/${skill.maxPts}</span></div>`;
+        }
+
+        let badgeHtml = '';
+        if (skill.type === 'augment') badgeHtml = '<span class="skill-type-badge badge-augment">Augment</span>';
+        if (skill.type === 'weapon') badgeHtml = '<span class="skill-type-badge badge-weapon">IB Weapon</span>';
+
+        html += `<div class="${nodeClass}" data-tree="${tree.id}" data-skill="${skill.id}">
+          <div class="skill-icon">${skill.icon}</div>
+          <div class="skill-info">
+            ${badgeHtml}
+            <div class="skill-name">${skill.name}</div>
+            <div class="skill-desc">${skill.desc.length > 80 ? skill.desc.substring(0, 78) + '…' : skill.desc}</div>
+            ${pipsHtml}
+          </div>
+        </div>`;
+      });
+
+      html += `</div></div>`;
+    });
+
+    html += `</div>`;
+    col.innerHTML = html;
+    container.appendChild(col);
+
+    col.querySelectorAll('.skill-node:not(.weapon-node):not(.locked)').forEach(el => {
+      const treeId = el.dataset.tree;
+      const skillId = el.dataset.skill;
+      const t = TREES.find(x => x.id === treeId);
+      const s = t.tiers.flatMap(x => x.skills).find(x => x.id === skillId);
+      el.addEventListener('click', e => handleSkillClick(e, treeId, skillId));
+      el.addEventListener('contextmenu', e => { e.preventDefault(); handleSkillClick(e, treeId, skillId); });
+      el.addEventListener('mouseenter', e => showTooltip(e, s));
+      el.addEventListener('mouseleave', hideTooltip);
+    });
+
+    col.querySelectorAll('.skill-node.weapon-node, .skill-node.locked').forEach(el => {
+      const treeId = el.dataset.tree;
+      const skillId = el.dataset.skill;
+      const t = TREES.find(x => x.id === treeId);
+      const s = t.tiers.flatMap(x => x.skills).find(x => x.id === skillId);
+      el.addEventListener('mouseenter', e => showTooltip(e, s));
+      el.addEventListener('mouseleave', hideTooltip);
+    });
+  });
+
+  document.getElementById('sp-used').textContent = getTotalUsed();
+}
+
+render();
+</script>
+</body>
+</html>
