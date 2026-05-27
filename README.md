@@ -5,9 +5,9 @@ Designed for use in creating, saving, & experimenting with Moze builds for Borde
 
 ## What is Mozepository?
 ![Moze's title card in BL3](mozeTitle.png)
-<center>
+<p align="center">
 <em> I'm Moserah Hayussinian Yan-Lun al-Amir Andreyevna. Call me Moze. </em> 
-</center>
+</p>
 
 <br>
 
