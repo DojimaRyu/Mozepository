@@ -458,17 +458,71 @@ const TREES = [
     subtitle: 'Splash damage & explosions',
     color: '#e87050',
     icon: '💣',
-    actionSkill: { name: 'V-35 Grenade Launcher', desc: 'The V-35 is a semi-automatic Grenade Launcher. Its grenades are not affected by Moze\'s equipped grenade mod. (Magazine size: 15.) <br> <i> For when the V-34 just isn\'t enough. </i> ', icon: '💣' },
+    actionSkill: { name: 'V-35 Grenade Launcher', icon: '💣',
+      desc: `
+              The <span style="color: #cf8252">V-35</span> is a semi-automatic Grenade Launcher. 
+              Its grenades are not affected by Moze\'s equipped grenade mod.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><Strong>Magazine size</Strong>: <span style="color: #3a8fbf">15</span></li>
+              </ul>
+              <br>
+
+              <i>For when the V-34 just isn\'t enough.</i> 
+            ` 
+      },
     tiers: [
       { required: 0, skills: [
-        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: '🔥', desc: 'Whenever Moze deals Splash Damage, she deals bonus Fire Damage. Receives Mayhem Scaling.', effect: 'KEY META SKILL — core to splash builds' },
-        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: '⏱', desc: 'Iron Bear weapons drain less Fuel. Killing enemies while Iron Bear is active restores Fuel.' },
-        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: '🐻', desc: '<span style="color: #ba0f3c"><Strong> Kill Skill. </Strong></span> Killing enemies reduces Iron Bear cooldown.' },
+        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: '🔥', 
+          desc: 
+             `
+              Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <strong>Incendiary Damage</strong>.
+
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><Strong>Bonus Incendiary Damage</Strong>: <span style="color: #3a8fbf">+3%</span> per level</li>
+              </ul>
+            `
+        },
+        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: '⏱', 
+          desc: 
+            `
+              Firing <span style="color: #cf8252">Iron Bear</span> weapons drains less Fuel. 
+              Killing an enemy while <span style="color: #cf8252">Iron Bear</span> is active increases Fuel. This skill has diminishing returns.
+
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><Strong>Fuel Returned</Strong>: <span style="color: #3a8fbf">+2%</span> per level</li>
+                <li><Strong>Fuel Drain</Strong>: <span style="color: #3a8fbf">-10%</span> per level</li>
+              </ul>
+            `
+        },
+        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: '🐻', 
+          desc: 
+          `
+            <span style="color: #ba0f3c">
+              <strong>Kill Skill.</strong>
+            </span>
+            Killing an enemy reduces Moze's remaining <Strong>Action Skill Cooldown Time</Strong>. This skill has diminishing returns. 
+
+            <ul style="margin: 0; padding-left: 1em;">
+              <li><Strong>Iron Bear Cooldown Time</Strong>: <span style="color: #3a8fbf">-1</span> second per level</li>
+            </ul>
+          `
+        },
       ]},
       { required: 5, skills: [
-        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: '🚀', type: 'weapon', desc: '[Iron Bear Weapon] Fires a volley of rockets that deal Splash Damage on impact.' },
-        { id: 'dw_heatseeker', name: 'Heatseeker', maxPts: 1, icon: '🎯', type: 'augment', desc: '[V-35 Augment] Grenades now track the nearest enemy and deal increased Splash Damage.' },
-        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: '♻️', desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
+        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: '🚀', type: 'weapon', 
+        desc: 
+          `
+            The <span style = "color: #cf8252"> Vanquisher Rocket Pod </span> is a rocket launcher capable of rapid-firing volleys of unguided explosive rockets. 
+            <ul style="margin: 0; padding-left: 1em;">
+              <li><Strong>Magazine size</Strong>: <span style="color: #3a8fbf">36</span></li>
+            </ul>
+            <br>
+
+            <i>If you want guidance, get a sherpa. If you want explosions, get a Vladof.</i> 
+          `
+        },
+        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: '♻️', 
+          desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
         { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: '💥', desc: 'Increases Splash Damage dealt by Moze and Iron Bear. Also has a chance to double Splash Radius.' },
         { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: '🐻', desc: 'Increases Skill Damage, Maximum Fuel, and Health For Iron Bear. The Maximum Fuel effect is doubled for Iron Cub.' },
       ]},
@@ -586,6 +640,37 @@ TREES.forEach(tree => {
   });
 });
 
+function getSkillDesc(skill, pts) {
+  const level = pts || 0;
+
+  switch (skill.id) {
+    case 'dw_fitsd': 
+      return `
+        <ul style="margin: 0; padding-left: 1em;">
+          <li><strong>Bonus Incendiary Damage</strong>: <span style="color:#3a8fbf">+${3 * level}%</span></li>
+        </ul>
+      `;
+
+    case 'dw_deadlines':
+      return `
+        <ul style="margin: 0; padding-left: 1em;">
+          <li><Strong>Fuel Returned</Strong>: <span style="color: #3a8fbf">+${2 * level}%</span></li>
+            <li><Strong>Fuel Drain</Strong>: <span style="color: #3a8fbf">-${10 * level}%</span></li>
+        </ul>
+      `;
+
+    case 'dw_grizzled':
+      return `
+        <ul style="margin: 0; padding-left: 1em;">
+          <li><strong>Iron Bear Cooldown</strong>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
+        </ul>
+      `;
+
+    default:
+      return skill.desc;
+  }
+}
+
 function getTreePts(tree) {
   let total = 0;
   tree.tiers.forEach(tier => {
@@ -629,7 +714,7 @@ function canRemovePoint(tree, skill) {
   if (skill.type !== 'augment' && skill.type !== 'weapon') wouldBe = pts - 1;
   for (let i = tierIdx + 1; i < tree.tiers.length; i++) {
     const hasSpentInHigher = tree.tiers[i].skills.some(s => state[s.id] > 0);
-    if (hasSpentInHigher && wouldBe < tree.tiers[i].required) return false;
+    if (hasSpentInHigher && wouldBe <= tree.tiers[i].required) return false;
   }
   return true;
 }
@@ -661,7 +746,8 @@ function showTooltip(e, skill) {
   else if (skill.maxPts > 1) meta += `Max ${skill.maxPts} pts · `;
   meta += `${state[skill.id]}/${skill.maxPts} points`;
   document.getElementById('tt-meta').innerHTML = `<span class="pts">${meta}</span>`;
-  document.getElementById('tt-desc').textContent = skill.desc.replace(/<[^>]*>/g, '');;
+  const pts = state[skill.id];
+  document.getElementById('tt-desc').innerHTML = getSkillDesc(skill, pts);
   document.getElementById('tt-effect').textContent = skill.effect || '';
 
   const rect = e.currentTarget.getBoundingClientRect();
@@ -676,6 +762,13 @@ function showTooltip(e, skill) {
 
 function hideTooltip() {
   document.getElementById('tooltip-overlay').style.display = 'none';
+}
+
+function stripHtml(html)
+{
+   let tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
 }
 
 function render() {
@@ -737,7 +830,8 @@ function render() {
           <div class="skill-info">
             ${badgeHtml}
             <div class="skill-name">${skill.name}</div>
-            <div class="skill-desc">${skill.desc.length > 80 ? skill.desc.substring(0, 78) + '…' : skill.desc}</div>
+            <!-- TODO: Disregard HTML from the substring -->
+            <div class="skill-desc">${skill.desc}</div>
             ${pipsHtml}
           </div>
         </div>`;
