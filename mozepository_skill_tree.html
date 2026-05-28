@@ -7,9 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
- *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html {
-    font-size: 170%;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    font-size: clamp(12px, 1.15vw, 18px);
+
+    --icon-size:   clamp(52px, 5.5vw, 90px);
+    --as-icon-size: clamp(36px, 3.5vw, 56px);
+    --header-h:    clamp(48px, 5.5vh, 72px);
   }
 
   body {
@@ -20,11 +25,12 @@
     overflow-x: hidden;
   }
 
-  /* Header */
+  /* ─── Header ──────────────────────────────────────────────── */
   .header {
     background: linear-gradient(180deg, #1a1208 0%, #0e0e0e 100%);
     border-bottom: 2px solid #c97b12;
-    padding: 0.75rem 2rem;
+    padding: 0 2rem;
+    height: var(--header-h);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -41,11 +47,7 @@
     text-transform: uppercase;
   }
   .logo span { color: #e8e0d0; }
-  .header-info {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
+  .header-info { display: flex; align-items: center; gap: 1.5rem; }
   .level-badge {
     background: #1e1a12;
     border: 1px solid #c97b12;
@@ -81,95 +83,115 @@
   }
   .reset-btn:hover { border-color: #c97b12; color: #f0a020; }
 
-  /* Trees layout */
+  /* ─── Trees layout ────────────────────────────────────────── */
   .trees-container {
     display: flex;
     gap: 0;
     padding: 0;
-    overflow-x: auto;
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - var(--header-h) - 36px);
   }
-
   .tree-column {
     flex: 1;
-    min-width: 260px;
+    min-width: 0;           /* let columns shrink below content width */
     border-right: 1px solid #1e1e1e;
     display: flex;
     flex-direction: column;
   }
   .tree-column:last-child { border-right: none; }
 
-  /* Tree header */
+  /* ─── Tree header ─────────────────────────────────────────── */
   .tree-header {
-    padding: 1rem 1rem 0.75rem;
+    padding: 0.75rem 0.875rem 0.75rem;
     border-bottom: 1px solid #222;
     position: relative;
-    overflow: hidden;
   }
-  .tree-header::before {
+  .tree-header::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 2px;
   }
-  .tree-col-bm .tree-header::before { background: #6a9e3a; }
-  .tree-col-dw .tree-header::before { background: #3a8fbf; }
-  .tree-col-sor .tree-header::before { background: #d44f30; }
-  .tree-col-ic .tree-header::before { background: #c229ba; }
+  .tree-col-bm .tree-header::after  { background: #6a9e3a; }
+  .tree-col-dw .tree-header::after  { background: #3a8fbf; }
+  .tree-col-sor .tree-header::after { background: #d44f30; }
+  .tree-col-ic  .tree-header::after { background: #c229ba; }
 
   .tree-name {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
-  .tree-col-bm .tree-name { color: #88c050; }
-  .tree-col-dw .tree-name { color: #5bb8e8; }
+  .tree-col-bm  .tree-name { color: #88c050; }
+  .tree-col-dw  .tree-name { color: #5bb8e8; }
   .tree-col-sor .tree-name { color: #e87050; }
-  .tree-col-ic .tree-name { color: #9953ca; }
+  .tree-col-ic  .tree-name { color: #c060e0; }
 
-  .tree-subtitle { font-size: 0.75rem; color: #666; margin-top: 2px; }
+  .tree-subtitle { font-size: 0.72rem; color: #666; margin-top: 1px; }
 
+  /* ─── Action-Skill block ──────────────────────────────────── */
   .tree-action-skill {
     margin-top: 0.6rem;
-    background: #181510;
+    border-radius: 5px;
+    overflow: hidden;
     border: 1px solid #333;
-    border-radius: 4px;
-    padding: 0.5rem 0.65rem;
+  }
+
+  /* Coloured header strip */
+  .as-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+    padding: 0.3rem 0.55rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
-  .action-skill-icon {
-    width: 28px; height: 28px;
+  .tree-col-bm  .as-header { background: #152b10; color: #88c050; border-bottom: 1px solid #2a4818; }
+  .tree-col-dw  .as-header { background: #0e2030; color: #5bb8e8; border-bottom: 1px solid #1a3a50; }
+  .tree-col-sor .as-header { background: #2a1008; color: #e87050; border-bottom: 1px solid #4a2010; }
+  .tree-col-ic  .as-header { background: #200e2a; color: #c060e0; border-bottom: 1px solid #3a1850; }
+
+  .as-header-icon {
+    width: var(--as-icon-size);
+    height: var(--as-icon-size);
     border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
+    overflow: hidden;
     flex-shrink: 0;
+    background: rgba(0,0,0,0.35);
   }
-  .tree-col-sor .action-skill-icon { background: #2a1508; color: #e87050; }
-  .tree-col-bm .action-skill-icon { background: #152008; color: #88c050; }
-  .tree-col-dw .action-skill-icon { background: #0e2a38; color: #5bb8e8; }
-  .tree-col-ic .action-skill-icon { background: #251331; color: #9953ca; }
+  .as-header-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .action-skill-info {}
-  .action-skill-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; }
-  .action-skill-desc { color: #777; font-size: 0.7rem; line-height: 1.3; margin-top: 1px; }
-
-  /* Points in tree */
-  .tree-pts {
-    font-size: 0.72rem;
-    color: #666;
-    margin-top: 0.5rem;
+  .as-header-text { display: flex; flex-direction: column; gap: 1px; }
+  .as-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    opacity: 0.7;
   }
-  .tree-pts span { font-weight: 600; color: #aaa; }
+  .as-name { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; }
+
+  /* Body of action skill card */
+  .as-body {
+    padding: 0.45rem 0.55rem;
+    background: #0d0d0a;
+    font-size: 0.7rem;
+    color: #888;
+    line-height: 1.4;
+  }
+  .as-body i { color: #555; font-style: italic; }
+
+  /* ─── Tree points ─────────────────────────────────────────── */
+  .tree-pts { font-size: 0.68rem; color: #555; margin-top: 0.45rem; }
+  .tree-pts span { font-weight: 600; color: #999; }
 
   /* DLC badge */
   .dlc-badge {
     display: inline-block;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.1em;
     font-weight: 700;
     text-transform: uppercase;
@@ -181,81 +203,59 @@
     border: 1px solid #5a3010;
   }
 
-  /* Tiers */
-  .tier {
-    border-bottom: 1px solid #181818;
-    padding: 0.6rem 0.75rem;
-  }
+  /* ─── Tier rows ───────────────────────────────────────────── */
+  .tier { border-bottom: 1px solid #181818; padding: 0.55rem 0.65rem; }
   .tier-label {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #444;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
     display: flex;
     align-items: center;
     gap: 6px;
   }
-  .tier-label::before {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #282828;
-  }
+  .tier-label::before { content: ''; flex: 1; height: 1px; background: #282828; }
   .tier-locked .tier-label { color: #333; }
+  .skills-grid { display: flex; flex-direction: column; gap: 4px; }
 
-  .skills-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  /* Skill node */
+  /* ─── Skill nodes ─────────────────────────────────────────── */
   .skill-node {
     background: #151510;
     border: 1px solid #2a2a22;
     border-radius: 4px;
-    padding: 0.45rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     cursor: pointer;
     transition: border-color 0.12s, background 0.12s;
     user-select: none;
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
-  .skill-node.augment {
-    border-left: 2px solid #8a1b17;
-    background: #372006;
-  }
-  .skill-node.weapon-node {
-    border-left: 2px solid #5c178a;
-    background: #0e0e18;
-  }
+  .skill-node.augment  { border-left: 2px solid #8a1b17; background: #372006; }
+  .skill-node.weapon-node { border-left: 2px solid #5c178a; background: #0e0e18; }
 
   .skill-node.unlocked { border-color: #3a3020; background: #1a1810; }
-  .skill-node.maxed {
-    border-color: #f0a020;
-    background: #1e1a0e;
-  }
-  .skill-node.locked { opacity: 0.4; cursor: not-allowed; }
-  .skill-node.augment.maxed { border-left-width: 2px; }
+  .skill-node.maxed    { border-color: #f0a020; background: #1e1a0e; }
+  .skill-node.locked   { opacity: 0.4; cursor: not-allowed; }
 
-  .tree-col-dw .skill-node.maxed { border-color: #3a8fbf; background: #0a1e2a; }
+  .tree-col-dw  .skill-node.maxed { border-color: #3a8fbf; background: #0a1e2a; }
   .tree-col-sor .skill-node.maxed { border-color: #d44f30; background: #1e0e08; }
-  .tree-col-bm .skill-node.maxed { border-color: #6a9e3a; background: #0e1a08; }
-  .tree-col-ic .skill-node.maxed { border-color: #9953ca; background: #251331; }
+  .tree-col-bm  .skill-node.maxed { border-color: #6a9e3a; background: #0e1a08; }
+  .tree-col-ic  .skill-node.maxed { border-color: #9953ca; background: #251331; }
 
-  .tree-col-dw .skill-node.unlocked { background: #0a1520; border-color: #1e3a50; }
+  .tree-col-dw  .skill-node.unlocked { background: #0a1520; border-color: #1e3a50; }
   .tree-col-sor .skill-node.unlocked { background: #1a0e08; border-color: #3a2018; }
-  .tree-col-bm .skill-node.unlocked { background: #0a1508; border-color: #1e3018; }
-  .tree-col-ic .skill-node.unlocked { background: #22112e; border-color: #2b092a; }
+  .tree-col-bm  .skill-node.unlocked { background: #0a1508; border-color: #1e3018; }
+  .tree-col-ic  .skill-node.unlocked { background: #22112e; border-color: #2b092a; }
 
-  .tree-col-ic .skill-node.augment { background: #1a1208; border-left-color: #5a3010; }
+  .tree-col-ic .skill-node.augment       { background: #1a1208; border-left-color: #5a3010; }
   .tree-col-ic .skill-node.augment.maxed { background: #221408; border-left-color: #d44f20; }
 
+  /* ─── Skill icon ──────────────────────────────────────────── */
   .skill-icon {
-    width: 100px;
-    height: 100px;
+    width:  var(--icon-size);
+    height: var(--icon-size);
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
@@ -264,20 +264,9 @@
     align-items: center;
     justify-content: center;
   }
+  .skill-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .skill-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .skill-node.maxed .skill-icon { background: #2a2010; color: #f0a020; }
-  .skill-node.unlocked .skill-icon { background: #1a1810; color: #c09040; }
-  .tree-col-dw .skill-node.maxed .skill-icon { background: #0e2030; color: #5bb8e8; }
-  .tree-col-sor .skill-node.maxed .skill-icon { background: #2a1008; color: #e87050; }
-  .tree-col-bm .skill-node.maxed .skill-icon { background: #102008; color: #88c050; }
-  .tree-col-ic .skill-node.maxed .skill-icon { background: #2a0828; color: #f038d4; }
-
+  /* ─── Skill text ──────────────────────────────────────────── */
   .skill-info { flex: 1; min-width: 0; }
   .skill-name {
     font-family: 'Barlow Condensed', sans-serif;
@@ -285,14 +274,14 @@
     font-size: 0.85rem;
     letter-spacing: 0.03em;
     color: #d0c8b8;
-    line-height: 1.1;
+    line-height: 1.15;
   }
-  .skill-node.maxed .skill-name { color: #f0e8d0; }
+  .skill-node.maxed  .skill-name { color: #f0e8d0; }
   .skill-node.locked .skill-name { color: #555; }
 
   .skill-type-badge {
     display: inline-block;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 1px 4px;
@@ -301,46 +290,39 @@
     font-weight: 600;
   }
   .badge-augment { background: #3a2916; color: #b5580b; border: 1px solid #b36812; }
-  .badge-weapon { background: #101020; color: #7080c0; border: 1px solid #2a2a50; }
+  .badge-weapon  { background: #101020; color: #7080c0; border: 1px solid #2a2a50; }
 
   .skill-desc {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: #666;
     line-height: 1.3;
     margin-top: 2px;
   }
   .skill-node.maxed .skill-desc { color: #888; }
 
-  .skill-pts-row {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 4px;
-  }
+  /* ─── Pip row ─────────────────────────────────────────────── */
+  .skill-pts-row { display: flex; align-items: center; gap: 3px; margin-top: 4px; }
   .pts-pip {
-    width: 10px; height: 4px;
+    width: clamp(6px, 0.7vw, 12px);
+    height: 4px;
     border-radius: 1px;
     background: #2a2a22;
     transition: background 0.1s;
   }
   .pts-pip.filled { background: #c0a040; }
-  .tree-col-dw .pts-pip.filled { background: #3a8fbf; }
+  .tree-col-dw  .pts-pip.filled { background: #3a8fbf; }
   .tree-col-sor .pts-pip.filled { background: #d44f30; }
-  .tree-col-bm .pts-pip.filled { background: #6a9e3a; }
-  .tree-col-ic .pts-pip.filled { background: #9953ca; }
+  .tree-col-bm  .pts-pip.filled { background: #6a9e3a; }
+  .tree-col-ic  .pts-pip.filled { background: #9953ca; }
 
-  .pts-label {
-    font-size: 0.65rem;
-    color: #555;
-    margin-left: 2px;
-  }
+  .pts-label { font-size: 0.62rem; color: #555; margin-left: 2px; }
   .skill-node.maxed .pts-label { color: #888; }
 
-  /* Tooltip */
+  /* ─── Tooltip ─────────────────────────────────────────────── */
   .tooltip-overlay {
     display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     z-index: 200;
     pointer-events: none;
   }
@@ -349,9 +331,9 @@
     background: #1a1810;
     border: 1px solid #c97b12;
     border-radius: 6px;
-    padding: 0.8rem 1rem;
-    max-width: 280px;
-    min-width: 200px;
+    padding: 0.75rem 0.9rem;
+    max-width: clamp(200px, 22vw, 320px);
+    min-width: 180px;
     pointer-events: none;
     box-shadow: 0 8px 24px rgba(0,0,0,0.8);
   }
@@ -362,40 +344,37 @@
     color: #f0e0b0;
     margin-bottom: 4px;
   }
-  .tooltip-meta { font-size: 0.72rem; color: #888; margin-bottom: 6px; }
+  .tooltip-meta   { font-size: 0.7rem;  color: #888;    margin-bottom: 5px; }
   .tooltip-meta .pts { color: #f0a020; font-weight: 600; }
-  .tooltip-desc { font-size: 0.78rem; color: #c0b898; line-height: 1.4; }
-  .tooltip-effect { font-size: 0.75rem; color: #90c0a0; margin-top: 6px; font-style: italic; }
+  .tooltip-desc   { font-size: 0.75rem; color: #c0b898; line-height: 1.4; }
+  .tooltip-effect { font-size: 0.72rem; color: #90c0a0; margin-top: 5px; font-style: italic; }
 
-  /* Info panel */
+  /* ─── Info bar ────────────────────────────────────────────── */
   .info-bar {
     background: #0e0e0e;
     border-top: 1px solid #1a1a1a;
-    padding: 0.5rem 1.5rem;
+    padding: 0.4rem 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
   }
-  .info-item { font-size: 0.75rem; color: #555; }
-  .info-item strong { color: #888; font-weight: 500; }
-  .info-hint {
-    font-size: 0.72rem;
-    color: #444;
-    margin-left: auto;
-    font-style: italic;
-  }
+  .info-item { font-size: 0.7rem; color: #555; }
+  .info-item strong { color: #777; font-weight: 500; }
+  .info-hint { font-size: 0.68rem; color: #3a3a3a; margin-left: auto; font-style: italic; }
 
-  /* Scrollable tree body */
   .tree-body { overflow-y: auto; flex: 1; }
 </style>
 </head>
 <body>
+
 <div class="header">
   <div class="logo">Moze<span>pository</span></div>
   <div class="header-info">
     <div class="level-badge">Moze — The Gunner</div>
-    <div class="sp-counter"><span class="label">SKILL POINTS</span><span id="sp-used">0</span> / <span id="sp-total">70</span></div>
+    <div class="sp-counter">
+      <span class="label">SKILL POINTS</span><span id="sp-used">0</span> / <span id="sp-total">70</span>
+    </div>
     <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
   </div>
 </div>
@@ -404,20 +383,22 @@
 
 <div class="info-bar">
   <div class="info-item">Left-click to add · Right-click to remove</div>
-  <div class="info-item">Each tier requires <b>5 pts</b> in the tree to unlock</div>
+  <div class="info-item">Each tier requires <strong>5 pts</strong> in the tree to unlock</div>
   <div class="info-hint">Base level 72 = 70 skill points available</div>
 </div>
 
 <div class="tooltip-overlay" id="tooltip-overlay">
   <div class="tooltip-box" id="tooltip-box">
-    <div class="tooltip-name" id="tt-name"></div>
-    <div class="tooltip-meta" id="tt-meta"></div>
-    <div class="tooltip-desc" id="tt-desc"></div>
+    <div class="tooltip-name"   id="tt-name"></div>
+    <div class="tooltip-meta"   id="tt-meta"></div>
+    <div class="tooltip-desc"   id="tt-desc"></div>
     <div class="tooltip-effect" id="tt-effect"></div>
   </div>
 </div>
 
-<script>const TREES = [
+
+<script>
+const TREES = [
   {
     id: 'bm',
     name: 'Bottomless Mags',
@@ -426,45 +407,223 @@
     icon: 'images/spec/Minigun.webp',
     actionSkill: { 
       name: 'Minigun', 
-      icon: 'images/spec/Minigun.webp',
+      icon: 'images/wep/Minigun.webp',
       desc: `
-        The <span style="color:#e87f45">Minigun</span> is capable of sustained rapid fire. Firing for long periods causes the <b>Minigun</b> to overheat, rendering it inoperable for a few seconds.
+        The <span style="color:#e87f45">Minigun</span> is capable of sustained rapid fire. 
+        Firing for long periods causes the <span style="color:#e87f45">Minigun</span> to <span style="color: #f1d981">overheat</span>, rendering it inoperable for a few seconds.
         <br><br>
         <p><i>Put a little lead in the air and see what falls over.</i></p>
       `,
     },
     tiers: [
       { required: 0, skills: [
-        { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: 'images/spec/Cloud of Lead.webp', desc: 'Occasionally deals bonus Fire Damage and consumes no ammo on shots for Moze and Iron Bear.' },
-        { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: 'images/spec/Dakka Bear.webp', desc: 'Adds a manned turret to the back of Iron Bear for an ally or Moze to operate.' },
-        { id: 'bm_matched', name: 'Matched Set', maxPts: 5, icon: 'images/spec/Matched Set.webp', desc: 'Gains stacking Magazine Size bonus and reduced Heat per Shot for each equipped item from the same manufacturer.' },
+        { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: 'images/spec/Cloud of Lead.webp', 
+          desc: 
+            `
+              <td>Occasionally, Moze's and <span style="color:#e87f45">Iron Bear's/Iron Cub's</span> shots will deal additional <b>Incendiary Damage</b> and won't consume ammo.
+                <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style = "color: #6a9e3a">+2.25%</span> per level</li>
+              </ul>
+            `
+        },
+        { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: 'images/spec/Dakka Bear.webp', 
+          desc: 
+            `
+              Adds a <span style="color: #f1d981">manned turret</span> to the back of <span style="color:#e87f45">Iron Bear</span>.
+              While manned, <span style="color:#e87f45">Iron bear</span> and its rider gain <span style="color: #f1d981">Increased Damage</span>.
+              If <span style="color:#e87f45">Iron Cub</span> is equipped, it gains <span style="color: #f1d981">Increased Damage</span> instead.
+              <ul style="margin: 0; padding-left: 1em;">
+                  <li><span style="color: #f1d981">Iron Bear damage</span>: <span style = "color: #6a9e3a">+50%</span></li>
+                  <li><span style="color: #f1d981">Iron Cub Damage</span>: <span style = "color: #6a9e3a">+20%</span></li>
+              </ul>
+              <br>
+              <br>
+              <p><i>Fasten your seatbelt. it's going to be a bumpy ride.</i>
+            `
+        },
+        { id: 'bm_matched', name: 'Matched Set', maxPts: 5, icon: 'images/spec/Matched Set.webp', 
+          desc: 
+            `
+              <td>Moze's currently equipped weapon gains a stacking bonus to <span style="color: #f1d981">Magazine Size</span> and <span style="color: #f1d981">Decreased Heat Per Shot</span> for every piece of equipped gear that has a <span style="color: #f1d981">matching manufacturer</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Heat Per Shot</span>: <span style = "color: #6a9e3a">-2%</span> per level</li>
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style = "color: #6a9e3a">+2%</span> per level</li>
+              </ul>
+            `
+        },
       ]},
       { required: 5, skills: [
-        { id: 'bm_salamander', name: 'Salamander', maxPts: 1, icon: 'images/spec/Salamander.webp', type: 'weapon', desc: '[Iron Bear Weapon] Flamethrower that deals Fire Damage at close range. Uses Fuel.' },
-        { id: 'bm_letoff', name: 'Let Off Some Steam', maxPts: 1, icon: 'images/spec/Let Off Some Steam.webp', type: 'augment', desc: '[Minigun Augment] Minigun deals more damage as heat increases, and can fire longer before overheating.' },
-        { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: 'images/spec/Stoke the Embers.webp', desc: 'Increases Fire Damage for Moze and Iron Bear.' },
-        { id: 'bm_redist', name: 'Redistribution', maxPts: 1, icon: 'images/spec/Phalanx Doctrine.webp', desc: 'After scoring a Critical Hit, Moze regenerates ammo for a few seconds.' },
-        { id: 'bm_scrappy', name: 'Scrappy', maxPts: 5, icon: 'images/spec/Scrappy.webp', desc: 'Increases Handling. While moving, Weapon Swap and Mode Switch Speed are increased.' }
+        { id: 'bm_salamander', name: 'Salamander', maxPts: 1, icon: 'images/spec/Salamander.webp', type: 'weapon', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Salamander</span> is a flamethrower that deals <span style="color: #f1d981">Incendiary Damage</span> at close range. 
+              <br><br>
+              Though the <span style="color:#e87f45">Salamander</span> has <span style="color: #f1d981">infinite ammo</span>, it <span style="color: #f1d981"> drains Fuel</span> while firing.
+              <br><br>
+              <p><i>Fire... for effect.</i></p>
+            ` 
+        },
+        { id: 'bm_letoff', name: 'Let Off Some Steam', maxPts: 1, icon: 'images/spec/Let Off Some Steam.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Minigun</span> deals <span style="color: #f1d981">More Damage</span> as heat increases, and can fire longer before <span style="color: #f1d981">overheating</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Maximum Damage</span>: <span style="color: #6a9e3a">+80%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: 'images/spec/Stoke the Embers.webp', 
+          desc: 
+            `
+              <td>Increases Moze's and <span style="color:#e87f45">Iron Bear's/Iron Cub's</span> <span style="color: #f1d981">Incendiary Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Incendiary Damage</span>: <span style = "color: #6a9e3a">+10%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_redist', name: 'Redistribution', maxPts: 1, icon: 'images/spec/Redistribution.webp', 
+          desc: 
+            `
+              <td>After Mozes scores a <span style="color: #f1d981">Critical Hit</span>, she <span style="color: #f1d981">regenerates ammo and health</span> for a few seconds.
+                The lower her health, the more power the health regeneration.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Ammo Regeneration</span>: <span style = "color: #6a9e3a">+5%</span> of magazine / sec</li>
+                <li><span style="color: #f1d981">Health Regeneration</span>: up to <span style = "color: #6a9e3a">+2.5%</span> Missing Health / sec</li>
+                <li><span style="color: #f1d981">Redistribution Duration</span>: <span style = "color: #6a9e3a">3 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_scrappy', name: 'Scrappy', maxPts: 5, icon: 'images/spec/Scrappy.webp', 
+          desc: 
+            `
+              <td>While <span style="color: #f1d981">moving</span>, Moze's <span style="color: #f1d981">Weapon Damage, Handling, Weapon Swap</span> and <span style="color: #f1d981">Mode Switch</span> are increased.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Weapon Damage</span>: <span style = "color: #6a9e3a">+6%</span> per level</li>
+                <li><span style="color: #f1d981">Handling</span>: <span style = "color: #6a9e3a">+10.7% / +19.4% / +26.5% / +32.4% / +37.5%</span></li>
+                <li><span style="color: #f1d981">Weapon Swap Speed</span>: <span style = "color: #6a9e3a">+16% / +27.5% / +36.3% / +43.2% / +48.7%</span></li>
+                <li><span style="color: #f1d981">Mode Swap Speed</span>: <span style = "color: #6a9e3a">+16% / +27.5% / +36.3% / +43.2% / +48.7%</span></li>
+              </ul>
+            ` 
+        }
       ]},
       { required: 10, skills: [
-        { id: 'bm_genwinter', name: 'General Winter', maxPts: 1, icon: 'images/spec/General Winter.webp', type: 'augment', desc: '[Minigun Augment] Fires Cryo rounds — less heat/fuel drain but reduced damage.' },
-        { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: 'images/spec/Fuel Economy.webp', type: 'augment', desc: '[Salamander Augment] Reduced Fuel Drain. Iron Bear movement speed increases after hitting an enemy.' },
-        { id: 'bm_rushin', name: "Rushin' Offensive", maxPts: 1, icon: "images/spec/Rushin' Offensive.webp", desc: 'Moze can sprint and shoot simultaneously.' },
-        { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: "images/spec/Scorching RPM's.webp", desc: 'Increases Fire Rate and Critical Hit Damage for Moze. Iron Bear gains increased Hard Point Damage.' },
+        { id: 'bm_genwinter', name: 'General Winter', maxPts: 1, icon: 'images/spec/General Winter.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Minigun</span> fires <span style="color: #f1d981">Cryo Rounds</span> which reduce <span style="color: #f1d981">Heat Drain</span> and <span style="color: #f1d981">Fuel Drain</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Minigun Damage</span>: <span style="color: #6a9e3a">-30%</span></li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">-40%</span></li>
+                <li><span style="color: #f1d981">Converts to Cryo Damage</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: 'images/spec/Fuel Economy.webp', type: 'augment', 
+          desc: 
+            `
+              <td>Reduces <span style="color:#e87f45">Salamander</span>'s <span style="color: #f1d981">Fuel Drain</span>. Additionally, <span style="color:#e87f45">Iron Bear</span>'s <span style="color: #f1d981">Movement Speed</span> is increased after hitting an enemy with the <span style="color:#e87f45">Salamander</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">-25%</span></li>
+                <li><span style="color: #f1d981">Movement Speed</span>: <span style="color: #6a9e3a">+25%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_rushin', name: "Rushin' Offensive", maxPts: 1, icon: "images/spec/Rushin' Offensive.webp", 
+          desc: 
+            `
+              <td>Moze can <span style="color: #f1d981">Sprint and Shoot</span> at the same time.
+            ` 
+        },
+        { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: "images/spec/Scorching RPM's.webp", 
+          desc: 
+            `
+              <td>Moze gains increased <span style="color: #f1d981">Fire Rate</span> and <span style="color: #f1d981">Critical Hit Damage</span>. <span style="color:#e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Hard Point Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fire Rate</span>: <span style = "color: #6a9e3a">+3%</span> per level</li>
+                <li><span style="color: #f1d981">Critical Hit Damage</span>: <span style = "color: #6a9e3a">+4%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style = "color: #6a9e3a">+5.0%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 15, skills: [
-        { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: 'images/spec/Exploding. Bullets..webp', type: 'augment', desc: '[Minigun Augment] Fires Explosive Rounds with bonus Splash Damage but reduced Fire Rate.' },
-        { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: 'images/spec/Chemical Warfare.webp', type: 'augment', desc: '[Salamander Augment] Converts damage to Corrosive and increases Melt Damage.' },
-        { id: 'bm_ironbank', name: 'The Iron Bank', maxPts: 5, icon: 'images/spec/The Iron Bank.webp', desc: "Increases Moze's Magazine Size." },
-        { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: 'images/spec/Specialist Bear.webp', desc: 'Equipping the same weapon in both Iron Bear hardpoints increases their damage.' },
+        { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: 'images/spec/Exploding. Bullets..webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Minigun</span> fires explosive rounds that deal <span style="color: #f1d981">Splash Damage</span> but have a reduced Fire Rate.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fire Rate</span>: <span style="color: #6a9e3a">-25%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: 'images/spec/Chemical Warfare.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Salamander</span> deals <span style="color: #f1d981">Corrosive Damage</span> instead of Incendiary. Additionally, <span style="color:#e87f45">Salamander</span>'s Melt Damage is significantly increased.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Converts to Corrosive Damage</span></li>
+                <li><span style="color: #f1d981">Melt Damage</span>: <span style="color: #6a9e3a">+50%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_ironbank', name: 'The Iron Bank', maxPts: 5, icon: 'images/spec/The Iron Bank.webp', 
+          desc: 
+            `
+              <td>Increases Moze's <span style="color: #f1d981">Magazine Size</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style = "color: #6a9e3a">+7%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: 'images/spec/Specialist Bear.webp', 
+          desc: 
+            `
+              <td>Equipping two of the <span style="color: #f1d981">Same Weapon</span> on <span style="color:#e87f45">Iron Bear</span> increases the damage dealt by both weapons.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style = "color: #6a9e3a">+60%</span></li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 20, skills: [
-        { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: 'images/spec/Molten Roar.webp', type: 'augment', desc: '[Salamander Augment] Burst-fires 3 projectiles; the first leaves a large Fire area on the ground.' },
-        { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: 'images/spec/Some for the Road.webp', desc: 'Moze gains infinite ammo for a few seconds after exiting Iron Bear.' },
-        { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: 'images/spec/“Click, Click...”.webp', desc: 'Gun Damage increases as the magazine empties — greater bonus at lower ammo. COV weapons gain Gun Damage as heat increases.' },
+        { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: 'images/spec/Molten Roar.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color:#e87f45">Salamander</span> consumes 3 times more fuel to fire a burst of 3 projectiles. The first projectile creates a persistent pool of <span style="color: #f1d981">Fire</span> on the ground.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">+200%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: 'images/spec/Some for the Road.webp', 
+          desc: 
+            `
+              <td>Moze gains <span style="color: #f1d981">Infinite Ammo</span> for a short time after exiting <span style="color:#e87f45">Iron Bear</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Duration</span>: <span style = "color: #6a9e3a">5 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: 'images/spec/Click, Click.webp', 
+          desc: 
+            `
+              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> as her magazine empties. The less ammo remaining, the greater the bonus. COV weapons gain damage as heat increases.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style = "color: #6a9e3a">Up to +12%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 25, skills: [
-        { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: 'images/spec/Forge.webp', desc: 'Moze constantly regenerates ammo for her currently equipped weapon.' },
+        { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: 'images/spec/Forge.webp', 
+          desc: 
+            `
+              <td>Moze constantly <span style="color: #f1d981">Regenerates Ammo</span> for her currently equipped weapon.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Ammo Regeneration</span>: <span style = "color: #6a9e3a">+5.0%</span> of magazine / sec</li>
+              </ul>
+            ` 
+        },
       ]},
     ]
   },
@@ -478,45 +637,210 @@
       name: 'V-35 Grenade Launcher', 
       icon: 'images/spec/V-35 Grenade Launcher.webp',
       desc: `
-        The <span style="color: #cf8252">V-35</span> is a semi-automatic Grenade Launcher. 
+        The <span style="color: #e87f45">V-35</span> is a semi-automatic Grenade Launcher. 
         Its grenades are not affected by Moze's equipped grenade mod.
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><b>Magazine size</b>: <span style="color: #3a8fbf">15</span></li>
-        </ul>
-        <br>
-        <i>For when the V-34 just isn't enough.</i> 
+        <br><br>
+        <p><i>For when the V-34 just isn't enough.</i></p>
       ` 
     },
     tiers: [
       { required: 0, skills: [
-        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: 'images/spec/Fire in the Skag Den.webp', desc: 'Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <b>Incendiary Damage</b>.<ul style="margin: 0; padding-left: 1em;"><li><b>Bonus Incendiary Damage</b>: <span style="color: #3a8fbf">+3%</span> per level</li></ul>' },
-        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', desc: 'Firing <span style="color: #cf8252">Iron Bear</span> weapons drains less Fuel. Killing an enemy while active increases Fuel.<ul style="margin: 0; padding-left: 1em;"><li><b>Fuel Returned</b>: <span style="color: #3a8fbf">+2%</span> per level</li><li><b>Fuel Drain</b>: <span style="color: #3a8fbf">-10%</span> per level</li></ul>' },
-        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: 'images/spec/Grizzled.avif', desc: '<span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy reduces Moze\'s remaining Action Skill Cooldown Time.<ul style="margin: 0; padding-left: 1em;"><li><b>Iron Bear Cooldown Time</b>: <span style="color: #3a8fbf">-1</span> second per level</li></ul>' },
+        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: 'images/spec/Fire in the Skag Den.webp', 
+          desc: 
+            `
+              <td>Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <b>Incendiary Damage</b>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #6a9e3a">+3%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', 
+          desc: 
+            `
+              <td>Firing <span style="color: #e87f45">Iron Bear</span> weapons drains less <span style="color: #f1d981">Fuel</span>. Killing an enemy while <span style="color: #e87f45">Iron Bear</span> is active refunds Fuel.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fuel Returned</span>: <span style="color: #6a9e3a">+2.0%</span> per level</li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">-10.0%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: 'images/spec/Grizzled.avif', 
+          desc: 
+            `
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy reduces Moze's remaining <span style="color: #f1d981">Action Skill Cooldown Time</span>. This skill has diminishing returns.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Action Skill Cooldown Time</span>: <span style="color: #6a9e3a">-1</span> second per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 5, skills: [
-        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: 'images/spec/Vanquisher Rocket Pod.webp', type: 'weapon', desc: 'The Vanquisher Rocket Pod is capable of rapid volleys of unguided rockets.' },
-        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: 'images/spec/Means of Destruction.webp', desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
-        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: 'images/spec/Torgue Cross-Promotion.webp', desc: 'Increases Splash Damage dealt by Moze and Iron Bear. Also has a chance to double Splash Radius.' },
-        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', desc: 'Increases Skill Damage, Maximum Fuel, and Health For Iron Bear.' },
+        { id: 'dw_rocketpods', name: 'Vanquisher Rocket Pod', maxPts: 1, icon: 'images/spec/Vanquisher Rocket Pod.webp', type: 'weapon', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> is a rocket launcher capable of rapid volleys of unguided explosive rockets.
+              <br><br>
+              <p><i>The final solution to tactical logistics.</i></p>
+            ` 
+        },
+        { id: 'dw_means', name: 'Means of Destruction', maxPts: 3, icon: 'images/spec/Means of Destruction.webp', 
+          desc: 
+            `
+              <td>Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, there is a chance to add ammo to her equipped weapon's magazine or return a grenade.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Ammo Chance</span>: <span style="color: #6a9e3a">+2.0%</span> per level</li>
+                <li><span style="color: #f1d981">Grenade Chance</span>: <span style="color: #6a9e3a">+2.0%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: 'images/spec/Torgue Cross-Promotion.webp', 
+          desc: 
+            `
+              <td>All <span style="color: #f1d981">Splash Damage</span> dealt by Moze has a chance to double in size. Additionally, increases Splash Damage.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Splash Damage Chance</span>: <span style="color: #6a9e3a">+3.0%</span> per level</li>
+                <li><span style="color: #f1d981">Splash Damage</span>: <span style="color: #6a9e3a">+6.0%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Armor</span> and maximum <span style="color: #f1d981">Fuel</span>. Additionally, increases <span style="color: #f1d981">Iron Bear Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Iron Bear Armor</span>: <span style="color: #6a9e3a">+6.0%</span> per level</li>
+                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #6a9e3a">+4.0%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style="color: #6a9e3a">+4.0%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 10, skills: [
-        { id: 'dw_stickybombs', name: 'Stiky Bombs', maxPts: 1, icon: 'images/spec/Shaped Charge.webp', type: 'augment', desc: '[V-35 Augment] Grenades stick to surfaces and enemies before detonating.' },
-        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', desc: '[Rocket Pods Augment] Fires a single nuclear rocket dealing massive Radiation Splash Damage.' },
-        { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', desc: 'Grenades can now Critically Hit, which doubles their damage.' },
-        { id: 'dw_autobear', name: 'Auto Bear', maxPts: 5, icon: 'images/spec/Auto Bear.webp', desc: 'After exiting, Iron Bear / Cub will stand in place for 15 seconds and attack.' },
+        { id: 'dw_stickybombs', name: 'Shaped Charge', maxPts: 1, icon: 'images/spec/Shaped Charge.webp', type: 'augment', 
+          desc: 
+            `
+              <td>Direct hits with the <span style="color: #e87f45">V-35</span> deal <span style="color: #f1d981">Increased Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Direct Hit Damage</span>: <span style="color: #6a9e3a">+35%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> fires a single nuclear rocket that deals massive <span style="color: #f1d981">Radiation Splash Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #6a9e3a">1</span></li>
+                <li><span style="color: #f1d981">Damage</span>: <span style="color: #6a9e3a">+600%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 3, icon: 'images/spec/Pull the Holy Pin.webp', 
+          desc: 
+            `
+              <td>Moze's grenades have a chance to deal a <span style="color: #f1d981">Critical Hit</span>, dealing double damage.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Critical Hit Chance</span>: <span style="color: #6a9e3a">+10%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_autobear', name: 'Auto Bear', maxPts: 1, icon: 'images/spec/Auto Bear.webp', 
+          desc: 
+            `
+              <td>After Moze exits <span style="color: #e87f45">Iron Bear</span>, it will remain deployed in place for a short time. While active, <span style="color: #e87f45">Auto Bear</span> will attack nearby enemies until its duration expires or it is destroyed.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Auto Bear Duration</span>: <span style="color: #6a9e3a">15 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 15, skills: [
-        { id: 'dw_longdead', name: 'Long-Range Rider', maxPts: 1, icon: 'images/spec/Target Softening.webp', type: 'augment', desc: '[V-35 Augment] V-35 fires a single, long-range high-damage grenade.' },
-        { id: 'dw_heatseekhome', name: 'Targeting Scope', maxPts: 1, icon: 'images/spec/Active Tracking.webp', type: 'augment', desc: '[Rocket Pods Augment] Rockets become heat-seeking and travel further.' },
-        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
-        { id: 'dw_explosive', name: 'Why Can\'t I Carry All These Grenades?', maxPts: 5, icon: 'images/spec/Why Can\'t I Carry All These Grenades.webp', desc: 'Increases Grenade carrying capacity and grants additional grenades on pickup.' },
+        { id: 'dw_longdead', name: 'Musical Chairs', maxPts: 1, icon: 'images/spec/Musical Chairs.webp', type: 'augment', 
+          desc: 
+            `
+              <td>Occasionally, the <span style="color: #e87f45">V-35</span> fires a singularity grenade that pulls in nearby enemies.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Every 7th Shot</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_heatseekhome', name: 'Active Tracking', maxPts: 1, icon: 'images/spec/Active Tracking.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> can now lock on to targets. Holding down fire guides homing rockets towards locked targets. Firing rockets in this way increases Fire Rate.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Reload Time</span>: <span style="color: #6a9e3a">-25%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', effect: 'Core survival skill — sustain on splash builds',
+          desc: 
+            `
+              <td>Whenever Moze damages an enemy with a grenade, she <span style="color: #f1d981">Restores Health</span> for every enemy hit. <span style="color: #e87f45">Iron Bear</span> restores health when dealing splash damage.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Restored Health</span>: <span style="color: #6a9e3a">+4.0%</span> of missing health per level</li>
+                <li><span style="color: #f1d981">Iron Bear Restored Health</span>: <span style="color: #6a9e3a">+2.0%</span> of missing armor per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_explosive', name: "Why Can't I Carry All These Grenades?", maxPts: 3, icon: "images/spec/Why Can't I Carry All These Grenades.webp", 
+          desc: 
+            `
+              <td>Increases Moze's <span style="color: #f1d981">Grenade Capacity</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Grenade Capacity</span>: <span style="color: #6a9e3a">+1</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 20, skills: [
-        { id: 'dw_torguerev', name: 'Short Fuse', maxPts: 5, icon: 'images/spec/Short Fuse.webp', desc: 'Whenever Moze deals Gun Damage, there is a chance to trigger a secondary explosion.', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper' },
-        { id: 'dw_torgue2', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', desc: "Increases Iron Bear's Fuel capacity and Armor." },
+        { id: 'dw_lockspeed', name: 'Lock and Speedload', maxPts: 1, icon: 'images/spec/Lock and Speedload.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">V-35</span>'s reload speed is greatly increased and it fires a 3-round burst.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Reload Speed</span>: <span style="color: #6a9e3a">+50%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_targetsoft', name: 'Target Softening', maxPts: 1, icon: 'images/spec/Target Softening.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> deals reduced damage per rocket, but fires a 6-rocket volley. Enemies hit by these rockets take <span style="color: #f1d981">Increased Damage</span> from all sources.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Rockets per Volley</span>: <span style="color: #6a9e3a">6</span></li>
+                <li><span style="color: #f1d981">Hardpoint Damage</span>: <span style="color: #6a9e3a">-15%</span></li>
+                <li><span style="color: #f1d981">Enemy Damage Taken</span>: <span style="color: #6a9e3a">+15%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_tothelast', name: 'To the Last', maxPts: 1, icon: 'images/spec/To the Last.webp', 
+          desc: 
+            `
+              <td>Moze gains the ability to <span style="color: #f1d981">Throw Grenades</span> while in Fight For Your Life. If she threw a grenade before entering FFYL, a grenade is refunded.
+            ` 
+        },
+        { id: 'dw_explosive_punct', name: 'Explosive Punctuation', maxPts: 5, icon: 'images/spec/Explosive Punctuation.webp', 
+          desc: 
+            `
+              <td>When Moze deals <span style="color: #f1d981">Splash Damage</span>, her Action Skill Cooldown Rate is briefly increased.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #6a9e3a">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 25, skills: [
-        { id: 'dw_vampyr_cap', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', desc: 'Whenever Moze throws a grenade, she regenerates health per enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
+        { id: 'dw_shortfuse', name: 'Short Fuse', maxPts: 1, icon: 'images/spec/Short Fuse.webp', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper',
+          desc: 
+            `
+              <td>Whenever Moze deals Gun Damage, there is a chance of a <span style="color: #f1d981">Secondary Explosion</span> centered on the target.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Trigger Chance</span>: <span style="color: #6a9e3a">20%</span></li>
+                <li><span style="color: #f1d981">Secondary Explosion Damage</span>: <span style="color: #6a9e3a">75%</span> of Gun Damage</li>
+              </ul>
+            ` 
+        },
       ]},
     ]
   },
@@ -530,44 +854,197 @@
       name: 'Railgun', 
       icon: 'images/spec/Railgun.webp', 
       desc: `
-        The <span style="color: #cf8252">Railgun</span> fires electrified high-velocity projectiles that deal <b>Shock Damage</b>.
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><b>Magazine size</b>: <span style="color: #e87050">1</span></li>
-        </ul>
-        <br>
+        The <span style="color: #e87f45">Railgun</span> fires electrified high-velocity projectiles that deal <b>Shock Damage</b>.
+        <br><br>
         <i>It's like a bullet, only bigger. And faster. And wrapped in lightning.</i> 
       `
     },
     tiers: [
       { required: 0, skills: [
-        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: 'images/spec/Armored Infantry.webp', desc: 'While shields are active, Moze gains Damage Reduction and increased Gun Damage.' },
-        { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: 'images/spec/Security Bear.webp', desc: "Iron Bear gains a Bubble Shield that reduces incoming damage." },
-        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: 'images/spec/Selfless Vengeance.webp', desc: 'On reload, Moze loses some health but grants bonus Fire Damage to her and nearby allies.' },
+        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: 'images/spec/Armored Infantry.webp', 
+          desc: 
+            `
+              <td>While Moze's shields are active, she gains <span style="color: #f1d981">Damage Reduction</span> and increased <span style="color: #f1d981">Gun Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Damage Reduction</span>: <span style="color: #6a9e3a">+3%</span> per level</li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #6a9e3a">+3%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: 'images/spec/Security Bear.webp', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear</span> gains a <span style="color: #f1d981">Bubble Shield</span> that reduces incoming damage. The bubble shield possesses its own capacity and recharge functionality.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Bubble Shield Capacity</span>: <span style="color: #6a9e3a">50%</span> of Iron Bear Max Armor</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: 'images/spec/Selfless Vengeance.webp', 
+          desc: 
+            `
+              <td>Whenever Moze reloads, she loses a small portion of her current health and grants bonus <span style="color: #f1d981">Incendiary Damage</span> to her and her allies' weapons for a short time.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Current Health Removed</span>: <span style="color: #6a9e3a">1.0%</span> per level</li>
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #6a9e3a">+3.0%</span> of gun damage dealt</li>
+                <li><span style="color: #f1d981">Selfless Vengeance Duration</span>: <span style="color: #6a9e3a">5 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 5, skills: [
-        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', desc: '[Iron Bear Weapon] Iron Bear gains a powerful melee punch.' },
-        { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: 'images/spec/Hell on Rails.webp', type: 'augment', desc: '[Railgun Augment] Converts Railgun to Fire Damage at the cost of increased Fuel Drain.' },
-        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: 'images/spec/Vladof Ingenuity.webp', desc: 'Increases Maximum Shield and grants Shock Damage Resistance.' },
-        { id: 'sor_force', name: 'Forced Feedback', maxPts: 1, icon: 'images/spec/Force Feedback.webp', desc: 'Killing an enemy while the shield is recharging immediately restores a portion.' },
+        { id: 'sor_bearfist', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Bear Fist</span> is a pneumatic-driven fist that deals massive close-range melee damage.
+              <br><br>
+              <p><i>The direct approach.</i></p>
+            ` 
+        },
+        { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: 'images/spec/Hell on Rails.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Railgun</span> fires rounds that deal <span style="color: #f1d981">Incendiary Damage</span>, but have increased Fuel Drain per shot.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Converts to Incendiary Damage</span></li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">+30%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: 'images/spec/Vladof Ingenuity.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Maximum Shield</span> is increased, and she gains resistance to <span style="color: #f1d981">Shock Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Max Shield</span>: <span style="color: #6a9e3a">+6.0%</span> per level</li>
+                <li><span style="color: #f1d981">Shock Damage Resistance</span>: <span style="color: #6a9e3a">+15.0%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_drowning', name: 'Drowning in Brass', maxPts: 5, icon: 'images/spec/Drowning in Brass.webp', 
+          desc: 
+            `
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy grants Moze a stack of Drowning in Brass. Each stack reduces Fire Rate but increases <span style="color: #f1d981">Gun Damage</span> for her and her allies.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Moze Fire Rate</span>: <span style="color: #6a9e3a">-0.5%</span> per stack</li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #6a9e3a">+4.0%</span> per stack</li>
+                <li><span style="color: #f1d981">Max Stacks</span>: <span style="color: #6a9e3a">3</span></li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">15 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: 'images/spec/Thin Red Line.webp', 
+          desc: 
+            `
+              <td>A portion of Moze's health is reserved and cannot be restored, but her <span style="color: #f1d981">Maximum Shield</span> is increased by that same amount.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Max Health Reserved</span>: <span style="color: #6a9e3a">+20%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 10, skills: [
-        { id: 'sor_shocktorail', name: 'Capacitor', maxPts: 1, icon: 'images/spec/Capacitive Armature.webp', type: 'augment', desc: '[Railgun Augment] Railgun overcharges, firing additional Shock orbs on hit.' },
-        { id: 'sor_superconductor', name: 'Superconductor', maxPts: 1, icon: 'images/spec/Shockhammer.webp', type: 'augment', desc: '[Capacitance Augment] Melee hit triggers a Shock AoE explosion.' },
-        { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: 'images/spec/Phalanx Doctrine.webp', desc: '<span style="color: #ba0f3c"><b>Kill Skill.</b></span> Each kill grants a stack increasing Maximum Shield and Gun Damage.' },
-        { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: 'images/spec/Thin Red Line.webp', desc: 'Converts a portion of Max Health into Max Shield.' },
+        { id: 'sor_capacitive', name: 'Capacitive Armature', maxPts: 1, icon: 'images/spec/Capacitive Armature.webp', type: 'augment', 
+          desc: 
+            `
+              <td>When the <span style="color: #e87f45">Railgun</span> hits an enemy, its electrical current chains to nearby enemies, dealing reduced damage to secondary targets.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Splinter Damage</span>: <span style="color: #6a9e3a">-75%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_closetime', name: 'Close the Distance', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Bear Fist</span> shoots forward, pulling enemies to <span style="color: #e87f45">Iron Bear</span> or pulling <span style="color: #e87f45">Iron Bear</span> to massive enemies. Deals Shock Damage.
+            ` 
+        },
+        { id: 'sor_experimental', name: 'Experimental Munitions', maxPts: 1, icon: 'images/spec/Experimental Munitions.webp', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear</span> scores a Critical Hit, they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #6a9e3a">+10%</span> of damage dealt</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: 'images/spec/Behind the Iron Curtain.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Shield Recharge Delay</span> is reduced, and her <span style="color: #f1d981">Shield Recharge Rate</span> is increased.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shield Recharge Rate</span>: <span style="color: #6a9e3a">+7%</span> per level</li>
+                <li><span style="color: #f1d981">Shield Recharge Delay</span>: <span style="color: #6a9e3a">-7.0%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 15, skills: [
-        { id: 'sor_electric', name: 'Electrical Burn', maxPts: 1, icon: 'images/spec/Experimental Munitions.webp', type: 'augment', desc: '[Railgun Augment] Shots have a chance to burn enemies.' },
-        { id: 'sor_groundpounder', name: 'Ground Pounder', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', desc: "[Capacitance Augment] Iron Bear's melee becomes a ground slam." },
-        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: 'images/spec/Behind the Iron Curtain.webp', desc: 'Increases Shield Recharge Rate and decreases Shield Recharge Delay.' },
-        { id: 'sor_ironshield', name: 'Iron Bear: Fuel Drain Shield', maxPts: 5, icon: 'images/spec/Nitrotrinadium Engines.avif', desc: "Iron Bear's Fuel Drain is reduced while its shields are active." },
+        { id: 'sor_corrosive_sabot', name: 'Corrosive Sabot Round', maxPts: 1, icon: 'images/spec/Corrosive Sabot Round.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Railgun</span> fires special rounds that deal reduced damage but explode after a short delay, dealing <span style="color: #f1d981">Corrosive Damage</span>. Fuel Drain and Magazine Size are improved.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Converts to Corrosive Damage</span></li>
+                <li><span style="color: #f1d981">Railgun Damage</span>: <span style="color: #6a9e3a">-50%</span></li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">-50%</span></li>
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #6a9e3a">+2</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_shockhammer', name: 'Shockhammer', maxPts: 1, icon: 'images/spec/Shockhammer.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Bear Fist</span> hits deal additional <span style="color: #f1d981">Shock Damage</span> and chain electricity to nearby enemies. Firing Bear Fist creates a sustained chain lightning field.
+            ` 
+        },
+        { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: 'images/spec/Phalanx Doctrine.webp', 
+          desc: 
+            `
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy grants Moze a stack of Phalanx Doctrine. Each stack increases Moze's <span style="color: #f1d981">Maximum Shield</span> and <span style="color: #f1d981">Gun Damage</span>. Stacks are unlimited.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Max Shields</span>: <span style="color: #6a9e3a">+3.0%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #6a9e3a">+2.0%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">30 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_force', name: 'Force Feedback', maxPts: 1, icon: 'images/spec/Force Feedback.webp', 
+          desc: 
+            `
+              <td>Whenever Moze scores a <span style="color: #f1d981">Critical Hit</span>, her shield immediately begins recharging.
+            ` 
+        },
       ]},
       { required: 20, skills: [
-        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp', effect: 'KEY META SKILL — powerful shield pop trigger' },
-        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: 'images/spec/Desperate Measures.webp', desc: 'The lower Moze\'s health, the greater her Gun Damage bonus.' },
+        { id: 'sor_wildswing', name: 'Wild Swing', maxPts: 1, icon: 'images/spec/Wild Swing.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Bear Fist</span> hits deal random elemental <span style="color: #f1d981">Splash Damage</span> to targets and surrounding enemies.
+            ` 
+        },
+        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: 'images/spec/Desperate Measures.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Gun Damage</span> is increased based on how low her health is. The lower her current health, the larger the bonus.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #3a8fbf">Up to +11%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 25, skills: [
-        { id: 'sor_ironclad', name: 'Full Can of Whoop-Ass', maxPts: 1, icon: 'images/spec/Full Can of Whoop-Ass.webp', desc: 'Activating Iron Bear immediately fully replenishes Moze\'s Shield.' },
+        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp', effect: 'KEY META SKILL — powerful shield pop trigger',
+          desc: 
+            `
+              <td>Whenever Moze's shield is completely depleted, she instantly restores a portion of her shield and gains increased <span style="color: #f1d981">Gun Damage</span> for a short time. This skill can only trigger after a full recharge.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shield Restored</span>: <span style="color: #6a9e3a">40%</span> of Max Shield</li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #6a9e3a">+30%</span></li>
+                <li><span style="color: #f1d981">Tenacious Defense Duration</span>: <span style="color: #6a9e3a">30 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
     ]
   },
@@ -581,111 +1058,166 @@
       name: 'Iron Cub', 
       icon: 'images/spec/Iron Cub.avif',
       desc: `
-        <td>Moze summons <span style="color: #cf8252">Iron Cub</span> in place of <b>Iron Bear</b>. Iron Cub uses <b>Fuel</b>, but uses less of it and deals less damage.
-        <br>
-        <br>
-
+        Moze summons <span style="color: #e87f45">Iron Cub</span> in place of <b>Iron Bear</b>. Iron Cub deploys as an autonomous companion that follows Moze and attacks nearby targets using weapons equipped in its Hardpoints. 
+        <br><br>
         <p><i>Oppress not the cubs of the stranger.</i></p>
       `
     },
     tiers: [
       { required: 0, skills: [
-        { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: 'images/spec/Biofuel.webp', desc: 'Whenever Moze or Iron Bear/Cub ignites an enemy, both regenerate health.' },
-        { id: 'ic_cub_passive', name: 'Scorched Earth', maxPts: 1, icon: 'images/spec/Fired Up.avif', desc: 'While Action Skill is on cooldown, all damage adds bonus Incendiary Skill Damage.' },
-        { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: 'images/spec/Really Big Guns.avif', desc: 'Increases Iron Bear/Cub\'s Damage. Auto Bear is not affected by this skill.' },
+        { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: 'images/spec/Biofuel.webp', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> ignites an enemy, Moze and <span style="color: #e87f45">Iron Bear/Cub</span> gain temporary <span style="color: #f1d981">Health Regeneration</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Health Regeneration</span>: <span style="color: #6a9e3a">+0.7%</span> of max health / sec per level</li>
+                <li><span style="color: #f1d981">Iron Bear Armor Regen</span>: <span style="color: #6a9e3a">+0.5%</span> of max armor / sec per level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">8 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_bigsurplus', name: 'Big Surplus', maxPts: 3, icon: 'images/spec/Fired Up.avif', 
+          desc: 
+            `
+              <td>While Moze's Action Skill is cooling down, her shots deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Bonus Damage</span>: <span style="color: #6a9e3a">+5%</span> of gun damage dealt per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: 'images/spec/Really Big Guns.avif', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear/Cub</span> gains increased damage.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Iron Bear/Cub Damage</span>: <span style="color: #6a9e3a">+4.0%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 5, skills: [
-        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', desc: '[Iron Bear/Cub Weapon] Flaming melee punch.' },
-        { id: 'ic_fuelforfire', name: 'Fuel for the Fire', maxPts: 1, icon: 'images/spec/Fuel for the Fire.avif', type: 'augment', desc: '[Iron Cub Augment] Inflicting a Status Effect restores Iron Cub\'s armor.' },
-        { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: 'images/spec/Double Time.webp', desc: 'While Iron Cub is deployed, both gain increased Movement Speed.' },
-        { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: 'images/spec/Explosive Fury.avif', desc: 'Increases Status Effect Damage and Status Effect Chance.' },
-        { id: 'ic_matchedelement', name: 'Matched Elements', maxPts: 5, icon: 'images/spec/Harmonious Havoc.avif', desc: 'Increases Gun Damage with elemental weapons.' },
+        { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: 'images/spec/Double Time.webp', 
+          desc: 
+            `
+              <td>While Moze's Action Skill is active, she gains increased <span style="color: #f1d981">Movement Speed</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Movement Speed</span>: <span style="color: #6a9e3a">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: 'images/spec/Explosive Fury.avif', 
+          desc: 
+            `
+              <td>Moze and <span style="color: #e87f45">Iron Bear/Cub</span> gain increased <span style="color: #f1d981">Status Effect Damage</span> and Status Effect Chance.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #6a9e3a">+7%</span> per level</li>
+                <li><span style="color: #f1d981">Status Effect Chance</span>: <span style="color: #6a9e3a">+9%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_matchedelement', name: 'Harmonious Havoc', maxPts: 5, icon: 'images/spec/Harmonious Havoc.avif', 
+          desc: 
+            `
+              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> for each item of equipped gear matching the element of her current weapon.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage per Matching Item</span>: <span style="color: #6a9e3a">+2%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 10, skills: [
-        { id: 'ic_babynukes', name: 'Baby Nukes', maxPts: 1, icon: 'images/spec/Baby Nukes.avif', type: 'augment', desc: '[Iron Cub Augment] Deployment or destruction triggers a nuclear explosion.' },
-        { id: 'ic_hamfist', name: 'Hamfisted', maxPts: 1, icon: 'images/spec/Musical Chairs.webp', type: 'augment', desc: '[Bear Fist Augment] Bear Fist hits generate a Shock shockwave.' },
-        { id: 'ic_fire_rate', name: 'Pull the Pin', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', desc: 'Applying a Status Effect grants stacking Fire Rate bonuses.' },
-        { id: 'ic_cooldown', name: 'Cub Down', maxPts: 5, icon: 'images/spec/Explosive Punctuation.webp', desc: 'Increases Moze\'s Skill Cooldown Rate and Iron Bear\'s Maximum Fuel.' },
+        { id: 'ic_fire_rate', name: 'Fired Up', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> applies a Status Effect to an enemy, Moze gains increased <span style="color: #f1d981">Fire Rate</span> for a short time. Stacks up to 5 times.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fire Rate</span>: <span style="color: #6a9e3a">+1%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">12 seconds</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_nitro', name: 'Nitrotrinadium Engines', maxPts: 5, icon: 'images/spec/Nitrotrinadium Engines.avif', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Maximum Fuel</span> and Action Skill Cooldown Rate.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #6a9e3a">+4%</span> per level</li>
+                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #6a9e3a">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 15, skills: [
-        { id: 'ic_myleaf', name: 'My Little Friend', maxPts: 1, icon: 'images/spec/My Little Friend.webp', type: 'augment', desc: '[Iron Cub Augment] Spawns equipped with an additional Incendiary Assault Rifle.' },
-        { id: 'ic_emberfist', name: 'Ember\'s Purge', maxPts: 1, icon: 'images/spec/Wild Swing.webp', type: 'augment', desc: '[Bear Fist Augment] Bear Fist ignites enemies on hit.' },
-        { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: 'images/spec/Never Going to Give You Up.webp', desc: 'Applying a Status Effect returns fuel to Iron Bear.' },
-        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 1, icon: 'images/spec/Superior Firepower.avif', desc: 'Applying a Status Effect grants stacking Status Effect and Cryo Damage.' },
+        { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: 'images/spec/Never Going to Give You.webp', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> applies a Status Effect to an enemy, <span style="color: #e87f45">Iron Bear/Cub</span> restores fuel. Diminishing returns apply.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fuel Returned</span>: <span style="color: #6a9e3a">Up to +5%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 5, icon: 'images/spec/Superior Firepower.avif', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> inflicts a status effect on an enemy, they gain temporary increased <span style="color: #f1d981">Status Effect Damage</span> of that element. Stacks up to 5 times.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #6a9e3a">+4%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">8 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 20, skills: [
-        { id: 'ic_efficiency', name: 'Efficiency Engine', maxPts: 5, icon: 'images/spec/Efficiency Engine.avif', desc: 'Moze gains increased Gun Damage scaling over Iron Cub activity time.', effect: 'Key skill — rewards keeping Iron Cub alive for sustained damage' },
-        { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: 'images/spec/Feature Creep.avif', desc: 'Increases Iron Bear/Cub\'s Damage and Damage Resistance.' },
-        { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: 'images/spec/Limit Break.webp', desc: 'Applying a Status Effect grants stacking Skill Cooldown Rate.' },
+        { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: 'images/spec/Feature Creep.avif', 
+          desc: 
+            `
+              <td>Increases <span style="color: #e87f45">Iron Bear/Cub</span>'s damage and <span style="color: #f1d981">Damage Resistance</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Iron Bear/Cub Damage</span>: <span style="color: #6a9e3a">+18%</span></li>
+                <li><span style="color: #f1d981">Damage Resistance</span>: <span style="color: #6a9e3a">+45%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: 'images/spec/Limit Break.webp', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> inflicts a Status Effect on an enemy, Moze's <span style="color: #f1d981">Action Skill Cooldown Rate</span> is increased. Stacks up to 10 times.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #6a9e3a">+4%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">12 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
       { required: 25, skills: [
-        { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: 'images/spec/Running on Fumes.avif', desc: 'Igniting an enemy stops passive Fuel consumption for 6 seconds.', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds' },
+        { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: 'images/spec/Running on Fumes.avif', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds',
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> ignites an enemy, <span style="color: #e87f45">Iron Bear/Cub</span> stops consuming fuel for a short time.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #6a9e3a">6 seconds</span></li>
+              </ul>
+            ` 
+        },
       ]},
     ]
   },
 ];
 
 const state = {};
-TREES.forEach(tree => {
-  tree.tiers.forEach(tier => {
-    tier.skills.forEach(skill => {
-      state[skill.id] = 0;
-    });
-  });
-});
-
-function getSkillDesc(skill, pts) {
-  const level = pts || 0;
-
-  switch (skill.id) {
-    case 'dw_fitsd': 
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><b>Bonus Incendiary Damage</b>: <span style="color:#3a8fbf">+${3 * level}%</span></li>
-        </ul>
-      `;
-
-    case 'dw_deadlines':
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><b>Fuel Returned</b>: <span style="color: #3a8fbf">+${2 * level}%</span></li>
-            <li><b>Fuel Drain</b>: <span style="color: #3a8fbf">-${10 * level}%</span></li>
-        </ul>
-      `;
-
-    case 'dw_grizzled':
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><b>Iron Bear Cooldown</b>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
-        </ul>
-      `;
-
-    default:
-      return skill.desc;
-  }
-}
+TREES.forEach(t => t.tiers.forEach(tier => tier.skills.forEach(s => { state[s.id] = 0; })));
 
 function getTreePts(tree) {
-  let total = 0;
-  tree.tiers.forEach(tier => {
-    tier.skills.forEach(skill => {
-      if (skill.type !== 'augment' && skill.type !== 'weapon') total += state[skill.id];
-    });
-  });
-  return total;
+  return tree.tiers.flatMap(t => t.skills)
+    .filter(s => s.type !== 'augment' && s.type !== 'weapon')
+    .reduce((sum, s) => sum + state[s.id], 0);
 }
-
-function getTotalUsed() {
-  let total = 0;
-  Object.values(state).forEach(v => total += v);
-  return total;
-}
-
+function getTotalUsed() { return Object.values(state).reduce((a, b) => a + b, 0); }
 function getAvailable() { return 70 - getTotalUsed(); }
 
 function isTierUnlocked(tree, tierIdx) {
-  if (tierIdx === 0) return true;
-  return getTreePts(tree) >= tree.tiers[tierIdx].required;
+  return tierIdx === 0 || getTreePts(tree) >= tree.tiers[tierIdx].required;
 }
 
 function canAddPoint(tree, skill) {
@@ -693,22 +1225,17 @@ function canAddPoint(tree, skill) {
   if (state[skill.id] >= skill.maxPts) return false;
   if (getAvailable() <= 0) return false;
   const tierIdx = tree.tiers.findIndex(t => t.skills.find(s => s.id === skill.id));
-  if (!isTierUnlocked(tree, tierIdx)) return false;
-  if (skill.type === 'augment') {
-    if (state[skill.id] >= 1) return false;
-  }
-  return true;
+  return isTierUnlocked(tree, tierIdx);
 }
 
 function canRemovePoint(tree, skill) {
   if (state[skill.id] <= 0) return false;
   const tierIdx = tree.tiers.findIndex(t => t.skills.find(s => s.id === skill.id));
   const pts = getTreePts(tree);
-  let wouldBe = pts;
-  if (skill.type !== 'augment' && skill.type !== 'weapon') wouldBe = pts - 1;
+  const wouldBe = (skill.type !== 'augment' && skill.type !== 'weapon') ? pts - 1 : pts;
   for (let i = tierIdx + 1; i < tree.tiers.length; i++) {
-    const hasSpentInHigher = tree.tiers[i].skills.some(s => state[s.id] > 0);
-    if (hasSpentInHigher && wouldBe <= tree.tiers[i].required) return false;
+    const hasHigher = tree.tiers[i].skills.some(s => state[s.id] > 0);
+    if (hasHigher && wouldBe <= tree.tiers[i].required) return false;
   }
   return true;
 }
@@ -724,15 +1251,10 @@ function handleSkillClick(e, treeId, skillId) {
   }
 }
 
-function resetAll() {
-  Object.keys(state).forEach(k => state[k] = 0);
-  render();
-}
+function resetAll() { Object.keys(state).forEach(k => state[k] = 0); render(); }
 
 function showTooltip(e, skill) {
-  const overlay = document.getElementById('tooltip-overlay');
-  const box = document.getElementById('tooltip-box');
-  overlay.style.display = 'block';
+  document.getElementById('tooltip-overlay').style.display = 'block';
   document.getElementById('tt-name').textContent = skill.name;
   let meta = '';
   if (skill.type === 'augment') meta += 'Augment · ';
@@ -740,30 +1262,21 @@ function showTooltip(e, skill) {
   else if (skill.maxPts > 1) meta += `Max ${skill.maxPts} pts · `;
   meta += `${state[skill.id]}/${skill.maxPts} points`;
   document.getElementById('tt-meta').innerHTML = `<span class="pts">${meta}</span>`;
-  const pts = state[skill.id];
-  document.getElementById('tt-desc').innerHTML = getSkillDesc(skill, pts);
+  document.getElementById('tt-desc').innerHTML = skill.desc;
   document.getElementById('tt-effect').textContent = skill.effect || '';
 
+  const box = document.getElementById('tooltip-box');
   const rect = e.currentTarget.getBoundingClientRect();
-  const bw = 280, bh = 160;
-  let left = rect.right + 8;
-  let top = rect.top;
-  if (left + bw > window.innerWidth - 16) left = rect.left - bw - 8;
-  if (top + bh > window.innerHeight - 16) top = window.innerHeight - bh - 16;
-  box.style.left = left + 'px';
-  box.style.top = Math.max(8, top) + 'px';
+  const bw = box.offsetWidth || 260;
+  const bh = box.offsetHeight || 180;
+  let left = rect.right + 10;
+  let top  = rect.top;
+  if (left + bw > window.innerWidth - 12) left = rect.left - bw - 10;
+  if (top + bh > window.innerHeight - 12) top  = window.innerHeight - bh - 12;
+  box.style.left = Math.max(8, left) + 'px';
+  box.style.top  = Math.max(8, top)  + 'px';
 }
-
-function hideTooltip() {
-  document.getElementById('tooltip-overlay').style.display = 'none';
-}
-
-function stripHtml(html)
-{
-   let tmp = document.createElement("DIV");
-   tmp.innerHTML = html;
-   return tmp.textContent || tmp.innerText || "";
-}
+function hideTooltip() { document.getElementById('tooltip-overlay').style.display = 'none'; }
 
 function render() {
   const container = document.getElementById('trees');
@@ -776,15 +1289,22 @@ function render() {
 
     let html = `
       <div class="tree-header">
-        <div class="tree-name">${tree.name}</div>
+        <div class="tree-name">${tree.name}${tree.dlc ? ' <span class="dlc-badge">DLC</span>' : ''}</div>
         <div class="tree-subtitle">${tree.subtitle}</div>
+
         <div class="tree-action-skill">
-          <div class="action-skill-icon">${tree.actionSkill.icon}</div>
-          <div class="action-skill-info">
-            <div class="action-skill-name">${tree.actionSkill.name}</div>
-            <div class="action-skill-desc">${tree.actionSkill.desc}</div>
+          <div class="as-header">
+            <div class="as-header-icon">
+              <img src="${tree.actionSkill.icon}" alt="${tree.actionSkill.name}" />
+            </div>
+            <div class="as-header-text">
+              <div class="as-label">⚡ Action Skill</div>
+              <div class="as-name">${tree.actionSkill.name}</div>
+            </div>
           </div>
+          <div class="as-body">${tree.actionSkill.desc}</div>
         </div>
+
         <div class="tree-pts">Tree points: <span>${treePts}</span></div>
       </div>
       <div class="tree-body">`;
@@ -797,36 +1317,32 @@ function render() {
 
       tier.skills.forEach(skill => {
         const pts = state[skill.id];
-        const isMaxed = pts >= skill.maxPts;
+        const isMaxed  = pts >= skill.maxPts;
         const isLocked = !unlocked || skill.type === 'classmod';
         let nodeClass = 'skill-node';
-        if (skill.type === 'augment') nodeClass += ' augment';
-        if (skill.type === 'weapon') nodeClass += ' weapon-node';
-        if (isMaxed) nodeClass += ' maxed';
-        else if (pts > 0) nodeClass += ' unlocked';
-        else if (isLocked) nodeClass += ' locked';
+        if (skill.type === 'augment')    nodeClass += ' augment';
+        if (skill.type === 'weapon')     nodeClass += ' weapon-node';
+        if (isMaxed)                     nodeClass += ' maxed';
+        else if (pts > 0)                nodeClass += ' unlocked';
+        else if (isLocked)               nodeClass += ' locked';
 
         let pipsHtml = '';
         if (skill.maxPts > 1) {
           pipsHtml = '<div class="skill-pts-row">';
-          for (let i = 0; i < skill.maxPts; i++) {
+          for (let i = 0; i < skill.maxPts; i++)
             pipsHtml += `<div class="pts-pip${i < pts ? ' filled' : ''}"></div>`;
-          }
           pipsHtml += `<span class="pts-label">${pts}/${skill.maxPts}</span></div>`;
         }
 
         let badgeHtml = '';
         if (skill.type === 'augment') badgeHtml = '<span class="skill-type-badge badge-augment">Augment</span>';
-        if (skill.type === 'weapon') badgeHtml = '<span class="skill-type-badge badge-weapon">IB Weapon</span>';
+        if (skill.type === 'weapon')  badgeHtml = '<span class="skill-type-badge badge-weapon">IB Weapon</span>';
 
         html += `<div class="${nodeClass}" data-tree="${tree.id}" data-skill="${skill.id}">
-          <div class="skill-icon">
-            <img src="${skill.icon}" alt="${skill.name}" />
-          </div>
+          <div class="skill-icon"><img src="${skill.icon}" alt="${skill.name}" /></div>
           <div class="skill-info">
             ${badgeHtml}
             <div class="skill-name">${skill.name}</div>
-            <!-- TODO: Disregard HTML from the substring -->
             <div class="skill-desc">${skill.desc}</div>
             ${pipsHtml}
           </div>
@@ -840,22 +1356,16 @@ function render() {
     col.innerHTML = html;
     container.appendChild(col);
 
-    col.querySelectorAll('.skill-node:not(.weapon-node):not(.locked)').forEach(el => {
-      const treeId = el.dataset.tree;
+    /* Events */
+    col.querySelectorAll('.skill-node').forEach(el => {
+      const treeId  = el.dataset.tree;
       const skillId = el.dataset.skill;
       const t = TREES.find(x => x.id === treeId);
       const s = t.tiers.flatMap(x => x.skills).find(x => x.id === skillId);
-      el.addEventListener('click', e => handleSkillClick(e, treeId, skillId));
-      el.addEventListener('contextmenu', e => { e.preventDefault(); handleSkillClick(e, treeId, skillId); });
-      el.addEventListener('mouseenter', e => showTooltip(e, s));
-      el.addEventListener('mouseleave', hideTooltip);
-    });
-
-    col.querySelectorAll('.skill-node.weapon-node, .skill-node.locked').forEach(el => {
-      const treeId = el.dataset.tree;
-      const skillId = el.dataset.skill;
-      const t = TREES.find(x => x.id === treeId);
-      const s = t.tiers.flatMap(x => x.skills).find(x => x.id === skillId);
+      if (!el.classList.contains('locked') && !el.classList.contains('weapon-node') && !el.classList.contains('augment')) {
+        el.addEventListener('click',       e => handleSkillClick(e, treeId, skillId));
+        el.addEventListener('contextmenu', e => { e.preventDefault(); handleSkillClick(e, treeId, skillId); });
+      }
       el.addEventListener('mouseenter', e => showTooltip(e, s));
       el.addEventListener('mouseleave', hideTooltip);
     });
