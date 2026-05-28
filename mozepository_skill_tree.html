@@ -8,6 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    font-size: 170%;
+  }
 
   body {
     background: #0e0e0e;
@@ -221,13 +224,12 @@
     gap: 0.5rem;
   }
   .skill-node.augment {
-    border-left: 2px solid #3a3a28;
-    background: #1a1a0e;
+    border-left: 2px solid #8a1b17;
+    background: #372006;
   }
   .skill-node.weapon-node {
+    border-left: 2px solid #5c178a;
     background: #0e0e18;
-    border-color: #2a2a40;
-    cursor: default;
   }
 
   .skill-node.unlocked { border-color: #3a3020; background: #1a1810; }
@@ -252,15 +254,22 @@
   .tree-col-ic .skill-node.augment.maxed { background: #221408; border-left-color: #d44f20; }
 
   .skill-icon {
-    width: 22px; height: 22px;
-    border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    overflow: hidden;
     flex-shrink: 0;
     background: #202018;
-    color: #888;
-    transition: all 0.12s;
-    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .skill-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .skill-node.maxed .skill-icon { background: #2a2010; color: #f0a020; }
   .skill-node.unlocked .skill-icon { background: #1a1810; color: #c09040; }
@@ -291,7 +300,7 @@
     margin-bottom: 2px;
     font-weight: 600;
   }
-  .badge-augment { background: #1e1e10; color: #888; border: 1px solid #333; }
+  .badge-augment { background: #3a2916; color: #b5580b; border: 1px solid #b36812; }
   .badge-weapon { background: #101020; color: #7080c0; border: 1px solid #2a2a50; }
 
   .skill-desc {
@@ -336,7 +345,7 @@
     pointer-events: none;
   }
   .tooltip-box {
-    position: absolute;
+    position: fixed;
     background: #1a1810;
     border: 1px solid #c97b12;
     border-radius: 6px;
@@ -395,7 +404,7 @@
 
 <div class="info-bar">
   <div class="info-item">Left-click to add · Right-click to remove</div>
-  <div class="info-item">Each tier requires <strong>5 pts</strong> in the tree to unlock</div>
+  <div class="info-item">Each tier requires <b>5 pts</b> in the tree to unlock</div>
   <div class="info-hint">Base level 72 = 70 skill points available</div>
 </div>
 
@@ -408,142 +417,106 @@
   </div>
 </div>
 
-<script>
-const TREES = [
+<script>const TREES = [
   {
     id: 'bm',
     name: 'Bottomless Mags',
     subtitle: 'Ammo sustain & fire damage',
     color: '#5bb8e8', 
-    icon: '🔫',
-    actionSkill: { name: 'Minigun', desc: 'Sustained rapid fire; overheats with prolonged use', icon: '🔥' },
+    icon: 'images/spec/Minigun.webp',
+    actionSkill: { 
+      name: 'Minigun', 
+      icon: 'images/spec/Minigun.webp',
+      desc: `
+        The <span style="color:#e87f45">Minigun</span> is capable of sustained rapid fire. Firing for long periods causes the <b>Minigun</b> to overheat, rendering it inoperable for a few seconds.
+        <br><br>
+        <p><i>Put a little lead in the air and see what falls over.</i></p>
+      `,
+    },
     tiers: [
       { required: 0, skills: [
-        { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: '💨', desc: 'Occasionally deals bonus Fire Damage and consumes no ammo on shots for Moze and Iron Bear.' },
-        { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: '🗼', desc: 'Adds a manned turret to the back of Iron Bear for an ally or Moze to operate.' },
-        { id: 'bm_matched', name: 'Matched Set', maxPts: 5, icon: '🔧', desc: 'Gains stacking Magazine Size bonus and reduced Heat per Shot for each equipped item from the same manufacturer.' },
+        { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: 'images/spec/Cloud of Lead.webp', desc: 'Occasionally deals bonus Fire Damage and consumes no ammo on shots for Moze and Iron Bear.' },
+        { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: 'images/spec/Dakka Bear.webp', desc: 'Adds a manned turret to the back of Iron Bear for an ally or Moze to operate.' },
+        { id: 'bm_matched', name: 'Matched Set', maxPts: 5, icon: 'images/spec/Matched Set.webp', desc: 'Gains stacking Magazine Size bonus and reduced Heat per Shot for each equipped item from the same manufacturer.' },
       ]},
       { required: 5, skills: [
-        { id: 'bm_salamander', name: 'Salamander', maxPts: 1, icon: '🦎', type: 'weapon', desc: '[Iron Bear Weapon] Flamethrower that deals Fire Damage at close range. Uses Fuel.' },
-        { id: 'bm_letoff', name: 'Let Off Some Steam', maxPts: 1, icon: '♨️', type: 'augment', desc: '[Minigun Augment] Minigun deals more damage as heat increases, and can fire longer before overheating.' },
-        { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: '🔥', desc: 'Increases Fire Damage for Moze and Iron Bear.' },
-        { id: 'bm_redist', name: 'Redistribution', maxPts: 1, icon: '↩', desc: 'After scoring a Critical Hit, Moze regenerates ammo for a few seconds.' },
-        { id: 'bm_scrappy', name: 'Scrappy', maxPts: 5, icon: '💨', desc: 'Increases Handling. While moving, Weapon Swap and Mode Switch Speed are increased.' }
+        { id: 'bm_salamander', name: 'Salamander', maxPts: 1, icon: 'images/spec/Salamander.webp', type: 'weapon', desc: '[Iron Bear Weapon] Flamethrower that deals Fire Damage at close range. Uses Fuel.' },
+        { id: 'bm_letoff', name: 'Let Off Some Steam', maxPts: 1, icon: 'images/spec/Let Off Some Steam.webp', type: 'augment', desc: '[Minigun Augment] Minigun deals more damage as heat increases, and can fire longer before overheating.' },
+        { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: 'images/spec/Stoke the Embers.webp', desc: 'Increases Fire Damage for Moze and Iron Bear.' },
+        { id: 'bm_redist', name: 'Redistribution', maxPts: 1, icon: 'images/spec/Phalanx Doctrine.webp', desc: 'After scoring a Critical Hit, Moze regenerates ammo for a few seconds.' },
+        { id: 'bm_scrappy', name: 'Scrappy', maxPts: 5, icon: 'images/spec/Scrappy.webp', desc: 'Increases Handling. While moving, Weapon Swap and Mode Switch Speed are increased.' }
       ]},
       { required: 10, skills: [
-        { id: 'bm_genwinter', name: 'General Winter', maxPts: 1, icon: '❄️', type: 'augment', desc: '[Minigun Augment] Fires Cryo rounds — less heat/fuel drain but reduced damage.' },
-        { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: '⛽', type: 'augment', desc: '[Salamander Augment] Reduced Fuel Drain. Iron Bear movement speed increases after hitting an enemy.' },
-        { id: 'bm_rushin', name: "Rushin' Offensive", maxPts: 1, icon: '🏃', desc: 'Moze can sprint and shoot simultaneously.' },
-        { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: '🎯', desc: 'Increases Fire Rate and Critical Hit Damage for Moze. Iron Bear gains increased Hard Point Damage.' },
+        { id: 'bm_genwinter', name: 'General Winter', maxPts: 1, icon: 'images/spec/General Winter.webp', type: 'augment', desc: '[Minigun Augment] Fires Cryo rounds — less heat/fuel drain but reduced damage.' },
+        { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: 'images/spec/Fuel Economy.webp', type: 'augment', desc: '[Salamander Augment] Reduced Fuel Drain. Iron Bear movement speed increases after hitting an enemy.' },
+        { id: 'bm_rushin', name: "Rushin' Offensive", maxPts: 1, icon: "images/spec/Rushin' Offensive.webp", desc: 'Moze can sprint and shoot simultaneously.' },
+        { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: "images/spec/Scorching RPM's.webp", desc: 'Increases Fire Rate and Critical Hit Damage for Moze. Iron Bear gains increased Hard Point Damage.' },
       ]},
       { required: 15, skills: [
-        { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: '💥', type: 'augment', desc: '[Minigun Augment] Fires Explosive Rounds with bonus Splash Damage but reduced Fire Rate.' },
-        { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: '☣️', type: 'augment', desc: '[Salamander Augment] Converts damage to Corrosive and increases Melt Damage.' },
-        { id: 'bm_ironbank', name: 'The Iron Bank', maxPts: 5, icon: '🏦', desc: "Increases Moze's Magazine Size." },
-        { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: '⭐', desc: 'Equipping the same weapon in both Iron Bear hardpoints increases their damage.' },
+        { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: 'images/spec/Exploding. Bullets..webp', type: 'augment', desc: '[Minigun Augment] Fires Explosive Rounds with bonus Splash Damage but reduced Fire Rate.' },
+        { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: 'images/spec/Chemical Warfare.webp', type: 'augment', desc: '[Salamander Augment] Converts damage to Corrosive and increases Melt Damage.' },
+        { id: 'bm_ironbank', name: 'The Iron Bank', maxPts: 5, icon: 'images/spec/The Iron Bank.webp', desc: "Increases Moze's Magazine Size." },
+        { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: 'images/spec/Specialist Bear.webp', desc: 'Equipping the same weapon in both Iron Bear hardpoints increases their damage.' },
       ]},
       { required: 20, skills: [
-        { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: '🌋', type: 'augment', desc: '[Salamander Augment] Burst-fires 3 projectiles; the first leaves a large Fire area on the ground.' },
-        { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: '🛣️', desc: 'Moze gains infinite ammo for a few seconds after exiting Iron Bear.' },
-        { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: '📉', desc: 'Gun Damage increases as the magazine empties — greater bonus at lower ammo. COV weapons gain Gun Daamge as heat increases.' },
+        { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: 'images/spec/Molten Roar.webp', type: 'augment', desc: '[Salamander Augment] Burst-fires 3 projectiles; the first leaves a large Fire area on the ground.' },
+        { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: 'images/spec/Some for the Road.webp', desc: 'Moze gains infinite ammo for a few seconds after exiting Iron Bear.' },
+        { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: 'images/spec/“Click, Click...”.webp', desc: 'Gun Damage increases as the magazine empties — greater bonus at lower ammo. COV weapons gain Gun Damage as heat increases.' },
       ]},
       { required: 25, skills: [
-        { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: '⚒️', desc: 'Moze constantly regenerates ammo for her currently equipped weapon.' },
+        { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: 'images/spec/Forge.webp', desc: 'Moze constantly regenerates ammo for her currently equipped weapon.' },
       ]},
     ]
   },
-   {
+  {
     id: 'dw',
     name: 'Demolition Woman',
     subtitle: 'Splash damage & explosions',
     color: '#e87050',
-    icon: '💣',
-    actionSkill: { name: 'V-35 Grenade Launcher', icon: '💣',
+    icon: 'images/spec/V-35 Grenade Launcher.webp',
+    actionSkill: { 
+      name: 'V-35 Grenade Launcher', 
+      icon: 'images/spec/V-35 Grenade Launcher.webp',
       desc: `
-              The <span style="color: #cf8252">V-35</span> is a semi-automatic Grenade Launcher. 
-              Its grenades are not affected by Moze\'s equipped grenade mod.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><Strong>Magazine size</Strong>: <span style="color: #3a8fbf">15</span></li>
-              </ul>
-              <br>
-
-              <i>For when the V-34 just isn\'t enough.</i> 
-            ` 
-      },
+        The <span style="color: #cf8252">V-35</span> is a semi-automatic Grenade Launcher. 
+        Its grenades are not affected by Moze's equipped grenade mod.
+        <ul style="margin: 0; padding-left: 1em;">
+          <li><b>Magazine size</b>: <span style="color: #3a8fbf">15</span></li>
+        </ul>
+        <br>
+        <i>For when the V-34 just isn't enough.</i> 
+      ` 
+    },
     tiers: [
       { required: 0, skills: [
-        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: '🔥', 
-          desc: 
-             `
-              Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <strong>Incendiary Damage</strong>.
-
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><Strong>Bonus Incendiary Damage</Strong>: <span style="color: #3a8fbf">+3%</span> per level</li>
-              </ul>
-            `
-        },
-        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: '⏱', 
-          desc: 
-            `
-              Firing <span style="color: #cf8252">Iron Bear</span> weapons drains less Fuel. 
-              Killing an enemy while <span style="color: #cf8252">Iron Bear</span> is active increases Fuel. This skill has diminishing returns.
-
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><Strong>Fuel Returned</Strong>: <span style="color: #3a8fbf">+2%</span> per level</li>
-                <li><Strong>Fuel Drain</Strong>: <span style="color: #3a8fbf">-10%</span> per level</li>
-              </ul>
-            `
-        },
-        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: '🐻', 
-          desc: 
-          `
-            <span style="color: #ba0f3c">
-              <strong>Kill Skill.</strong>
-            </span>
-            Killing an enemy reduces Moze's remaining <Strong>Action Skill Cooldown Time</Strong>. This skill has diminishing returns. 
-
-            <ul style="margin: 0; padding-left: 1em;">
-              <li><Strong>Iron Bear Cooldown Time</Strong>: <span style="color: #3a8fbf">-1</span> second per level</li>
-            </ul>
-          `
-        },
+        { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: 'images/spec/Fire in the Skag Den.webp', desc: 'Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <b>Incendiary Damage</b>.<ul style="margin: 0; padding-left: 1em;"><li><b>Bonus Incendiary Damage</b>: <span style="color: #3a8fbf">+3%</span> per level</li></ul>' },
+        { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', desc: 'Firing <span style="color: #cf8252">Iron Bear</span> weapons drains less Fuel. Killing an enemy while active increases Fuel.<ul style="margin: 0; padding-left: 1em;"><li><b>Fuel Returned</b>: <span style="color: #3a8fbf">+2%</span> per level</li><li><b>Fuel Drain</b>: <span style="color: #3a8fbf">-10%</span> per level</li></ul>' },
+        { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: 'images/spec/Grizzled.avif', desc: '<span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy reduces Moze\'s remaining Action Skill Cooldown Time.<ul style="margin: 0; padding-left: 1em;"><li><b>Iron Bear Cooldown Time</b>: <span style="color: #3a8fbf">-1</span> second per level</li></ul>' },
       ]},
       { required: 5, skills: [
-        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: '🚀', type: 'weapon', 
-        desc: 
-          `
-            The <span style = "color: #cf8252"> Vanquisher Rocket Pod </span> is a rocket launcher capable of rapid-firing volleys of unguided explosive rockets. 
-            <ul style="margin: 0; padding-left: 1em;">
-              <li><Strong>Magazine size</Strong>: <span style="color: #3a8fbf">36</span></li>
-            </ul>
-            <br>
-
-            <i>If you want guidance, get a sherpa. If you want explosions, get a Vladof.</i> 
-          `
-        },
-        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: '♻️', 
-          desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
-        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: '💥', desc: 'Increases Splash Damage dealt by Moze and Iron Bear. Also has a chance to double Splash Radius.' },
-        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: '🐻', desc: 'Increases Skill Damage, Maximum Fuel, and Health For Iron Bear. The Maximum Fuel effect is doubled for Iron Cub.' },
+        { id: 'dw_rocketpods', name: 'Rocket Pods', maxPts: 1, icon: 'images/spec/Vanquisher Rocket Pod.webp', type: 'weapon', desc: 'The Vanquisher Rocket Pod is capable of rapid volleys of unguided rockets.' },
+        { id: 'dw_means', name: 'Means of Destruction', maxPts: 5, icon: 'images/spec/Means of Destruction.webp', desc: 'Splash Damage has a chance to return ammo to the magazine or return a grenade.' },
+        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: 'images/spec/Torgue Cross-Promotion.webp', desc: 'Increases Splash Damage dealt by Moze and Iron Bear. Also has a chance to double Splash Radius.' },
+        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', desc: 'Increases Skill Damage, Maximum Fuel, and Health For Iron Bear.' },
       ]},
       { required: 10, skills: [
-        { id: 'dw_stickybombs', name: 'Stiky Bombs', maxPts: 1, icon: '📌', type: 'augment', desc: '[V-35 Augment] Grenades stick to surfaces and enemies before detonating, reducing radius but increasing damage.' },
-        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: '☢️', type: 'augment', desc: '[Rocket Pods Augment] Fires a single nuclear rocket dealing massive Radiation Splash Damage.' },
-        { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 5, icon: '📿', desc: 'Grenades can now Critically Hit, which doubles their damage. This is unaffected by Crit Damage Bonuses.' },
-        { id: 'dw_autobear', name: 'Auto Bear', maxPts: 5, icon: '🤖', desc: 'After exiting Iron Bear or Iron Cub runs out of fuel, Iron Bear / Cub will stand in place for 15 seconds and attack enemies before charging at an enemy and self destructing. \n Note that this is the only way to use Dakka Bear in solo mode!' },
+        { id: 'dw_stickybombs', name: 'Stiky Bombs', maxPts: 1, icon: 'images/spec/Shaped Charge.webp', type: 'augment', desc: '[V-35 Augment] Grenades stick to surfaces and enemies before detonating.' },
+        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', desc: '[Rocket Pods Augment] Fires a single nuclear rocket dealing massive Radiation Splash Damage.' },
+        { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', desc: 'Grenades can now Critically Hit, which doubles their damage.' },
+        { id: 'dw_autobear', name: 'Auto Bear', maxPts: 5, icon: 'images/spec/Auto Bear.webp', desc: 'After exiting, Iron Bear / Cub will stand in place for 15 seconds and attack.' },
       ]},
-        { required: 15, skills: [
-        { id: 'dw_longdead', name: 'Long-Range Rider', maxPts: 1, icon: '🎯', type: 'augment', desc: '[V-35 Augment] V-35 fires a single, long-range high-damage grenade.' },
-        { id: 'dw_heatseekhome', name: 'Targeting Scope', maxPts: 1, icon: '🔭', type: 'augment', desc: '[Rocket Pods Augment] Rockets become heat-seeking and travel further.' },
-        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: '🩸', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
-        { id: 'dw_explosive', name: 'Why Can\'t I Carry All These Grenades?', maxPts: 5, icon: '🧨', desc: 'Increases Grenade carrying capacity and grants additional grenades on pickup.' },
+      { required: 15, skills: [
+        { id: 'dw_longdead', name: 'Long-Range Rider', maxPts: 1, icon: 'images/spec/Target Softening.webp', type: 'augment', desc: '[V-35 Augment] V-35 fires a single, long-range high-damage grenade.' },
+        { id: 'dw_heatseekhome', name: 'Targeting Scope', maxPts: 1, icon: 'images/spec/Active Tracking.webp', type: 'augment', desc: '[Rocket Pods Augment] Rockets become heat-seeking and travel further.' },
+        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
+        { id: 'dw_explosive', name: 'Why Can\'t I Carry All These Grenades?', maxPts: 5, icon: 'images/spec/Why Can\'t I Carry All These Grenades.webp', desc: 'Increases Grenade carrying capacity and grants additional grenades on pickup.' },
       ]},
       { required: 20, skills: [
-        { id: 'dw_torguerev', name: 'Short Fuse', maxPts: 5, icon: '⚡', desc: 'Whenever Moze deals Gun Damage, there is a chance to trigger a secondary explosion near the enemy.', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper' },
-        { id: 'dw_torgue2', name: 'Stainless Steel Bear', maxPts: 5, icon: '🔩', desc: "Increases Iron Bear's Fuel capacity and Armor." },
+        { id: 'dw_torguerev', name: 'Short Fuse', maxPts: 5, icon: 'images/spec/Short Fuse.webp', desc: 'Whenever Moze deals Gun Damage, there is a chance to trigger a secondary explosion.', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper' },
+        { id: 'dw_torgue2', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', desc: "Increases Iron Bear's Fuel capacity and Armor." },
       ]},
       { required: 25, skills: [
-        { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: '🩸', desc: 'Whenever Moze throws a grenade, she regenerates a portion of her health for each enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
+        { id: 'dw_vampyr_cap', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', desc: 'Whenever Moze throws a grenade, she regenerates health per enemy hit.', effect: 'Core survival skill — sustain on splash builds' },
       ]},
     ]
   },
@@ -552,38 +525,49 @@ const TREES = [
     name: 'Shield of Retribution',
     subtitle: 'Defense & shield bonuses',
     color: '#e87050',
-    icon: '🛡️',
-    actionSkill: { name: 'Railgun', desc: 'High-velocity Shock projectiles; needs to recharge between shots', icon: '⚡' },
+    icon: 'images/spec/Railgun.webp',
+    actionSkill: { 
+      name: 'Railgun', 
+      icon: 'images/spec/Railgun.webp', 
+      desc: `
+        The <span style="color: #cf8252">Railgun</span> fires electrified high-velocity projectiles that deal <b>Shock Damage</b>.
+        <ul style="margin: 0; padding-left: 1em;">
+          <li><b>Magazine size</b>: <span style="color: #e87050">1</span></li>
+        </ul>
+        <br>
+        <i>It's like a bullet, only bigger. And faster. And wrapped in lightning.</i> 
+      `
+    },
     tiers: [
       { required: 0, skills: [
-        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: '🛡', desc: 'While shields are active, Moze gains Damage Reduction and increased Gun Damage.' },
-        { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: '🔵', desc: "Iron Bear gains a Bubble Shield that reduces incoming damage. Reactivates after a short cooldown if destroyed." },
-        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: '❤️', desc: 'On reload, Moze loses some health but grants bonus Fire Damage to her and nearby allies.' },
+        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: 'images/spec/Armored Infantry.webp', desc: 'While shields are active, Moze gains Damage Reduction and increased Gun Damage.' },
+        { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: 'images/spec/Security Bear.webp', desc: "Iron Bear gains a Bubble Shield that reduces incoming damage." },
+        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: 'images/spec/Selfless Vengeance.webp', desc: 'On reload, Moze loses some health but grants bonus Fire Damage to her and nearby allies.' },
       ]},
       { required: 5, skills: [
-        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: '👊', type: 'weapon', desc: '[Iron Bear Weapon] Iron Bear gains a powerful melee punch.' },
-        { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: '🔥', type: 'augment', desc: '[Railgun Augment] Converts Railgun to Fire Damage at the cost of increased Fuel Drain.' },
-        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: '🔋', desc: 'Increases Maximum Shield and grants Shock Damage Resistance.' },
-        { id: 'sor_force', name: 'Forced Feedback', maxPts: 1, icon: '💪', desc: 'Killing an enemy while the shield is recharging immediately restores a portion of the shield.' },
+        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', desc: '[Iron Bear Weapon] Iron Bear gains a powerful melee punch.' },
+        { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: 'images/spec/Hell on Rails.webp', type: 'augment', desc: '[Railgun Augment] Converts Railgun to Fire Damage at the cost of increased Fuel Drain.' },
+        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: 'images/spec/Vladof Ingenuity.webp', desc: 'Increases Maximum Shield and grants Shock Damage Resistance.' },
+        { id: 'sor_force', name: 'Forced Feedback', maxPts: 1, icon: 'images/spec/Force Feedback.webp', desc: 'Killing an enemy while the shield is recharging immediately restores a portion.' },
       ]},
       { required: 10, skills: [
-        { id: 'sor_shocktorail', name: 'Capacitor', maxPts: 1, icon: '⚡', type: 'augment', desc: '[Railgun Augment] Railgun overcharges, firing additional Shock orbs on hit.' },
-        { id: 'sor_superconductor', name: 'Superconductor', maxPts: 1, icon: '⚡', type: 'augment', desc: '[Capacitance Augment] Melee hit triggers a Shock AoE explosion that chains to nearby enemies.' },
-        { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: '📊', desc: '<span style="color: #ba0f3c"><Strong> Kill Skill. </Strong></span> Each kill grants a stack increasing Maximum Shield and Gun Damage. Stacks decay over time.' },
-        { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: '❤️', desc: 'Converts a portion of Max Health into Max Shield. Moze\'s shield becomes significantly larger.' },
+        { id: 'sor_shocktorail', name: 'Capacitor', maxPts: 1, icon: 'images/spec/Capacitive Armature.webp', type: 'augment', desc: '[Railgun Augment] Railgun overcharges, firing additional Shock orbs on hit.' },
+        { id: 'sor_superconductor', name: 'Superconductor', maxPts: 1, icon: 'images/spec/Shockhammer.webp', type: 'augment', desc: '[Capacitance Augment] Melee hit triggers a Shock AoE explosion.' },
+        { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: 'images/spec/Phalanx Doctrine.webp', desc: '<span style="color: #ba0f3c"><b>Kill Skill.</b></span> Each kill grants a stack increasing Maximum Shield and Gun Damage.' },
+        { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: 'images/spec/Thin Red Line.webp', desc: 'Converts a portion of Max Health into Max Shield.' },
       ]},
       { required: 15, skills: [
-        { id: 'sor_electric', name: 'Electrical Burn', maxPts: 1, icon: '🔥', type: 'augment', desc: '[Railgun Augment] Shots have a chance to burn enemies, dealing bonus Fire Damage.' },
-        { id: 'sor_groundpounder', name: 'Ground Pounder', maxPts: 1, icon: '👊', type: 'augment', desc: "[Capacitance Augment] Iron Bear's melee becomes a ground slam hitting a wide area." },
-        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: '⚡', desc: 'Increases Shield Recharge Rate and decreases Shield Recharge Delay.' },
-        { id: 'sor_ironshield', name: 'Iron Bear: Fuel Drain Shield', maxPts: 5, icon: '⛽', desc: "Iron Bear's Fuel Drain is reduced while its shields are active." },
+        { id: 'sor_electric', name: 'Electrical Burn', maxPts: 1, icon: 'images/spec/Experimental Munitions.webp', type: 'augment', desc: '[Railgun Augment] Shots have a chance to burn enemies.' },
+        { id: 'sor_groundpounder', name: 'Ground Pounder', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', desc: "[Capacitance Augment] Iron Bear's melee becomes a ground slam." },
+        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: 'images/spec/Behind the Iron Curtain.webp', desc: 'Increases Shield Recharge Rate and decreases Shield Recharge Delay.' },
+        { id: 'sor_ironshield', name: 'Iron Bear: Fuel Drain Shield', maxPts: 5, icon: 'images/spec/Nitrotrinadium Engines.avif', desc: "Iron Bear's Fuel Drain is reduced while its shields are active." },
       ]},
       { required: 20, skills: [
-        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: '🔰', desc: 'When the shield is fully depleted, it triggers: restores 40% of Max Shield and grants +30% Gun Damage for 30 seconds.', effect: 'KEY META SKILL — powerful shield pop trigger' },
-        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: '📈', desc: 'The lower Moze\'s health, the greater her Gun Damage bonus.' },
+        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp', effect: 'KEY META SKILL — powerful shield pop trigger' },
+        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: 'images/spec/Desperate Measures.webp', desc: 'The lower Moze\'s health, the greater her Gun Damage bonus.' },
       ]},
       { required: 25, skills: [
-        { id: 'sor_ironclad', name: 'Full Can of Whoop-Ass', maxPts: 1, icon: '💪', desc: 'Activating Iron Bear immediately fully replenishes Moze\'s Shield.' },
+        { id: 'sor_ironclad', name: 'Full Can of Whoop-Ass', maxPts: 1, icon: 'images/spec/Full Can of Whoop-Ass.webp', desc: 'Activating Iron Bear immediately fully replenishes Moze\'s Shield.' },
       ]},
     ]
   },
@@ -592,40 +576,50 @@ const TREES = [
     name: 'Bear Mother',
     subtitle: 'Iron Cub companion & incendiary',
     dlc: true,
-    icon: '🐾',
-    actionSkill: { name: 'Iron Cub', desc: 'Mini-mech companion that follows Moze and dual-wields the weapon in your other hardpoint slot. Less damage and fuel than Iron Bear, but fully autonomous.', icon: '🐾' },
+    icon: 'images/spec/Iron Cub.avif',
+    actionSkill: { 
+      name: 'Iron Cub', 
+      icon: 'images/spec/Iron Cub.avif',
+      desc: `
+        <td>Moze summons <span style="color: #cf8252">Iron Cub</span> in place of <b>Iron Bear</b>. Iron Cub uses <b>Fuel</b>, but uses less of it and deals less damage.
+        <br>
+        <br>
+
+        <p><i>Oppress not the cubs of the stranger.</i></p>
+      `
+    },
     tiers: [
       { required: 0, skills: [
-        { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: '🔥', desc: 'Whenever Moze or Iron Bear/Cub ignites an enemy, both Moze and Iron Cub regenerate health for a short time.' },
-        { id: 'ic_cub_passive', name: 'Scorched Earth', maxPts: 1, icon: '☄️', desc: 'While Moze\'s Action Skill is on cooldown, all damage she deals adds bonus Incendiary Skill Damage.' },
-        { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: '🦾', desc: 'Increases Iron Bear/Cub\'s Damage. Auto Bear is not affected by this skill.' },
+        { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: 'images/spec/Biofuel.webp', desc: 'Whenever Moze or Iron Bear/Cub ignites an enemy, both regenerate health.' },
+        { id: 'ic_cub_passive', name: 'Scorched Earth', maxPts: 1, icon: 'images/spec/Fired Up.avif', desc: 'While Action Skill is on cooldown, all damage adds bonus Incendiary Skill Damage.' },
+        { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: 'images/spec/Really Big Guns.avif', desc: 'Increases Iron Bear/Cub\'s Damage. Auto Bear is not affected by this skill.' },
       ]},
       { required: 5, skills: [
-        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: '👊', type: 'weapon', desc: '[Iron Bear/Cub Weapon] Iron Bear/Cub gains a powerful flaming melee punch. Deals Fire Damage and staggers enemies.' },
-        { id: 'ic_fuelforfire', name: 'Fuel for the Fire', maxPts: 1, icon: '🛡️', type: 'augment', desc: '[Iron Cub Augment] Whenever Moze or Iron Cub inflicts a Status Effect on an enemy, Iron Cub\'s armor is restored.' },
-        { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: '💨', desc: 'While Iron Cub is deployed, both Moze and Iron Bear/Cub gain increased Movement Speed.' },
-        { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: '💥', desc: 'Increases Status Effect Damage and Status Effect Chance for Moze and Iron Bear. Note: currently bugged and bonuses may not apply correctly.' },
-        { id: 'ic_matchedelement', name: 'Matched Elements', maxPts: 5, icon: '🔮', desc: 'Increases Gun Damage with elemental weapons. Each equipped item that shares the primary element of your held gun increases this bonus.' },
+        { id: 'ic_incendiary_ar', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', desc: '[Iron Bear/Cub Weapon] Flaming melee punch.' },
+        { id: 'ic_fuelforfire', name: 'Fuel for the Fire', maxPts: 1, icon: 'images/spec/Fuel for the Fire.avif', type: 'augment', desc: '[Iron Cub Augment] Inflicting a Status Effect restores Iron Cub\'s armor.' },
+        { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: 'images/spec/Double Time.webp', desc: 'While Iron Cub is deployed, both gain increased Movement Speed.' },
+        { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: 'images/spec/Explosive Fury.avif', desc: 'Increases Status Effect Damage and Status Effect Chance.' },
+        { id: 'ic_matchedelement', name: 'Matched Elements', maxPts: 5, icon: 'images/spec/Harmonious Havoc.avif', desc: 'Increases Gun Damage with elemental weapons.' },
       ]},
       { required: 10, skills: [
-        { id: 'ic_babynukes', name: 'Baby Nukes', maxPts: 1, icon: '☢️', type: 'augment', desc: '[Iron Cub Augment] Whenever Iron Cub is deployed or destroyed, it triggers a nuclear explosion dealing massive Radiation Damage to nearby enemies.' },
-        { id: 'ic_hamfist', name: 'Hamfisted', maxPts: 1, icon: '🥊', type: 'augment', desc: '[Bear Fist Augment] Bear Fist hits generate a Shock shockwave that damages nearby enemies.' },
-        { id: 'ic_fire_rate', name: 'Pull the Pin', maxPts: 5, icon: '📿', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Fire Rate and reduced Burst-Fire Delay for a short time (max 5 stacks, 12s duration).' },
-        { id: 'ic_cooldown', name: 'Cub Down', maxPts: 5, icon: '⏬', desc: 'Increases Moze\'s Skill Cooldown Rate and Iron Bear\'s Maximum Fuel.' },
+        { id: 'ic_babynukes', name: 'Baby Nukes', maxPts: 1, icon: 'images/spec/Baby Nukes.avif', type: 'augment', desc: '[Iron Cub Augment] Deployment or destruction triggers a nuclear explosion.' },
+        { id: 'ic_hamfist', name: 'Hamfisted', maxPts: 1, icon: 'images/spec/Musical Chairs.webp', type: 'augment', desc: '[Bear Fist Augment] Bear Fist hits generate a Shock shockwave.' },
+        { id: 'ic_fire_rate', name: 'Pull the Pin', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', desc: 'Applying a Status Effect grants stacking Fire Rate bonuses.' },
+        { id: 'ic_cooldown', name: 'Cub Down', maxPts: 5, icon: 'images/spec/Explosive Punctuation.webp', desc: 'Increases Moze\'s Skill Cooldown Rate and Iron Bear\'s Maximum Fuel.' },
       ]},
       { required: 15, skills: [
-        { id: 'ic_myleaf', name: 'My Little Friend', maxPts: 1, icon: '🔫', type: 'augment', desc: '[Iron Cub Augment] Iron Cub spawns equipped with an additional Incendiary Vladof Assault Rifle alongside its other weapons.' },
-        { id: 'ic_emberfist', name: 'Ember\'s Purge', maxPts: 1, icon: '🌋', type: 'augment', desc: '[Bear Fist Augment] Bear Fist ignites enemies on hit, dealing Fire Damage over time.' },
-        { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: '⛽', desc: 'Whenever Moze or Iron Bear applies a Status Effect to an enemy, Iron Bear gains Fuel. This effect has diminishing returns.' },
-        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 1, icon: '🌟', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Status Effect Damage and Cryo Damage bonuses for a short time (max 5 stacks, 8s duration).' },
+        { id: 'ic_myleaf', name: 'My Little Friend', maxPts: 1, icon: 'images/spec/My Little Friend.webp', type: 'augment', desc: '[Iron Cub Augment] Spawns equipped with an additional Incendiary Assault Rifle.' },
+        { id: 'ic_emberfist', name: 'Ember\'s Purge', maxPts: 1, icon: 'images/spec/Wild Swing.webp', type: 'augment', desc: '[Bear Fist Augment] Bear Fist ignites enemies on hit.' },
+        { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: 'images/spec/Never Going to Give You Up.webp', desc: 'Applying a Status Effect returns fuel to Iron Bear.' },
+        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 1, icon: 'images/spec/Superior Firepower.avif', desc: 'Applying a Status Effect grants stacking Status Effect and Cryo Damage.' },
       ]},
       { required: 20, skills: [
-        { id: 'ic_efficiency', name: 'Efficiency Engine', maxPts: 5, icon: '📈', desc: 'Moze gains increased Gun Damage. The bonus scales up the longer Iron Cub has been continuously active.', effect: 'Key skill — rewards keeping Iron Cub alive for sustained damage' },
-        { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: '🛡', desc: 'Increases Iron Bear/Cub\'s Damage and Damage Resistance. Auto Bear is not affected by this skill.' },
-        { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: '⏩', desc: 'When Moze or Iron Bear applies a Status Effect to an enemy, Moze gains stacking Skill Cooldown Rate for a short time (max 10 stacks, 12s duration).' },
+        { id: 'ic_efficiency', name: 'Efficiency Engine', maxPts: 5, icon: 'images/spec/Efficiency Engine.avif', desc: 'Moze gains increased Gun Damage scaling over Iron Cub activity time.', effect: 'Key skill — rewards keeping Iron Cub alive for sustained damage' },
+        { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: 'images/spec/Feature Creep.avif', desc: 'Increases Iron Bear/Cub\'s Damage and Damage Resistance.' },
+        { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: 'images/spec/Limit Break.webp', desc: 'Applying a Status Effect grants stacking Skill Cooldown Rate.' },
       ]},
       { required: 25, skills: [
-        { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: '⚗️', desc: 'Whenever Moze or Iron Bear ignites an enemy, Iron Bear stops passively consuming Fuel for 6 seconds. Can effectively make Iron Cub run indefinitely against groups of flammable enemies.', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds' },
+        { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: 'images/spec/Running on Fumes.avif', desc: 'Igniting an enemy stops passive Fuel consumption for 6 seconds.', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds' },
       ]},
     ]
   },
@@ -647,22 +641,22 @@ function getSkillDesc(skill, pts) {
     case 'dw_fitsd': 
       return `
         <ul style="margin: 0; padding-left: 1em;">
-          <li><strong>Bonus Incendiary Damage</strong>: <span style="color:#3a8fbf">+${3 * level}%</span></li>
+          <li><b>Bonus Incendiary Damage</b>: <span style="color:#3a8fbf">+${3 * level}%</span></li>
         </ul>
       `;
 
     case 'dw_deadlines':
       return `
         <ul style="margin: 0; padding-left: 1em;">
-          <li><Strong>Fuel Returned</Strong>: <span style="color: #3a8fbf">+${2 * level}%</span></li>
-            <li><Strong>Fuel Drain</Strong>: <span style="color: #3a8fbf">-${10 * level}%</span></li>
+          <li><b>Fuel Returned</b>: <span style="color: #3a8fbf">+${2 * level}%</span></li>
+            <li><b>Fuel Drain</b>: <span style="color: #3a8fbf">-${10 * level}%</span></li>
         </ul>
       `;
 
     case 'dw_grizzled':
       return `
         <ul style="margin: 0; padding-left: 1em;">
-          <li><strong>Iron Bear Cooldown</strong>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
+          <li><b>Iron Bear Cooldown</b>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
         </ul>
       `;
 
@@ -826,7 +820,9 @@ function render() {
         if (skill.type === 'weapon') badgeHtml = '<span class="skill-type-badge badge-weapon">IB Weapon</span>';
 
         html += `<div class="${nodeClass}" data-tree="${tree.id}" data-skill="${skill.id}">
-          <div class="skill-icon">${skill.icon}</div>
+          <div class="skill-icon">
+            <img src="${skill.icon}" alt="${skill.name}" />
+          </div>
           <div class="skill-info">
             ${badgeHtml}
             <div class="skill-name">${skill.name}</div>
