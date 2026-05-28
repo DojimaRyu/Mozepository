@@ -13,7 +13,7 @@
     font-size: clamp(12px, 1.15vw, 18px);
 
     --icon-size:   clamp(52px, 5.5vw, 90px);
-    --as-icon-size: clamp(36px, 3.5vw, 56px);
+    --as-icon-size: clamp(48px, 4.5vw, 68px);
     --header-h:    clamp(48px, 5.5vh, 72px);
   }
 
@@ -402,7 +402,7 @@ const TREES = [
   {
     id: 'bm',
     name: 'Bottomless Mags',
-    subtitle: 'Ammo sustain & fire damage',
+    subtitle: 'Gun damage & ammo sustain',
     color: '#5bb8e8', 
     icon: 'images/spec/Minigun.webp',
     actionSkill: { 
@@ -420,7 +420,7 @@ const TREES = [
         { id: 'bm_cloud', name: 'Cloud of Lead', maxPts: 5, icon: 'images/spec/Cloud of Lead.webp', 
           desc: 
             `
-              <td>Occasionally, Moze's and <span style="color:#e87f45">Iron Bear's/Iron Cub's</span> shots will deal additional <b>Incendiary Damage</b> and won't consume ammo.
+              <td>Occasionally, Moze's and <span style="color:#e87f45">Iron Bear/Iron Cub's</span> shots will deal additional <b>Incendiary Damage</b> and won't consume ammo.
                 <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style = "color: #6a9e3a">+2.25%</span> per level</li>
               </ul>
@@ -429,11 +429,11 @@ const TREES = [
         { id: 'bm_dakka', name: 'Dakka Bear', maxPts: 1, icon: 'images/spec/Dakka Bear.webp', 
           desc: 
             `
-              Adds a <span style="color: #f1d981">manned turret</span> to the back of <span style="color:#e87f45">Iron Bear</span>.
+              Adds a <span style="color: #f1d981">manned turret</span> to the back of <span style="color:#e87f45">Iron Bear/Iron Cub</span>.
               While manned, <span style="color:#e87f45">Iron bear</span> and its rider gain <span style="color: #f1d981">Increased Damage</span>.
               If <span style="color:#e87f45">Iron Cub</span> is equipped, it gains <span style="color: #f1d981">Increased Damage</span> instead.
               <ul style="margin: 0; padding-left: 1em;">
-                  <li><span style="color: #f1d981">Iron Bear damage</span>: <span style = "color: #6a9e3a">+50%</span></li>
+                  <li><span style="color: #f1d981">Iron Bear/Iron Cub damage</span>: <span style = "color: #6a9e3a">+50%</span></li>
                   <li><span style="color: #f1d981">Iron Cub Damage</span>: <span style = "color: #6a9e3a">+20%</span></li>
               </ul>
               <br>
@@ -475,7 +475,7 @@ const TREES = [
         { id: 'bm_stoke', name: 'Stoke the Embers', maxPts: 3, icon: 'images/spec/Stoke the Embers.webp', 
           desc: 
             `
-              <td>Increases Moze's and <span style="color:#e87f45">Iron Bear's/Iron Cub's</span> <span style="color: #f1d981">Incendiary Damage</span>.
+              <td>Increases Moze's and <span style="color:#e87f45">Iron Bear/Iron Cub's</span> <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Incendiary Damage</span>: <span style = "color: #6a9e3a">+10%</span> per level</li>
               </ul>
@@ -488,7 +488,7 @@ const TREES = [
                 The lower her health, the more power the health regeneration.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Ammo Regeneration</span>: <span style = "color: #6a9e3a">+5%</span> of magazine / sec</li>
-                <li><span style="color: #f1d981">Health Regeneration</span>: up to <span style = "color: #6a9e3a">+2.5%</span> Missing Health / sec</li>
+                <li><span style="color: #f1d981">Health Regeneration</span>: Up to <span style = "color: #6a9e3a">+2.5%</span> Missing Health / sec</li>
                 <li><span style="color: #f1d981">Redistribution Duration</span>: <span style = "color: #6a9e3a">3 seconds</span></li>
               </ul>
             ` 
@@ -521,10 +521,12 @@ const TREES = [
         { id: 'bm_fueleco', name: 'Fuel Economy', maxPts: 1, icon: 'images/spec/Fuel Economy.webp', type: 'augment', 
           desc: 
             `
-              <td>Reduces <span style="color:#e87f45">Salamander</span>'s <span style="color: #f1d981">Fuel Drain</span>. Additionally, <span style="color:#e87f45">Iron Bear</span>'s <span style="color: #f1d981">Movement Speed</span> is increased after hitting an enemy with the <span style="color:#e87f45">Salamander</span>.
+              <td>Reduces <span style="color:#e87f45">Salamander</span>'s <span style="color: #f1d981">Fuel Drain</span>. 
+              <br>
+              Additionally, <span style="color:#e87f45">Iron Bear/Iron Cub</span>'s <span style="color: #f1d981">Movement Speed</span> is increased after damaging an enemy with the <span style="color:#e87f45">Salamander</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">-25%</span></li>
-                <li><span style="color: #f1d981">Movement Speed</span>: <span style="color: #6a9e3a">+25%</span></li>
+                <li><span style="color: #f1d981">Movement Speed</span>: <span style="color: #6a9e3a">+50%</span> for 3s</li>
               </ul>
             ` 
         },
@@ -532,16 +534,25 @@ const TREES = [
           desc: 
             `
               <td>Moze can <span style="color: #f1d981">Sprint and Shoot</span> at the same time.
+              <br> While sprinting, Moze's weapons gain <span style="color: #f1d981">Life Steal</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Life Steal</span>: <span style="color: #6a9e3a">8%</span></li>
+              </ul>
+              <br>
+              <br>
+
+              <p><i>I don't want any messages saying "I'm holding my position."</i></p>
             ` 
         },
         { id: 'bm_scorching', name: "Scorching RPM's", maxPts: 5, icon: "images/spec/Scorching RPM's.webp", 
           desc: 
             `
-              <td>Moze gains increased <span style="color: #f1d981">Fire Rate</span> and <span style="color: #f1d981">Critical Hit Damage</span>. <span style="color:#e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Hard Point Damage</span>.
+              <td>Moze gains increased <span style="color: #f1d981">Fire Rate</span> and <span style="color: #f1d981">Critical Hit Damage</span>. 
+              <span style="color:#e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">Hard Point Damage</span> (for the left arm Hard Point only) and <span style="color: #f1d981">Critical Hit damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Fire Rate</span>: <span style = "color: #6a9e3a">+3%</span> per level</li>
                 <li><span style="color: #f1d981">Critical Hit Damage</span>: <span style = "color: #6a9e3a">+4%</span> per level</li>
-                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style = "color: #6a9e3a">+5.0%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style = "color: #6a9e3a">+5%</span> per level</li>
               </ul>
             ` 
         },
@@ -550,19 +561,21 @@ const TREES = [
         { id: 'bm_explode', name: 'Exploding. Bullets.', maxPts: 1, icon: 'images/spec/Exploding. Bullets..webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color:#e87f45">Minigun</span> fires explosive rounds that deal <span style="color: #f1d981">Splash Damage</span> but have a reduced Fire Rate.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Fire Rate</span>: <span style="color: #6a9e3a">-25%</span></li>
+              <td>The <span style="color:#e87f45">Minigun</span> fires <span style="color: #f1d981">Explosive Rounds</span> that deal increased <span style="color: #f1d981">Splash Damage</span>, but its <span style="color: #f1d981">Fire Rate</span> is decreased.
+              <ul style="margin: 0; padding-left: 1em;"
+                <li><span style="color: #f1d981">Minigun Fire Rate</span>: <span style="color: #6a9e3a">-75%</span></li>
+                <li><span style="color: #f1d981">Minigun Damage</span>: <span style="color: #6a9e3a">+232%</span></li>
               </ul>
             ` 
         },
         { id: 'bm_chemwar', name: 'Chemical Warfare', maxPts: 1, icon: 'images/spec/Chemical Warfare.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color:#e87f45">Salamander</span> deals <span style="color: #f1d981">Corrosive Damage</span> instead of Incendiary. Additionally, <span style="color:#e87f45">Salamander</span>'s Melt Damage is significantly increased.
+              <td>The <span style="color:#e87f45">Salamander</span> now deals <span style="color: #f1d981">Corrosive Damage</span>
+              Additionally, <span style="color:#e87f45">Salamander</span>'s <span style="color: #f1d981">Melt Damage</span> is increased.
               <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Melt Damage</span>: <span style="color: #6a9e3a">+125%</span></li>
                 <li><span style="color: #f1d981">Converts to Corrosive Damage</span></li>
-                <li><span style="color: #f1d981">Melt Damage</span>: <span style="color: #6a9e3a">+50%</span></li>
               </ul>
             ` 
         },
@@ -578,9 +591,9 @@ const TREES = [
         { id: 'bm_specbear', name: 'Specialist Bear', maxPts: 1, icon: 'images/spec/Specialist Bear.webp', 
           desc: 
             `
-              <td>Equipping two of the <span style="color: #f1d981">Same Weapon</span> on <span style="color:#e87f45">Iron Bear</span> increases the damage dealt by both weapons.
+              <td>Equipping two of the same <span style="color: #f1d981">Weapons</span> on <span style="color:#e87f45">Iron Bear/Iron Cub</span> increases the damage they deal.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style = "color: #6a9e3a">+60%</span></li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style = "color: #6a9e3a">+60%</span></li>
               </ul>
             ` 
         },
@@ -589,27 +602,29 @@ const TREES = [
         { id: 'bm_moltenroar', name: 'Molten Roar', maxPts: 1, icon: 'images/spec/Molten Roar.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color:#e87f45">Salamander</span> consumes 3 times more fuel to fire a burst of 3 projectiles. The first projectile creates a persistent pool of <span style="color: #f1d981">Fire</span> on the ground.
+              <td>The <span style="color:#e87f45">Salamander</span> burst-fires 3 projectiles with increased <span style="color: #f1d981">Damage</span>, the first of which leaves a large incendiary area.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #6a9e3a">+200%</span></li>
+                <li><span style="color: #f1d981">Damage</span>: <span style="color: #6a9e3a">+100%</span></li>
               </ul>
             ` 
         },
         { id: 'bm_someroad', name: 'Some for the Road', maxPts: 1, icon: 'images/spec/Some for the Road.webp', 
           desc: 
             `
-              <td>Moze gains <span style="color: #f1d981">Infinite Ammo</span> for a short time after exiting <span style="color:#e87f45">Iron Bear</span>.
+              <td>Moze gains <span style="color: #f1d981">Infinite Ammo</span> for a few sceonds after exiting <span style="color:#e87f45">Iron Bear/Iron Cub</span> or <span style="color:#e87f45">Iron Cub</span> ends.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Duration</span>: <span style = "color: #6a9e3a">5 seconds</span></li>
+                <li><span style="color: #f1d981">Some for the Road Duration</span>: <span style = "color: #6a9e3a">5 seconds</span></li>
               </ul>
             ` 
         },
         { id: 'bm_clickclick', name: '"Click, Click…"', maxPts: 3, icon: 'images/spec/Click, Click.webp', 
           desc: 
             `
-              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> as her magazine empties. The less ammo remaining, the greater the bonus. COV weapons gain damage as heat increases.
+              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> as her magazine empties. The less ammo remaining, the greater the bonus. 
+              <br>
+              If Moze has a <span style="color: #f1d981">COV</span> gun equipped, she gains <span style="color: #f1d981">Gun Damage</span> as her gun's heat increases.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Gun Damage</span>: <span style = "color: #6a9e3a">Up to +12%</span> per level</li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style = "color: #6a9e3a">Up to +20%</span> per level</li>
               </ul>
             ` 
         },
@@ -618,7 +633,7 @@ const TREES = [
         { id: 'bm_forge', name: 'Forge', maxPts: 1, icon: 'images/spec/Forge.webp', 
           desc: 
             `
-              <td>Moze constantly <span style="color: #f1d981">Regenerates Ammo</span> for her currently equipped weapon.
+              <td>Moze constantly <span style="color: #f1d981">regenerates ammo</span> for her currently equipped weapon.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Ammo Regeneration</span>: <span style = "color: #6a9e3a">+5.0%</span> of magazine / sec</li>
               </ul>
@@ -657,7 +672,7 @@ const TREES = [
         { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', 
           desc: 
             `
-              <td>Firing <span style="color: #e87f45">Iron Bear</span> weapons drains less <span style="color: #f1d981">Fuel</span>. Killing an enemy while <span style="color: #e87f45">Iron Bear</span> is active refunds Fuel.
+              <td>Firing <span style="color: #e87f45">Iron Bear/Iron Cub</span> weapons drains less <span style="color: #f1d981">Fuel</span>. Killing an enemy while <span style="color: #e87f45">Iron Bear/Iron Cub</span> is active refunds Fuel.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Fuel Returned</span>: <span style="color: #3a8fbf">+2.0%</span> per level</li>
                 <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #3a8fbf">-10.0%</span> per level</li>
@@ -706,11 +721,11 @@ const TREES = [
         { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
           desc: 
             `
-              <td><span style="color: #e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Armor</span> and maximum <span style="color: #f1d981">Fuel</span>. Additionally, increases <span style="color: #f1d981">Iron Bear Damage</span>.
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">Armor</span> and maximum <span style="color: #f1d981">Fuel</span>. Additionally, increases <span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Iron Bear Armor</span>: <span style="color: #3a8fbf">+6.0%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Armor</span>: <span style="color: #3a8fbf">+6.0%</span> per level</li>
                 <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #3a8fbf">+4.0%</span> per level</li>
-                <li><span style="color: #f1d981">Iron Bear Damage</span>: <span style="color: #3a8fbf">+4.0%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #3a8fbf">+4.0%</span> per level</li>
               </ul>
             ` 
         },
@@ -747,7 +762,7 @@ const TREES = [
         { id: 'dw_autobear', name: 'Auto Bear', maxPts: 1, icon: 'images/spec/Auto Bear.webp', 
           desc: 
             `
-              <td>After Moze exits <span style="color: #e87f45">Iron Bear</span>, it will remain deployed in place for a short time. While active, <span style="color: #e87f45">Auto Bear</span> will attack nearby enemies until its duration expires or it is destroyed.
+              <td>After Moze exits <span style="color: #e87f45">Iron Bear/Iron Cub</span>, it will remain deployed in place for a short time. While active, <span style="color: #e87f45">Auto Bear</span> will attack nearby enemies until its duration expires or it is destroyed.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Auto Bear Duration</span>: <span style="color: #3a8fbf">15 seconds</span></li>
               </ul>
@@ -776,10 +791,10 @@ const TREES = [
         { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', effect: 'Core survival skill — sustain on splash builds',
           desc: 
             `
-              <td>Whenever Moze damages an enemy with a grenade, she <span style="color: #f1d981">Restores Health</span> for every enemy hit. <span style="color: #e87f45">Iron Bear</span> restores health when dealing splash damage.
+              <td>Whenever Moze damages an enemy with a grenade, she <span style="color: #f1d981">Restores Health</span> for every enemy hit. <span style="color: #e87f45">Iron Bear/Iron Cub</span> restores health when dealing splash damage.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Restored Health</span>: <span style="color: #3a8fbf">+4.0%</span> of missing health per level</li>
-                <li><span style="color: #f1d981">Iron Bear Restored Health</span>: <span style="color: #3a8fbf">+2.0%</span> of missing armor per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Restored Health</span>: <span style="color: #3a8fbf">+2.0%</span> of missing armor per level</li>
               </ul>
             ` 
         },
@@ -847,7 +862,7 @@ const TREES = [
   {
     id: 'sor',
     name: 'Shield of Retribution',
-    subtitle: 'Defense & shield bonuses',
+    subtitle: 'Shield bonuses & aggression',
     color: '#e87050',
     icon: 'images/spec/Railgun.webp',
     actionSkill: { 
@@ -874,9 +889,9 @@ const TREES = [
         { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: 'images/spec/Security Bear.webp', 
           desc: 
             `
-              <td><span style="color: #e87f45">Iron Bear</span> gains a <span style="color: #f1d981">Bubble Shield</span> that reduces incoming damage. The bubble shield possesses its own capacity and recharge functionality.
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains a <span style="color: #f1d981">Bubble Shield</span> that reduces incoming damage. The bubble shield possesses its own capacity and recharge functionality.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Bubble Shield Capacity</span>: <span style="color: #d44f30">50%</span> of Iron Bear Max Armor</li>
+                <li><span style="color: #f1d981">Bubble Shield Capacity</span>: <span style="color: #d44f30">50%</span> of Iron Bear/Iron Cub Max Armor</li>
               </ul>
             ` 
         },
@@ -956,13 +971,13 @@ const TREES = [
         { id: 'sor_closetime', name: 'Close the Distance', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Bear Fist</span> shoots forward, pulling enemies to <span style="color: #e87f45">Iron Bear</span> or pulling <span style="color: #e87f45">Iron Bear</span> to massive enemies. Deals Shock Damage.
+              <td>The <span style="color: #e87f45">Bear Fist</span> shoots forward, pulling enemies to <span style="color: #e87f45">Iron Bear/Iron Cub</span> or pulling <span style="color: #e87f45">Iron Bear/Iron Cub</span> to massive enemies. Deals Shock Damage.
             ` 
         },
         { id: 'sor_experimental', name: 'Experimental Munitions', maxPts: 1, icon: 'images/spec/Experimental Munitions.webp', 
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear</span> scores a Critical Hit, they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> scores a Critical Hit, they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #d44f30">+10%</span> of damage dealt</li>
               </ul>
@@ -1051,15 +1066,27 @@ const TREES = [
   {
     id: 'ic',
     name: 'Bear Mother',
-    subtitle: 'Iron Cub companion & incendiary',
+    subtitle: 'Autonomous mech & status effects',
     dlc: true,
     icon: 'images/spec/Iron Cub.avif',
     actionSkill: { 
       name: 'Iron Cub', 
       icon: 'images/spec/Iron Cub.avif',
       desc: `
-        Moze summons <span style="color: #e87f45">Iron Cub</span> in place of <b>Iron Bear</b>. Iron Cub deploys as an autonomous companion that follows Moze and attacks nearby targets using weapons equipped in its Hardpoints. 
+        Moze summons <span style="color: #e87f45">Iron Cub</span> in place of Iron Bear.
+        <br>
+        <span style="color: #e87f45">Iron Cub</span> equips two of whatever weapon is equipped in the remaining
+          <span style="color: #e87f45">Action Skill</span> slot.
+        <br>
+        While deployed, <span style="color: #e87f45">Iron Cub</span> <span style="color: #f1d981">follows Moze and
+          will target and attack enemies for the duration</span>.
         <br><br>
+        
+        Skills that affect Iron Bear/Iron Cub affect <span style="color: #e87f45">Iron Cub</span>.
+        <span style="color: #e87f45">Iron Cub</span> still uses <span style="color: #f1d981">Fuel</span>, but uses less 
+          of it and deals less daamge (because it's samller).
+        <br><br>
+
         <p><i>Oppress not the cubs of the stranger.</i></p>
       `
     },
@@ -1068,124 +1095,187 @@ const TREES = [
         { id: 'ic_biofuel', name: 'Biofuel', maxPts: 5, icon: 'images/spec/Biofuel.webp', 
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> ignites an enemy, Moze and <span style="color: #e87f45">Iron Bear/Cub</span> gain temporary <span style="color: #f1d981">Health Regeneration</span>.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> ignites an enemy, they both
+                <span style="color: #f1d981">regenerate health</span> for a short time.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Health Regeneration</span>: <span style="color: #c229ba">+0.7%</span> of max health / sec per level</li>
-                <li><span style="color: #f1d981">Iron Bear Armor Regen</span>: <span style="color: #c229ba">+0.5%</span> of max armor / sec per level</li>
+                <li><span style="color: #f1d981">Health Regeneration</span>: Up to <span style="color: #c229ba">+0.7%</span> of max health / sec per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Armor Regen</span>: Up to <span style="color: #c229ba">+0.5%</span> of max armor / sec per level</li>
                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">8 seconds</span></li>
               </ul>
             ` 
         },
-        { id: 'ic_bigsurplus', name: 'Big Surplus', maxPts: 3, icon: 'images/spec/Fired Up.avif', 
+        { id: 'ic_bigsurplus', name: 'Big Surplus', maxPts: 3, icon: 'images/spec/Big Surplus.webp', 
           desc: 
             `
-              <td>While Moze's Action Skill is cooling down, her shots deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
+              <td>While Moze's <span style="color: #e87f45">Action Skill</span> is cooling down, she deals bonus 
+                <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Bonus Damage</span>: <span style="color: #c229ba">+5%</span> of gun damage dealt per level</li>
+                <li><span style="color: #f1d981">Bonus Damage</span>: <span style="color: #c229ba">+5%</span> of Gun Damage per level</li>
+                <span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #c229ba">x31.0</span></li>
               </ul>
             ` 
         },
         { id: 'ic_reallybig', name: 'Really Big Guns', maxPts: 5, icon: 'images/spec/Really Big Guns.avif', 
           desc: 
             `
-              <td><span style="color: #e87f45">Iron Bear/Cub</span> gains increased damage.
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased damage.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Iron Bear/Cub Damage</span>: <span style="color: #c229ba">+4.0%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #c229ba">+4.0%</span> per level</li>
               </ul>
             ` 
         },
       ]},
       { required: 5, skills: [
+        { id: 'sor_fuelfire', name: 'Fuel for the Fire', maxPts: 1, icon: 'images/spec/Fuel for the fire.avif', type: 'augment', 
+          desc: 
+            `
+              <td>When Moze or <span style="color: #e87f45">Iron Cub</span> inflicts a <span style="color: #f1d981">Status Effect</span> on
+                an enemy, <span style="color: #e87f45">Iron Cub's</span> <span style="color: #f1d981">Armor is restored</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Armor Restore</span>: <span style="color: #c229ba">12%</span> of Max Armor</li>
+              </ul>
+            ` 
+        },
         { id: 'ic_doubletime', name: 'Double Time', maxPts: 3, icon: 'images/spec/Double Time.webp', 
           desc: 
             `
-              <td>While Moze's Action Skill is active, she gains increased <span style="color: #f1d981">Movement Speed</span>.
+              <td>While Moze's <span style="color: #e87f45">Action Skill</span> is active, she and 
+                  <span style="color: #e87f45">Iron Bear/Iron Cub</span> gain increased <span style="color: #f1d981">Movement Speed</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Movement Speed</span>: <span style="color: #c229ba">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_harmhavoc', name: 'Harmonious Havoc', maxPts: 5, icon: 'images/spec/Harmonious Havoc.avif', 
+          desc: 
+            `
+              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> for weapon, shield, and grenade that matches the 
+                element of her gun.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage per Matching Item</span>: <span style="color: #c229ba">+2%</span> per level</li>
               </ul>
             ` 
         },
         { id: 'ic_explosivefury', name: 'Explosive Fury', maxPts: 3, icon: 'images/spec/Explosive Fury.avif', 
           desc: 
             `
-              <td>Moze and <span style="color: #e87f45">Iron Bear/Cub</span> gain increased <span style="color: #f1d981">Status Effect Damage</span> and Status Effect Chance.
+              <td>Moze and <span style="color: #e87f45">Iron Bear/Iron Cub</span> gain increased 
+                <span style="color: #f1d981">Status Effect Damage</span> and <span style="color: #f1d981">Status Effect Chance</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #c229ba">+7%</span> per level</li>
                 <li><span style="color: #f1d981">Status Effect Chance</span>: <span style="color: #c229ba">+9%</span> per level</li>
-              </ul>
-            ` 
-        },
-        { id: 'ic_matchedelement', name: 'Harmonious Havoc', maxPts: 5, icon: 'images/spec/Harmonious Havoc.avif', 
-          desc: 
-            `
-              <td>Moze gains increased <span style="color: #f1d981">Gun Damage</span> for each item of equipped gear matching the element of her current weapon.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Gun Damage per Matching Item</span>: <span style="color: #c229ba">+2%</span> per level</li>
+                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #c229ba">+5%</span> per level</li>
               </ul>
             ` 
         },
       ]},
       { required: 10, skills: [
-        { id: 'ic_fire_rate', name: 'Fired Up', maxPts: 5, icon: 'images/spec/Pull the Holy Pin.webp', 
+        { id: 'ic_babynuke', name: 'Baby Nukes', maxPts: 1, icon: 'images/spec/Baby Nukes.avif', type: 'augment',
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> applies a Status Effect to an enemy, Moze gains increased <span style="color: #f1d981">Fire Rate</span> for a short time. Stacks up to 5 times.
+              Whenever <td><span style="color: #e87f45">Iron Cub</span> is deployed or destroyed, it <span style="color: #f1d981">
+                triggers a nuclear explosion</span>, dealing massive <span style="color: #f1d981">Radiation Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Fire Rate</span>: <span style="color: #c229ba">+1%</span> per stack / level</li>
-                <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">12 seconds</span></li>
+                <li><span style="color: #f1d981">Damage</span>: Up to <span style="color: #c229ba">60652</span>; level dependant</li>
+                <span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #c229ba">x31.0</span></li>
+               
               </ul>
             ` 
         },
-        { id: 'ic_nitro', name: 'Nitrotrinadium Engines', maxPts: 5, icon: 'images/spec/Nitrotrinadium Engines.avif', 
+        { id: 'ic_fire_rate', name: 'Fired Up', maxPts: 5, icon: 'images/spec/Fired Up.avif', 
           desc: 
             `
-              <td><span style="color: #e87f45">Iron Bear</span> gains increased <span style="color: #f1d981">Maximum Fuel</span> and Action Skill Cooldown Rate.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> applies a <span style="color: #f1d981">Status 
+                Effect</span> to an enemy, Moze gains increased <span style="color: #f1d981">Fire Rate</span> and reduced 
+                <span style="color: #f1d981">Burst Fire Delay</span> for a short time. This effect stacks
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #c229ba">+4%</span> per level</li>
-                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #c229ba">+4%</span> per level</li>
+                <li><span style="color: #f1d981">Fire Rate</span>: <span style="color: #c229ba">+5%</span> per level</li>
+                <li><span style="color: #f1d981">Burst Fire Delay</span>: <span style="color: #c229ba">-5%</span> per level</li>
+                <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">12 seconds</span></li>
+                <li><span style="color: #f1d981">Max Stacks</span>: <span style="color: #c229ba">5</span></li>
               </ul>
             ` 
         },
       ]},
       { required: 15, skills: [
+        { id: 'ic_littlefriend', name: 'My Little Friend', maxPts: 1, icon: 'images/spec/My Little Friend.webp', type: 'augment',
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Cub</span> spawns with an <span style="color: #e87f45">Incendiary Vladof Assault
+                Rifle</span> in addition to <span style="color: #e87f45">Iron Cub's</span> other weapons.
+              <br>
+              <br>
+
+              <p><i> Say hello. </i></p>
+            ` 
+        },
+        { id: 'ic_nitro', name: 'Nitrotrinadium Engines', maxPts: 5, icon: 'images/spec/Nitrotrinadium Engines.avif', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">Maximum Fuel</span> and 
+                <span style="color: #f1d981"><span style="color: #f1d981">Magazine Size</span></span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #c229ba">+5%</span> per level</li>
+                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #c229ba">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
         { id: 'ic_neverlet', name: 'Never Gonna Give You Up', maxPts: 5, icon: 'images/spec/Never Going to Give You.webp', 
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> applies a Status Effect to an enemy, <span style="color: #e87f45">Iron Bear/Cub</span> restores fuel. Diminishing returns apply.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> applies a <span style="color: #f1d981">Status Effect</span>
+                to an enemy, <span style="color: #e87f45">Iron Bear/Iron Cub</span> gains <span style="color: #f1d981">Fuel</span>. This skill has diminishing returns.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Fuel Returned</span>: <span style="color: #c229ba">Up to +5%</span> per level</li>
               </ul>
             ` 
         },
-        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 5, icon: 'images/spec/Superior Firepower.avif', 
+      ]},
+      { required: 20, skills: [
+        { id: 'ic_effciency', name: 'Efficiency Engine', maxPts: 1, icon: 'images/spec/Efficiency Engine.avif', type: 'augment',
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> inflicts a status effect on an enemy, they gain temporary increased <span style="color: #f1d981">Status Effect Damage</span> of that element. Stacks up to 5 times.
+              <td>Moze gains increased <span style="color: #e87f45">Gun Damage</span>. The longer <span style="color: #e87f45">Iron Cub</span> has
+                been active, the greater the bonus.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #c229ba">+4%</span> per stack / level</li>
-                <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">8 seconds</span></li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #c229ba">0.5%</span> per second</li>
               </ul>
             ` 
         },
-      ]},
-      { required: 20, skills: [
         { id: 'ic_featurecreep', name: 'Feature Creep', maxPts: 1, icon: 'images/spec/Feature Creep.avif', 
           desc: 
             `
-              <td>Increases <span style="color: #e87f45">Iron Bear/Cub</span>'s damage and <span style="color: #f1d981">Damage Resistance</span>.
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">Damage</span> and 
+                <span style="color: #f1d981">Damage Resistance</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Iron Bear/Cub Damage</span>: <span style="color: #c229ba">+18%</span></li>
-                <li><span style="color: #f1d981">Damage Resistance</span>: <span style="color: #c229ba">+45%</span></li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #c229ba">+18%</span></li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage Resistance</span>: <span style="color: #c229ba">+45%</span></li>
               </ul>
             ` 
         },
         { id: 'ic_limitbreak', name: 'Limit Break', maxPts: 3, icon: 'images/spec/Limit Break.webp', 
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> inflicts a Status Effect on an enemy, Moze's <span style="color: #f1d981">Action Skill Cooldown Rate</span> is increased. Stacks up to 10 times.
+              <td>Moze gains increased <span style="color: #f1d981">Action Skill Cooldown Rate</span> whenever she or <span style="color: #e87f45">Iron Bear
+                /Iron Cub</span> inflicts a <span style="color: #f1d981">Status Effect</span> on an enemy. This effect stacks.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #c229ba">+4%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Cooldown Rate</span>: <span style="color: #c229ba">+4%</span> per level</li>
                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">12 seconds</span></li>
+                <li><span style="color: #f1d981">Max Stacks</span>: <span style="color: #c229ba">10</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'ic_superiorfirepower', name: 'Superior Firepower', maxPts: 1, icon: 'images/spec/Superior Firepower.avif', 
+          desc: 
+            `
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> inflicts a <span style="color: #f1d981">Status Effect</span>
+              on an enemy, they gain increased <span style="color: #f1d981">Status Effect Damage</span> and Moze gains increased
+              <span style="color: #f1d981">Cryo Damage</span> for a short time.
+
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Status Effect Damage</span>: <span style="color: #c229ba">+20%</span></li>
+                <li><span style="color: #f1d981">Cryo Damage</span>: <span style="color: #c229ba">+20%</span></li>
+                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">8 seconds</span></li>
+                <li><span style="color: #f1d981">Max Stacks</span>: <span style="color: #c229ba">5</span></li>
               </ul>
             ` 
         },
@@ -1194,10 +1284,13 @@ const TREES = [
         { id: 'ic_runningonfumes', name: 'Running on Fumes', maxPts: 1, icon: 'images/spec/Running on Fumes.avif', effect: 'Capstone — enables near-infinite Iron Cub uptime on fire-heavy builds',
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Cub</span> ignites an enemy, <span style="color: #e87f45">Iron Bear/Cub</span> stops consuming fuel for a short time.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> ignites an enemy, <span style="color: #e87f45">Iron Bear/Iron Cub</span> <span style="color: #f1d981">does not
+                consume fuel</span> for a short time.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">6 seconds</span></li>
               </ul>
+              <br><br>
+              <p><i>I've been in the slash many times.</i></p>
             ` 
         },
       ]},
@@ -1230,7 +1323,7 @@ function getSkillDesc(skill, pts) {
     case 'dw_grizzled':
       return `
         <ul style="margin: 0; padding-left: 1em;">
-          <li><strong>Iron Bear Cooldown</strong>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
+          <li><strong>Iron Bear/Iron Cub Cooldown</strong>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
         </ul>
       `;
 
@@ -1289,10 +1382,11 @@ function showTooltip(e, skill) {
   document.getElementById('tt-name').textContent = skill.name;
   let meta = '';
   if (skill.type === 'augment') meta += 'Augment · ';
-  else if (skill.type === 'weapon') meta += 'Iron Bear Weapon · ';
+  else if (skill.type === 'weapon') meta += 'Iron Bear/Iron Cub Weapon · ';
   else if (skill.maxPts > 1) meta += `Max ${skill.maxPts} pts · `;
   meta += `${state[skill.id]}/${skill.maxPts} points`;
   document.getElementById('tt-meta').innerHTML = `<span class="pts">${meta}</span>`;
+
   const pts = state[skill.id];
   document.getElementById('tt-desc').innerHTML = getSkillDesc(skill, pts);
   document.getElementById('tt-effect').textContent = skill.effect || '';
@@ -1406,7 +1500,23 @@ function render() {
   document.getElementById('sp-used').textContent = getTotalUsed();
 }
 
+function syncTreeHeaderHeights() {
+  const headers = document.querySelectorAll('.tree-header');
+  headers.forEach(h => h.style.height = 'auto');
+
+  let maxHeight = 0;
+  headers.forEach(h => {
+    maxHeight = Math.max(maxHeight, h.offsetHeight);
+  });
+
+  headers.forEach(h => {
+    h.style.height = `${maxHeight}px`;
+  });
+}
+
 render();
+// window.addEventListener('load', syncTreeHeaderHeights);
+// window.addEventListener('resize', syncTreeHeaderHeights);
 </script>
 </body>
 </html>
