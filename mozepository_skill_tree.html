@@ -663,7 +663,7 @@ const TREES = [
         { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: 'images/spec/Fire in the Skag Den.webp', 
           desc: 
             `
-              <td>Whenever Moze <span style="color: #e87f45">Iron Bear/Iron Cub</span>deals <span style="color: #f1d981">Splash Damage</span>, 
+              <td>Whenever Moze <span style="color: #e87f45">Iron Bear/Iron Cub</span> deals <span style="color: #f1d981">Splash Damage</span>, 
                 they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #3a8fbf">+3%</span> per level</li>
@@ -1414,7 +1414,7 @@ TREES.forEach(t => t.tiers.forEach(tier => tier.skills.forEach(s => { state[s.id
 function getSkillDesc(skill, pts) {
   const level = pts || 0;
 
-  // ── Helpers ──────────────────────────────────────────────────
+  // text formatting helpers
   const bm  = (v, u='%') => `<span style="color:#6a9e3a">${v}${u}</span>`;
   const dw  = (v, u='%') => `<span style="color:#3a8fbf">${v}${u}</span>`;
   const sor = (v, u='%') => `<span style="color:#d44f30">${v}${u}</span>`;
@@ -1619,7 +1619,6 @@ function getSkillDesc(skill, pts) {
       return ul(
         li('Gun Damage per Matching Item', ic(`+${2 * level}`))
       );
-
     case 'ic_explosivefury':
       return ul(
         li('Status Effect Chance',  ic(`+${9 * level}`)),
@@ -1679,14 +1678,28 @@ function canAddPoint(tree, skill) {
 
 function canRemovePoint(tree, skill) {
   if (state[skill.id] <= 0) return false;
+
+  const isCountable = skill.type !== 'augment' && skill.type !== 'weapon';
   const tierIdx = tree.tiers.findIndex(t => t.skills.find(s => s.id === skill.id));
-  const pts = getTreePts(tree);
-  const wouldBe = (skill.type !== 'augment' && skill.type !== 'weapon') ? pts - 1 : pts;
+
+  if (isCountable) state[skill.id]--;
+  let blocked = false;
   for (let i = tierIdx + 1; i < tree.tiers.length; i++) {
-    const hasHigher = tree.tiers[i].skills.some(s => state[s.id] > 0);
-    if (hasHigher && wouldBe <= tree.tiers[i].required) return false;
+    const hasPoints = tree.tiers[i].skills.some(s => state[s.id] > 0);
+    if (!hasPoints) continue;
+
+    const ptsBelow = tree.tiers
+      .slice(0, i)
+      .flatMap(t => t.skills)
+      .filter(s => s.type !== 'augment' && s.type !== 'weapon')
+      .reduce((sum, s) => sum + state[s.id], 0);
+
+    if (ptsBelow < tree.tiers[i].required) { blocked = true; break; }
   }
-  return true;
+
+  if (isCountable) state[skill.id]++;
+
+  return !blocked;
 }
 
 function handleSkillClick(e, treeId, skillId) {
