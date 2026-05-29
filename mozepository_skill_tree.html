@@ -663,7 +663,8 @@ const TREES = [
         { id: 'dw_fitsd', name: 'Fire in the Skag Den', maxPts: 5, icon: 'images/spec/Fire in the Skag Den.webp', 
           desc: 
             `
-              <td>Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, she deals bonus <b>Incendiary Damage</b>.
+              <td>Whenever Moze <span style="color: #e87f45">Iron Bear/Iron Cub</span>deals <span style="color: #f1d981">Splash Damage</span>, 
+                they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #3a8fbf">+3%</span> per level</li>
               </ul>
@@ -672,17 +673,21 @@ const TREES = [
         { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', 
           desc: 
             `
-              <td>Firing <span style="color: #e87f45">Iron Bear/Iron Cub</span> weapons drains less <span style="color: #f1d981">Fuel</span>. Killing an enemy while <span style="color: #e87f45">Iron Bear/Iron Cub</span> is active refunds Fuel.
+              <td>Firing <span style="color: #e87f45">Iron Bear Weapons</span><span style="color: #f1d981">drains less Fuel</span>. 
+                <br>
+                Killing an enemy while <span style="color: #e87f45">Iron Bear/Iron Cub</span> is active increases 
+                <span style="color: #f1d981">Fuel</span>. This skill has diminishign returns.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Fuel Returned</span>: <span style="color: #3a8fbf">+2.0%</span> per level</li>
-                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #3a8fbf">-10.0%</span> per level</li>
+                <li><span style="color: #f1d981">Fuel Returned</span>: Up to <span style="color: #3a8fbf">2%</span> per level</li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: Up to <span style="color: #3a8fbf">-12%</span> per level</li>
               </ul>
             ` 
         },
         { id: 'dw_grizzled', name: 'Grizzled', maxPts: 5, icon: 'images/spec/Grizzled.avif', 
           desc: 
             `
-              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy reduces Moze's remaining <span style="color: #f1d981">Action Skill Cooldown Time</span>. This skill has diminishing returns.
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy reduces Moze's remaining 
+                <span style="color: #f1d981">Action Skill Cooldown Time</span>. This skill has diminishing returns.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Action Skill Cooldown Time</span>: <span style="color: #3a8fbf">-1</span> second per level</li>
               </ul>
@@ -695,42 +700,9 @@ const TREES = [
             `
               <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> is a rocket launcher capable of rapid volleys of unguided explosive rockets.
               <br><br>
-              <p><i>The final solution to tactical logistics.</i></p>
+              <p><i>If you want guidance, get a sherpa. If you want explosions, get a Vladof.</i></p>
             ` 
         },
-        { id: 'dw_means', name: 'Means of Destruction', maxPts: 3, icon: 'images/spec/Means of Destruction.webp', 
-          desc: 
-            `
-              <td>Whenever Moze deals <span style="color: #f1d981">Splash Damage</span>, there is a chance to add ammo to her equipped weapon's magazine or return a grenade.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Ammo Chance</span>: <span style="color: #3a8fbf">+2.0%</span> per level</li>
-                <li><span style="color: #f1d981">Grenade Chance</span>: <span style="color: #3a8fbf">+2.0%</span> per level</li>
-              </ul>
-            ` 
-        },
-        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: 'images/spec/Torgue Cross-Promotion.webp', 
-          desc: 
-            `
-              <td>All <span style="color: #f1d981">Splash Damage</span> dealt by Moze has a chance to double in size. Additionally, increases Splash Damage.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Splash Damage Chance</span>: <span style="color: #3a8fbf">+3.0%</span> per level</li>
-                <li><span style="color: #f1d981">Splash Damage</span>: <span style="color: #3a8fbf">+6.0%</span> per level</li>
-              </ul>
-            ` 
-        },
-        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
-          desc: 
-            `
-              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">Armor</span> and maximum <span style="color: #f1d981">Fuel</span>. Additionally, increases <span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Iron Bear/Iron Cub Armor</span>: <span style="color: #3a8fbf">+6.0%</span> per level</li>
-                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #3a8fbf">+4.0%</span> per level</li>
-                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #3a8fbf">+4.0%</span> per level</li>
-              </ul>
-            ` 
-        },
-      ]},
-      { required: 10, skills: [
         { id: 'dw_stickybombs', name: 'Shaped Charge', maxPts: 1, icon: 'images/spec/Shaped Charge.webp', type: 'augment', 
           desc: 
             `
@@ -738,31 +710,98 @@ const TREES = [
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Direct Hit Damage</span>: <span style="color: #3a8fbf">+35%</span></li>
               </ul>
+              <br>
+              <br>
+
+              <p><i>To be frank, I'm just being Ernest.</i></p>
             ` 
         },
-        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', 
+        { id: 'dw_means', name: 'Means of Destruction', maxPts: 3, icon: 'images/spec/Means of Destruction.webp', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> fires a single nuclear rocket that deals massive <span style="color: #f1d981">Radiation Splash Damage</span>.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> deals <span style="color: #f1d981">Splash Damage</span>, there 
+                is a chance to add ammo to her equipped weapon's magazine, with a smaller chance to return a grenade.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #3a8fbf">1</span></li>
-                <li><span style="color: #f1d981">Damage</span>: <span style="color: #3a8fbf">+600%</span></li>
+                <li><span style="color: #f1d981">Ammo Chance</span>: <span style="color: #3a8fbf">+3.33%</span> per level</li>
+                <li><span style="color: #f1d981">Grenade Chance</span>: <span style="color: #3a8fbf">+2.0%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_torguecrosspromotion', name: 'Torgue Cross-Promotion', maxPts: 5, icon: 'images/spec/Torgue Cross-Promotion.webp', 
+          desc: 
+            `
+              <td>All <span style="color: #f1d981">Splash Damage</span> dealt by Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> has a chance to 
+                <span style="color: #f1d981">Double</span> in size. Additionally, Moze and <span style="color: #e87f45">Iron Bear/Iron Cub</span> deal 
+                increased <span style="color: #f1d981">Splash Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Splash Damage</span>: <span style="color: #3a8fbf">+6%</span> per level</li>
+                <li><span style="color: #f1d981">Chance to double Splash Damage Radius</span>: <span style="color: #3a8fbf">+3%</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
+          desc: 
+            `
+              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">armor</span> 
+                and <span style="color: #f1d981">Maximum Fuel</span>, and increased <span style="color: #f1d981">Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Armor</span>: <span style="color: #3a8fbf">+4%</span> per level</li>
+                <li><span style="color: #f1d981">Maximum Fuel</span>: <span style="color: #3a8fbf">+5%</span> per level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #3a8fbf">+4%</span> per level</li>
+              </ul>
+            ` 
+        },
+      ]},
+      { required: 10, skills: [
+        { id: 'dw_longdead', name: 'Musical Chairs', maxPts: 1, icon: 'images/spec/Musical Chairs.webp', type: 'augment', 
+          desc: 
+            `
+              <td>Occasionally, the <span style="color: #e87f45">V-35</span> fires a <span style="color: #f1d981">Singularity Grenade</span>
+                that pulls in nearby enemies before exploding.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Singularity</span>: Every <span style = "color: #3a8fbf">7th</span> shot</li>
+              </ul>
+            ` 
+        },
+        { id: 'dw_heatseekhome', name: 'Active Tracking', maxPts: 1, icon: 'images/spec/Active Tracking.webp', type: 'augment', 
+          desc: 
+            `
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> now fires <span style="color: #f1d981">homing rockets</span> and
+                has increased <span style="color: #f1d981">Reload Speed</span> but <span style="color: #f1d981">halves</span> the magazine size. 
+                <br>
+                Hold down the <span style="color: #e87f45">Action Skill Button</span> and aim at enemies to designate up to <span style = "color: #3a8fbf">6</span> targets. 
+                <br>
+                Releasing the <span style="color: #e87f45">Fire Button</span> launches a volley of homing rockets at the designated targets.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Reload Speed</span>: <span style="color: #3a8fbf">+25%</span></li>
               </ul>
             ` 
         },
         { id: 'dw_pullthepins', name: 'Pull the Holy Pin', maxPts: 3, icon: 'images/spec/Pull the Holy Pin.webp', 
           desc: 
             `
-              <td>Moze's grenades have a chance to deal a <span style="color: #f1d981">Critical Hit</span>, dealing double damage.
+              <td>Moze's <span style="color: #f1d981">grenades</span> have a chance to deal a <span style="color: #f1d981">Critical Hit</span>, 
+                dealing greatly increased damage.
+              <br>
+              <br>
+
+              Sources of <span style="color: #f1d981">Critical Hit Damage</span> do not affect grenade <span style="color: #f1d981">Critical Hits</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Critical Hit Chance</span>: <span style="color: #3a8fbf">+10%</span> per level</li>
+                <li><span style="color: #f1d981">Critical Hit Damage</span>: <span style="color: #3a8fbf">+100%</span></li>
               </ul>
             ` 
         },
         { id: 'dw_autobear', name: 'Auto Bear', maxPts: 1, icon: 'images/spec/Auto Bear.webp', 
           desc: 
             `
-              <td>After Moze exits <span style="color: #e87f45">Iron Bear/Iron Cub</span>, it will remain deployed in place for a short time. While active, <span style="color: #e87f45">Auto Bear</span> will attack nearby enemies until its duration expires or it is destroyed.
+              <td>After Moze exits <span style="color: #e87f45">Iron Bear</span> or <span style="color: #e87f45">Iron Cub</span> ends, it will remain deployed 
+                in place for a short time. 
+              <br>
+              <br>
+              
+              While <span style="color: #e87f45">Auto Bear</span> is active, it will target and attack nearby enemies until its duration expires before charging at an
+                enemy and <span style="color: #f1d981">self destructing</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Auto Bear Duration</span>: <span style="color: #3a8fbf">15 seconds</span></li>
               </ul>
@@ -770,28 +809,35 @@ const TREES = [
         },
       ]},
       { required: 15, skills: [
-        { id: 'dw_longdead', name: 'Musical Chairs', maxPts: 1, icon: 'images/spec/Musical Chairs.webp', type: 'augment', 
+        { id: 'dw_lockspeed', name: 'Lock and Speedload', maxPts: 1, icon: 'images/spec/Lock and Speedload.avif', type: 'augment', 
           desc: 
             `
-              <td>Occasionally, the <span style="color: #e87f45">V-35</span> fires a singularity grenade that pulls in nearby enemies.
+              <td>The <span style="color: #e87f45">V-35's</span> <span style="color: #f1d981">Reload Speed</span> is greatly increased and it fires a 
+                <span style="color: #f1d981">5-round burst</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Every 7th Shot</span></li>
+                <li><span style="color: #f1d981">Reload Speed</span>: <span style="color: #3a8fbf">+25%</span></li>
               </ul>
             ` 
         },
-        { id: 'dw_heatseekhome', name: 'Active Tracking', maxPts: 1, icon: 'images/spec/Active Tracking.webp', type: 'augment', 
+        { id: 'dw_targetsoft', name: 'Target Softening', maxPts: 1, icon: 'images/spec/Target Softening.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> can now lock on to targets. Holding down fire guides homing rockets towards locked targets. Firing rockets in this way increases Fire Rate.
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> deals reduced damage, but fires a <span style="color: #f1d981">6-rocket 
+                spread</span> and <span style="color: #f1d981">halves</span> the magazine size. Additionally, enemies hit by the <span style="color: #e87f45">
+                  Vanquisher Rocket Pod</span> take <span style="color: #f1d981">increased damage</span> from all sources.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Reload Time</span>: <span style="color: #3a8fbf">-25%</span></li>
+                <li><span style="color: #f1d981">Rockets per Volley</span>: <span style="color: #3a8fbf">6</span></li>
+                <li><span style="color: #f1d981">Hardpoint Damage</span>: <span style="color: #3a8fbf">-15%</span></li>
+                <li><span style="color: #f1d981">Enemy Damage Taken</span>: <span style="color: #3a8fbf">+15%</span></li>
               </ul>
             ` 
-        },
+        },        
         { id: 'dw_vampyr', name: 'Vampyr', maxPts: 5, icon: 'images/spec/Vampyr.webp', effect: 'Core survival skill — sustain on splash builds',
           desc: 
             `
-              <td>Whenever Moze damages an enemy with a grenade, she <span style="color: #f1d981">Restores Health</span> for every enemy hit. <span style="color: #e87f45">Iron Bear/Iron Cub</span> restores health when dealing splash damage.
+              <td>Whenever Moze damages an enemy with a thrown grenade or <span style="color: #e87f45">Iron Bear/Iron Cub</span> deals area damage, 
+                for every enemy hit, she <span style="color: #f1d981">restores</span> a portion of their missing health.
+                 <span style="color: #e87f45">Iron Bear/Iron Cub</span> receive <span style="color: #f1d981">half</span> of this bonus.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Restored Health</span>: <span style="color: #3a8fbf">+4.0%</span> of missing health per level</li>
                 <li><span style="color: #f1d981">Iron Bear/Iron Cub Restored Health</span>: <span style="color: #3a8fbf">+2.0%</span> of missing armor per level</li>
@@ -801,7 +847,7 @@ const TREES = [
         { id: 'dw_explosive', name: "Why Can't I Carry All These Grenades?", maxPts: 3, icon: "images/spec/Why Can't I Carry All These Grenades.webp", 
           desc: 
             `
-              <td>Increases Moze's <span style="color: #f1d981">Grenade Capacity</span>.
+              <td>Increases Moze's <span style="color: #f1d981">grenade carrying capacity</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Grenade Capacity</span>: <span style="color: #3a8fbf">+1</span> per level</li>
               </ul>
@@ -809,23 +855,13 @@ const TREES = [
         },
       ]},
       { required: 20, skills: [
-        { id: 'dw_lockspeed', name: 'Lock and Speedload', maxPts: 1, icon: 'images/spec/Lock and Speedload.webp', type: 'augment', 
+        { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">V-35</span>'s reload speed is greatly increased and it fires a 3-round burst.
+              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> fires a single nuclear rocket that deals massive <span style="color: #f1d981">Radiation Splash Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Reload Speed</span>: <span style="color: #3a8fbf">+50%</span></li>
-              </ul>
-            ` 
-        },
-        { id: 'dw_targetsoft', name: 'Target Softening', maxPts: 1, icon: 'images/spec/Target Softening.webp', type: 'augment', 
-          desc: 
-            `
-              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> deals reduced damage per rocket, but fires a 6-rocket volley. Enemies hit by these rockets take <span style="color: #f1d981">Increased Damage</span> from all sources.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Rockets per Volley</span>: <span style="color: #3a8fbf">6</span></li>
-                <li><span style="color: #f1d981">Hardpoint Damage</span>: <span style="color: #3a8fbf">-15%</span></li>
-                <li><span style="color: #f1d981">Enemy Damage Taken</span>: <span style="color: #3a8fbf">+15%</span></li>
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #3a8fbf">1</span></li>
+                <li><span style="color: #f1d981">Damage</span>: <span style="color: #3a8fbf">+600%</span></li>
               </ul>
             ` 
         },
@@ -995,7 +1031,7 @@ const TREES = [
         },
       ]},
       { required: 15, skills: [
-        { id: 'sor_corrosive_sabot', name: 'Corrosive Sabot Round', maxPts: 1, icon: 'images/spec/Corrosive Sabot Round.webp', type: 'augment', 
+        { id: 'sor_corrosive_sabot', name: 'Corrosive Sabot Round', maxPts: 1, icon: 'images/spec/Corrosive Sabot Round.avif', type: 'augment', 
           desc: 
             `
               <td>The <span style="color: #e87f45">Railgun</span> fires special rounds that deal reduced damage but explode after a short delay, dealing <span style="color: #f1d981">Corrosive Damage</span>. Fuel Drain and Magazine Size are improved.
@@ -1290,7 +1326,7 @@ const TREES = [
                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">6 seconds</span></li>
               </ul>
               <br><br>
-              <p><i>I've been in the slash many times.</i></p>
+              <p><i>I've been in the slash many times.</i></p>or  Iron BeaIroiirir     ddd
             ` 
         },
       ]},
@@ -1381,10 +1417,13 @@ function showTooltip(e, skill) {
   document.getElementById('tooltip-overlay').style.display = 'block';
   document.getElementById('tt-name').textContent = skill.name;
   let meta = '';
-  if (skill.type === 'augment') meta += 'Augment · ';
-  else if (skill.type === 'weapon') meta += 'Iron Bear/Iron Cub Weapon · ';
-  else if (skill.maxPts > 1) meta += `Max ${skill.maxPts} pts · `;
-  meta += `${state[skill.id]}/${skill.maxPts} points`;
+  if (skill.type === 'augment') meta += 'Augment';
+  else if (skill.type === 'weapon') meta += 'Iron Bear/Iron Cub Weapon';
+  else if (skill.maxPts > 1) 
+  {
+    meta += `Max ${skill.maxPts} pts · `;
+    meta += `${state[skill.id]}/${skill.maxPts} points`;
+  }
   document.getElementById('tt-meta').innerHTML = `<span class="pts">${meta}</span>`;
 
   const pts = state[skill.id];
