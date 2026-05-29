@@ -1022,34 +1022,40 @@ const TREES = [
         { id: 'sor_capacitive', name: 'Capacitive Armature', maxPts: 1, icon: 'images/spec/Capacitive Armature.webp', type: 'augment', 
           desc: 
             `
-              <td>When the <span style="color: #e87f45">Railgun</span> hits an enemy, its electrical current chains to nearby enemies, dealing reduced damage to secondary targets.
+              <td>When the <span style="color: #e87f45">Railgun</span> hits an enemy, it <span style="color: #f1d981">chains</span> to nearby enemies, dealing reduced 
+                <span style="color: #f1d981">Shock Damage</span> to more targets.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Splinter Damage</span>: <span style="color: #d44f30">-75%</span></li>
+                <li><span style="color: #f1d981">Splinter Damage</span>: <span style="color: #d44f30">-30%</span></li>
               </ul>
             ` 
         },
-        { id: 'sor_closetime', name: 'Close the Distance', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', 
+        { id: 'sor_closetime', name: 'Wild Swing', maxPts: 1, icon: 'images/spec/Wild Swing.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Bear Fist</span> shoots forward, pulling enemies to <span style="color: #e87f45">Iron Bear/Iron Cub</span> or pulling <span style="color: #e87f45">Iron Bear/Iron Cub</span> to massive enemies. Deals Shock Damage.
+              <td>Whenever <span style="color: #e87f45">Bear Fist</span> hits an enemy, it deals random bonus <span style="color: #f1d981">Elemental Damage</span> to that enemy and all 
+                enemies nearby. The explosion cannot directly harm Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Elemental Damage</span>: <span style="color: #d44f30">+35%</span> of damage dealt</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_whoopass', name: 'Full Can of Whoop-Ass', maxPts: 1, icon: 'images/spec/Full Can of Whoop-Ass.webp', 
+          desc: 
+            `
+              <td>Entering <span style="color: #e87f45">Iron Bear</span> or deploying <span style="color: #e87f45">Iron Cub</span> causes Moze's and her allies' shields to 
+                immediately begin <span style="color: #f1d981">recharging</span> at an increased <span style="color: #f1d981">Shield Recharge Rate</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shield Recharge Rate</span>: <span style="color: #d44f30">+25%</span></li>
+              </ul>
             ` 
         },
         { id: 'sor_experimental', name: 'Experimental Munitions', maxPts: 1, icon: 'images/spec/Experimental Munitions.webp', 
           desc: 
             `
-              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> scores a Critical Hit, they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
+              <td>Whenever Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span> scores a <span style="color: #f1d981">Critical Hit</span>, they deal bonus 
+                <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #d44f30">+10%</span> of damage dealt</li>
-              </ul>
-            ` 
-        },
-        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: 'images/spec/Behind the Iron Curtain.webp', 
-          desc: 
-            `
-              <td>Moze's <span style="color: #f1d981">Shield Recharge Delay</span> is reduced, and her <span style="color: #f1d981">Shield Recharge Rate</span> is increased.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Shield Recharge Rate</span>: <span style="color: #d44f30">+7%</span> per level</li>
-                <li><span style="color: #f1d981">Shield Recharge Delay</span>: <span style="color: #d44f30">-7.0%</span> per level</li>
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #d44f30">+15%</span> of Damage Dealt</li>
               </ul>
             ` 
         },
@@ -1058,53 +1064,94 @@ const TREES = [
         { id: 'sor_corrosive_sabot', name: 'Corrosive Sabot Round', maxPts: 1, icon: 'images/spec/Corrosive Sabot Round.avif', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Railgun</span> fires special rounds that deal reduced damage but explode after a short delay, dealing <span style="color: #f1d981">Corrosive Damage</span>. Fuel Drain and Magazine Size are improved.
+              <td>The <span style="color: #e87f45">Railgun</span> now fires a specialty round that deals reduced damage and explodes after a short delay.
+                <br><br>
+                
+              <span style="color: #e87f45">Railgun</span> shots have reduced <span style="color: #f1d981">Fuel Drain</span> and the <span style="color: #f1d981">Magazine Size</span> 
+                is increased. The explosion cannot directly harm Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Converts to Corrosive Damage</span></li>
-                <li><span style="color: #f1d981">Railgun Damage</span>: <span style="color: #d44f30">-50%</span></li>
                 <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #d44f30">-50%</span></li>
+                <li><span style="color: #f1d981">Railgun Damage</span>: <span style="color: #d44f30">-15%</span></li>
                 <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #d44f30">+2</span></li>
+                <li><span style="color: #f1d981">Converts to Corrosive Damage</span></li>
               </ul>
             ` 
         },
+        { id: 'sor_closetime', name: 'Close the Distance', maxPts: 1, icon: 'images/spec/Close the Distance.webp', type: 'augment', 
+          desc: 
+            `
+              <td>Instead of punching, the <span style="color: #e87f45">Bear Fist</span> now launches its first forward and grabs enemies at greatly increased
+                range, dealing <span style="color: #f1d981">Shock Damage</span> and <span style="color: #f1d981">pulling</span> them back to <span style="color: #e87f45">Iron Bear</span>.
+                <br><br>
+
+                <p><i>Step into my office.</i></p>
+            ` 
+        },        
+        { id: 'sor_behindcurtain', name: 'Behind the Iron Curtain', maxPts: 3, icon: 'images/spec/Behind the Iron Curtain.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Shield Recharge Delay</span> is reduced, and her <span style="color: #f1d981">Shield Recharge 
+                Rate</span> is increased.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shield Recharge Rate</span>: <span style="color: #d44f30">+11%</span> per level</li>
+                <li><span style="color: #f1d981">Shield Recharge Delay</span>: <span style="color: #d44f30">-12% / -21% / -28%</span></li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: 'images/spec/Desperate Measures.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Gun Damage</span> and <span style="color: #e87f45">Iron Bear's/Iron Cub's</span> <span style="color: #f1d981">Hard Point 
+                Damage</span> are increased depending on how low their individual health is. The lower the health, the greater the increase.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+17% / +33% / +50%</span></li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #d44f30">+17% / +33% / +50%</span></li>
+              </ul>
+            ` 
+        },
+      ]},
+      { required: 20, skills: [
         { id: 'sor_shockhammer', name: 'Shockhammer', maxPts: 1, icon: 'images/spec/Shockhammer.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Bear Fist</span> hits deal additional <span style="color: #f1d981">Shock Damage</span> and chain electricity to nearby enemies. Firing Bear Fist creates a sustained chain lightning field.
+              <td>The <span style="color: #e87f45">Bear Fist</span> is now capable of sustained rapid fire punching.
+                <br><br>
+              Additionally, <span style="color: #e87f45">Bear Fist</span> has reduced <span style="color: #f1d981">Fuel Drain</span>, deals <span style="color: #f1d981">Bonus Shock 
+                Damage</span> with each hit, and deals <span style="color: #f1d981">reduced damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shock Damage</span>: <span style="color: #d44f30">+60%</span> of damage dealt</li>
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #d44f30">-40%</span></li>
+              </ul>
             ` 
         },
         { id: 'sor_phalanx', name: 'Phalanx Doctrine', maxPts: 5, icon: 'images/spec/Phalanx Doctrine.webp', 
           desc: 
             `
-              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy grants Moze a stack of Phalanx Doctrine. Each stack increases Moze's <span style="color: #f1d981">Maximum Shield</span> and <span style="color: #f1d981">Gun Damage</span>. Stacks are unlimited.
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> After killing an enemy, Moze gains a stack of Phalanx Doctrine. For every stack of <span style="color: #f1d981">Phalanx Doctrine</span>, 
+                Moze's <span style="color: #f1d981">Maximum Shield</span> and <span style="color: #f1d981">Gun Damage</span> are increased while <span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased 
+                <span style="color: #f1d981">Damage</span> (for their left arm weapons only). Each stack lasts for <span style="color: #f1d981">30 seconds</span>.
+                <br><br>
+
+              <span style="color: #f1d981">There is no stack limit.</span>
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Max Shields</span>: <span style="color: #d44f30">+3.0%</span> per stack / level</li>
-                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+2.0%</span> per stack / level</li>
-                <li><span style="color: #f1d981">Duration</span>: <span style="color: #d44f30">30 seconds</span></li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+2%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #d44f30">+2%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Max Shields</span>: <span style="color: #d44f30">+3%</span> per stack / level</li>
+                <li><span style="color: #f1d981">Phalanx Doctrine Duration</span>: <span style="color: #d44f30">30 seconds</span></li>
               </ul>
             ` 
         },
         { id: 'sor_force', name: 'Force Feedback', maxPts: 1, icon: 'images/spec/Force Feedback.webp', 
           desc: 
             `
-              <td>Whenever Moze scores a <span style="color: #f1d981">Critical Hit</span>, her shield immediately begins recharging.
-            ` 
-        },
-      ]},
-      { required: 20, skills: [
-        { id: 'sor_wildswing', name: 'Wild Swing', maxPts: 1, icon: 'images/spec/Wild Swing.webp', type: 'augment', 
-          desc: 
-            `
-              <td>The <span style="color: #e87f45">Bear Fist</span> hits deal random elemental <span style="color: #f1d981">Splash Damage</span> to targets and surrounding enemies.
-            ` 
-        },
-        { id: 'sor_desperate', name: 'Desperate Measures', maxPts: 3, icon: 'images/spec/Desperate Measures.webp', 
-          desc: 
-            `
-              <td>Moze's <span style="color: #f1d981">Gun Damage</span> is increased based on how low her health is. The lower her current health, the larger the bonus.
+              <td>Whenever Moze scores a <span style="color: #f1d981">Critical Hit</span>, her shields immediately begin <span style="color: #f1d981">recharging</span> and she instantly <span style="color: #f1d981">
+                regains a portion of her shield</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #3a8fbf">Up to +11%</span> per level</li>
+                <li><span style="color: #f1d981">Shield Restored</span>: <span style="color: #d44f30">10%</span> of Max Shield Value</li>
               </ul>
+              <br><br>
+
+              <p><i>Just click on their heads.</i></p>
             ` 
         },
       ]},
@@ -1112,10 +1159,13 @@ const TREES = [
         { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp', effect: 'KEY META SKILL — powerful shield pop trigger',
           desc: 
             `
-              <td>Whenever Moze's shield is completely depleted, she instantly restores a portion of her shield and gains increased <span style="color: #f1d981">Gun Damage</span> for a short time. This skill can only trigger after a full recharge.
+              <td>Whenever Moze's shield is completely depleted, she instantly restores a portion of her <span style="color: #f1d981">shield</span> and her <span style="color: #f1d981">Gun Damage</span> is increased
+                for a short time.
+                <br><br>
+              This skill can only trigger after Moze's shields have fully recharged.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Shield Restored</span>: <span style="color: #d44f30">40%</span> of Max Shield</li>
                 <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+30%</span></li>
+                <li><span style="color: #f1d981">Shield Restored</span>: <span style="color: #d44f30">40%</span> of Max Shield</li>
                 <li><span style="color: #f1d981">Tenacious Defense Duration</span>: <span style="color: #d44f30">30 seconds</span></li>
               </ul>
             ` 
@@ -1350,7 +1400,7 @@ const TREES = [
                 <li><span style="color: #f1d981">Duration</span>: <span style="color: #c229ba">6 seconds</span></li>
               </ul>
               <br><br>
-              <p><i>I've been in the slash many times.</i></p>or  Iron BeaIroiirir     ddd
+              <p><i>I've been in the slash many times.</i></p>
             ` 
         },
       ]},
