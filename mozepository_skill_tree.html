@@ -667,13 +667,14 @@ const TREES = [
                 they deal bonus <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #3a8fbf">+3%</span> per level</li>
+                <li><span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #7b191a">x31.0</span></li>
               </ul>
             ` 
         },
         { id: 'dw_deadlines', name: 'Deadlines', maxPts: 3, icon: 'images/spec/Deadlines.webp', 
           desc: 
             `
-              <td>Firing <span style="color: #e87f45">Iron Bear Weapons</span><span style="color: #f1d981">drains less Fuel</span>. 
+              <td>Firing <span style="color: #e87f45">Iron Bear Weapons</span> <span style="color: #f1d981">drains less Fuel</span>. 
                 <br>
                 Killing an enemy while <span style="color: #e87f45">Iron Bear/Iron Cub</span> is active increases 
                 <span style="color: #f1d981">Fuel</span>. This skill has diminishign returns.
@@ -826,8 +827,7 @@ const TREES = [
                 spread</span> and <span style="color: #f1d981">halves</span> the magazine size. Additionally, enemies hit by the <span style="color: #e87f45">
                   Vanquisher Rocket Pod</span> take <span style="color: #f1d981">increased damage</span> from all sources.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Rockets per Volley</span>: <span style="color: #3a8fbf">6</span></li>
-                <li><span style="color: #f1d981">Hardpoint Damage</span>: <span style="color: #3a8fbf">-15%</span></li>
+                <li><span style="color: #f1d981">Hard Point Damage</span>: <span style="color: #3a8fbf">-74%</span></li>
                 <li><span style="color: #f1d981">Enemy Damage Taken</span>: <span style="color: #3a8fbf">+15%</span></li>
               </ul>
             ` 
@@ -858,23 +858,30 @@ const TREES = [
         { id: 'dw_hammerdown', name: 'Hammerdown Protocol', maxPts: 1, icon: 'images/spec/Hammerdown Protocol.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Vanquisher Rocket Pod</span> fires a single nuclear rocket that deals massive <span style="color: #f1d981">Radiation Splash Damage</span>.
+              <td>Instead of a volley of conventiuonal rockets, the <span style="color: #e87f45">Vanquisher Rocket Pod</span> fires a single nuclear rocket, dealing massive <span style="color: #f1d981">Radiation Damage</span>.
+                <br>
+                This Hard point cannot directly harm Moze or <span style="color: #e87f45">Iron Bear/Iron Cub</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #3a8fbf">1</span></li>
                 <li><span style="color: #f1d981">Damage</span>: <span style="color: #3a8fbf">+600%</span></li>
+                <li><span style="color: #f1d981">Magazine Size</span>: <span style="color: #3a8fbf">1</span></li>
               </ul>
             ` 
         },
         { id: 'dw_tothelast', name: 'To the Last', maxPts: 1, icon: 'images/spec/To the Last.webp', 
           desc: 
             `
-              <td>Moze gains the ability to <span style="color: #f1d981">Throw Grenades</span> while in Fight For Your Life. If she threw a grenade before entering FFYL, a grenade is refunded.
+              <td>Moze gains the ability to throw grenades while in <span style="color: #f1d981">Fight For Your Life</span>. If she threw a grenade before gaining <span style="color: #f1d981">Second Wind</span>,
+                a grenade is refunded.
+              <br>
+              <br>
+
+              <p><i>The greatest enemy is one with nothing to lose... and a  grenade. </i></p>
             ` 
         },
         { id: 'dw_explosive_punct', name: 'Explosive Punctuation', maxPts: 5, icon: 'images/spec/Explosive Punctuation.webp', 
           desc: 
             `
-              <td>When Moze deals <span style="color: #f1d981">Splash Damage</span>, her Action Skill Cooldown Rate is briefly increased.
+              <td>When Moze deals <span style="color: #f1d981">Splash Damage</span>, her <span style="color: #f1d981">Action Skill Cooldown Rate</span> is briefly increased.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Action Skill Cooldown Rate</span>: <span style="color: #3a8fbf">+4%</span> per level</li>
               </ul>
@@ -885,10 +892,11 @@ const TREES = [
         { id: 'dw_shortfuse', name: 'Short Fuse', maxPts: 1, icon: 'images/spec/Short Fuse.webp', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper',
           desc: 
             `
-              <td>Whenever Moze deals Gun Damage, there is a chance of a <span style="color: #f1d981">Secondary Explosion</span> centered on the target.
+              <td>Whenever Moze deals <span style="color: #f1d981">Gun Damage</span>, there is a chance of a <span style="color: #f1d981">secondary explosion</span> centered on the target.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Trigger Chance</span>: <span style="color: #3a8fbf">20%</span></li>
                 <li><span style="color: #f1d981">Secondary Explosion Damage</span>: <span style="color: #3a8fbf">75%</span> of Gun Damage</li>
+                <li><span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #7b191a">x4.5</span></li>
               </ul>
             ` 
         },
@@ -905,40 +913,46 @@ const TREES = [
       name: 'Railgun', 
       icon: 'images/spec/Railgun.webp', 
       desc: `
-        The <span style="color: #e87f45">Railgun</span> fires electrified high-velocity projectiles that deal <b>Shock Damage</b>.
+        The <span style="color: #e87f45">Railgun</span> fires electrified high-velocity projectiles that deal <span style="color: #f1d981">Shock Damage</span>.
         <br><br>
         <i>It's like a bullet, only bigger. And faster. And wrapped in lightning.</i> 
       `
     },
     tiers: [
       { required: 0, skills: [
-        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: 'images/spec/Armored Infantry.webp', 
+        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: 'images/spec/Selfless Vengeance.webp', 
           desc: 
             `
-              <td>While Moze's shields are active, she gains <span style="color: #f1d981">Damage Reduction</span> and increased <span style="color: #f1d981">Gun Damage</span>.
+              <td>Whenever Moze reloads, she loses a small portion of her health and grants bonus <span style="color: #f1d981">
+                Incendiary Damage</span> to her and her allies' rounds for a few seconds.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Damage Reduction</span>: <span style="color: #d44f30">+3%</span> per level</li>
-                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+3%</span> per level</li>
+                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #d44f30">+3%</span> of gun damage dealt per level</li>
+                <li><span style="color: #f1d981">Current Health Removed</span>: <span style="color: #d44f30">1%</span> per level</li>
+                <li><span style="color: #f1d981">Selfless Vengeance Duration</span>: <span style="color: #d44f30">6 seconds</span></li>
               </ul>
             ` 
         },
         { id: 'sor_security', name: 'Security Bear', maxPts: 1, icon: 'images/spec/Security Bear.webp', 
           desc: 
             `
-              <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains a <span style="color: #f1d981">Bubble Shield</span> that reduces incoming damage. The bubble shield possesses its own capacity and recharge functionality.
+              <td><span style="color: #e87f45">Iron Bear</span> gains a <span style="color: #f1d981">bubble shield</span> that reduces damage taken. 
+              <br><br>
+              The shield deactivates if it sustains too much damage, reactivating after a short cooldown. If <span style="color: #e87f45">Iron Cub</span> is
+                equipped, it gains <span style="color: #f1d981">Damage Reduction</span> instead.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Bubble Shield Capacity</span>: <span style="color: #d44f30">50%</span> of Iron Bear/Iron Cub Max Armor</li>
+                <li><span style="color: #f1d981">bubble Recharge Delay</span>: <span style="color: #d44f30">5 seconds</span></li>
+                <li><span style="color: #d44f30">50%</span><span style="color: #f1d981"> Iron Bear Max Health added as Shields</span></li>
+                <li><span style="color: #f1d981">Iron Cub Damage Reduction</span>: <span style="color: #d44f30">+50%</span></li>
               </ul>
             ` 
         },
-        { id: 'sor_selfless', name: 'Selfless Vengeance', maxPts: 5, icon: 'images/spec/Selfless Vengeance.webp', 
+        { id: 'sor_armored', name: 'Armored Infantry', maxPts: 5, icon: 'images/spec/Armored Infantry.webp', 
           desc: 
             `
-              <td>Whenever Moze reloads, she loses a small portion of her current health and grants bonus <span style="color: #f1d981">Incendiary Damage</span> to her and her allies' weapons for a short time.
+              <td>While Moze's shields are active, she gains <span style="color: #f1d981">Damage Reduction</span> and increased <span style="color: #f1d981">Gun Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Current Health Removed</span>: <span style="color: #d44f30">1.0%</span> per level</li>
-                <li><span style="color: #f1d981">Bonus Incendiary Damage</span>: <span style="color: #d44f30">+3.0%</span> of gun damage dealt</li>
-                <li><span style="color: #f1d981">Selfless Vengeance Duration</span>: <span style="color: #d44f30">5 seconds</span></li>
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+3%</span> per level</li>
+                <li><span style="color: #f1d981">Damage Reduction</span>: Roughly <span style="color: #d44f30">+3%</span> per level</li>
               </ul>
             ` 
         },
@@ -947,49 +961,59 @@ const TREES = [
         { id: 'sor_bearfist', name: 'Bear Fist', maxPts: 1, icon: 'images/spec/Bear Fist.webp', type: 'weapon', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Bear Fist</span> is a pneumatic-driven fist that deals massive close-range melee damage.
+              <td>The <span style="color: #e87f45">Bear Fist</span> is a pneumatic-driven fist that deals massive damage to a single target at close range.
               <br><br>
-              <p><i>The direct approach.</i></p>
+
+              <p><i>Vladof supports the right to bear arms.</i></p>
             ` 
         },
         { id: 'sor_hellorails', name: 'Hell on Rails', maxPts: 1, icon: 'images/spec/Hell on Rails.webp', type: 'augment', 
           desc: 
             `
-              <td>The <span style="color: #e87f45">Railgun</span> fires rounds that deal <span style="color: #f1d981">Incendiary Damage</span>, but have increased Fuel Drain per shot.
+              <td>The <span style="color: #e87f45">Railgun</span> now fires superheated rounds that deal <span style="color: #f1d981">Incendiary Damage</span>, 
+                but have increased <span style="color: #f1d981">Fuel Drain</span> per shot.
               <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #d44f30">+80%</span></li>
                 <li><span style="color: #f1d981">Converts to Incendiary Damage</span></li>
-                <li><span style="color: #f1d981">Fuel Drain</span>: <span style="color: #d44f30">+30%</span></li>
-              </ul>
-            ` 
-        },
-        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: 'images/spec/Vladof Ingenuity.webp', 
-          desc: 
-            `
-              <td>Moze's <span style="color: #f1d981">Maximum Shield</span> is increased, and she gains resistance to <span style="color: #f1d981">Shock Damage</span>.
-              <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Max Shield</span>: <span style="color: #d44f30">+6.0%</span> per level</li>
-                <li><span style="color: #f1d981">Shock Damage Resistance</span>: <span style="color: #d44f30">+15.0%</span> per level</li>
               </ul>
             ` 
         },
         { id: 'sor_drowning', name: 'Drowning in Brass', maxPts: 5, icon: 'images/spec/Drowning in Brass.webp', 
           desc: 
             `
-              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy grants Moze a stack of Drowning in Brass. Each stack reduces Fire Rate but increases <span style="color: #f1d981">Gun Damage</span> for her and her allies.
+              <td><span style="color: #ba0f3c"><b>Kill Skill.</b></span> Killing an enemy grants Moze a stack of Drowning in Brass. 
+              <br><br>
+              For each stack of <span style="color: #f1d981">Drowning in Brass</span>, Moze's <span style="color: #f1d981">Fire Rate</span> is reduced, but <span style="color: #f1d981">Gun Damage</span> is increased
+                for both her and her allies.
+
               <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+4%</span> per stack</li>
+                <li><span style="color: #f1d981">Iron Bear/Iron Cub Damage</span>: <span style="color: #d44f30">+4%</span> per stack</li>
                 <li><span style="color: #f1d981">Moze Fire Rate</span>: <span style="color: #d44f30">-0.5%</span> per stack</li>
-                <li><span style="color: #f1d981">Gun Damage</span>: <span style="color: #d44f30">+4.0%</span> per stack</li>
-                <li><span style="color: #f1d981">Max Stacks</span>: <span style="color: #d44f30">3</span></li>
-                <li><span style="color: #f1d981">Duration</span>: <span style="color: #d44f30">15 seconds</span></li>
+                <li><span style="color: #f1d981">Max Drowning in Brass Stacks</span>: <span style="color: #d44f30">3</span></li>
+                <li><span style="color: #f1d981">Drowning in Brass Duration</span>: <span style="color: #d44f30">15 seconds</span></li>
               </ul>
             ` 
         },
         { id: 'sor_thin', name: 'Thin Red Line', maxPts: 3, icon: 'images/spec/Thin Red Line.webp', 
           desc: 
             `
-              <td>A portion of Moze's health is reserved and cannot be restored, but her <span style="color: #f1d981">Maximum Shield</span> is increased by that same amount.
+              <td>A portion of Moze's health is <span style="color: #f1d981">Reserved</span> and cannot be restored, but her <span style="color: #f1d981">
+                Maximum Shield</span> is increased by the same amount.
               <ul style="margin: 0; padding-left: 1em;">
-                <li><span style="color: #f1d981">Max Health Reserved</span>: <span style="color: #d44f30">+20%</span> per level</li>
+                <li><span style="color: #d44f30">+20%</span> <span style="color: #f1d981">Max Health Reserved and Added to Max Shields</span> per level</li>
+              </ul>
+            ` 
+        },
+        { id: 'sor_vladof', name: 'Vladof Ingenuity', maxPts: 5, icon: 'images/spec/Vladof Ingenuity.webp', 
+          desc: 
+            `
+              <td>Moze's <span style="color: #f1d981">Maximum Shield</span> and <span style="color: #f1d981">Shield Recharge Rate</span> are increased, and she gains 
+                resistance to <span style="color: #f1d981">Shock Damage</span>.
+              <ul style="margin: 0; padding-left: 1em;">
+                <li><span style="color: #f1d981">Shield Recharge Rate</span>: <span style="color: #d44f30">+4%</span> per level</li>
+                <li><span style="color: #f1d981">Max Shield</span>: <span style="color: #d44f30">+6%</span> per level</li>
+                <li><span style="color: #f1d981">Shock Damage Resistance</span>: <span style="color: #d44f30">+15% / +26% / +35% / +42% / +47% / +52%</span></li>
               </ul>
             ` 
         },
@@ -1147,7 +1171,7 @@ const TREES = [
                 <span style="color: #f1d981">Incendiary Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Bonus Damage</span>: <span style="color: #c229ba">+5%</span> of Gun Damage per level</li>
-                <span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #c229ba">x31.0</span></li>
+                <li><span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #7b191a">x31.0</span></li>
               </ul>
             ` 
         },
@@ -1212,7 +1236,7 @@ const TREES = [
                 triggers a nuclear explosion</span>, dealing massive <span style="color: #f1d981">Radiation Damage</span>.
               <ul style="margin: 0; padding-left: 1em;">
                 <li><span style="color: #f1d981">Damage</span>: Up to <span style="color: #c229ba">60652</span>; level dependant</li>
-                <span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #c229ba">x31.0</span></li>
+                <span style="color: #e87f45">Bonus Mayhem Scaling</span>: Up to <span style="color: #7b191a">x31.0</span></li>
                
               </ul>
             ` 
