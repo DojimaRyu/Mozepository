@@ -740,7 +740,7 @@ const TREES = [
               </ul>
             ` 
         },
-        { id: 'dw_shaped', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
+        { id: 'dw_ssb', name: 'Stainless Steel Bear', maxPts: 5, icon: 'images/spec/Stainless Steel Bear.webp', 
           desc: 
             `
               <td><span style="color: #e87f45">Iron Bear/Iron Cub</span> gains increased <span style="color: #f1d981">armor</span> 
@@ -844,7 +844,7 @@ const TREES = [
               </ul>
             ` 
         },
-        { id: 'dw_explosive', name: "Why Can't I Carry All These Grenades?", maxPts: 3, icon: "images/spec/Why Can't I Carry All These Grenades.webp", 
+        { id: 'dw_carrygrenades', name: "Why Can't I Carry All These Grenades?", maxPts: 3, icon: "images/spec/Why Can't I Carry All These Grenades.webp", 
           desc: 
             `
               <td>Increases Moze's <span style="color: #f1d981">grenade carrying capacity</span>.
@@ -889,7 +889,7 @@ const TREES = [
         },
       ]},
       { required: 25, skills: [
-        { id: 'dw_shortfuse', name: 'Short Fuse', maxPts: 1, icon: 'images/spec/Short Fuse.webp', effect: 'KEY META SKILL — pairs powerfully with Mindsweeper',
+        { id: 'dw_shortfuse', name: 'Short Fuse', maxPts: 1, icon: 'images/spec/Short Fuse.webp',
           desc: 
             `
               <td>Whenever Moze deals <span style="color: #f1d981">Gun Damage</span>, there is a chance of a <span style="color: #f1d981">secondary explosion</span> centered on the target.
@@ -1156,7 +1156,7 @@ const TREES = [
         },
       ]},
       { required: 25, skills: [
-        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp', effect: 'KEY META SKILL — powerful shield pop trigger',
+        { id: 'sor_tenacious', name: 'Tenacious Defense', maxPts: 1, icon: 'images/spec/Tenacious Defense.webp',
           desc: 
             `
               <td>Whenever Moze's shield is completely depleted, she instantly restores a portion of her <span style="color: #f1d981">shield</span> and her <span style="color: #f1d981">Gun Damage</span> is increased
@@ -1414,28 +1414,243 @@ TREES.forEach(t => t.tiers.forEach(tier => tier.skills.forEach(s => { state[s.id
 function getSkillDesc(skill, pts) {
   const level = pts || 0;
 
+  // ── Helpers ──────────────────────────────────────────────────
+  const bm  = (v, u='%') => `<span style="color:#6a9e3a">${v}${u}</span>`;
+  const dw  = (v, u='%') => `<span style="color:#3a8fbf">${v}${u}</span>`;
+  const sor = (v, u='%') => `<span style="color:#d44f30">${v}${u}</span>`;
+  const ic  = (v, u='%') => `<span style="color:#c229ba">${v}${u}</span>`;
+  const yel = (v)        => `<span style="color:#f1d981">${v}</span>`;
+  const ora = (v)        => `<span style="color:#e87f45">${v}</span>`;
+
+  const li  = (label, val) => `<li>${yel(label)}: ${val}</li>`;
+  const ul  = (...items)   => `<ul style="margin:0;padding-left:1em;">${items.join('')}</ul>`;
+
   switch (skill.id) {
-    case 'dw_fitsd': 
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><strong>Bonus Incendiary Damage</strong>: <span style="color:#3a8fbf">+${3 * level}%</span></li>
-        </ul>
-      `;
+
+    // bottomless mags
+
+    case 'bm_cloud':
+      return ul(
+        li('Bonus Incendiary Damage', bm(`+${(2.25 * level).toFixed(2)}`))
+      );
+
+    case 'bm_matched':
+      return ul(
+        li('Heat Per Shot',  bm(`-${2 * level}`)),
+        li('Magazine Size',  bm(`+${2 * level}`))
+      );
+
+    case 'bm_stoke':
+      return ul(
+        li('Incendiary Damage', bm(`+${10 * level}`))
+      );
+
+    case 'bm_scrappy': {
+      const handling = ['0', '+10.7', '+19.4', '+26.5', '+32.4', '+37.5'];
+      const swap     = ['0', '+16',   '+27.5', '+36.3', '+43.2', '+48.7'];
+      return ul(
+        li('Weapon Damage',    bm(`+${6 * level}`)),
+        li('Handling',         bm(handling[level])),
+        li('Weapon Swap Speed',bm(swap[level])),
+        li('Mode Swap Speed',  bm(swap[level]))
+      );
+    }
+
+    case 'bm_scorching':
+      return ul(
+        li('Fire Rate',              bm(`+${3 * level}`)),
+        li('Critical Hit Damage',    bm(`+${4 * level}`)),
+        li('Iron Bear/Iron Cub Damage', bm(`+${5 * level}`))
+      );
+
+    case 'bm_ironbank':
+      return ul(
+        li('Magazine Size', bm(`+${7 * level}`))
+      );
+
+    case 'bm_clickclick':
+      return ul(
+        li('Gun Damage', bm(`Up to +${20 * level}`))
+      );
+
+    //  demolition woman
+    case 'dw_fitsd':
+      return ul(
+        li('Bonus Incendiary Damage', dw(`+${3 * level}`))
+      );
 
     case 'dw_deadlines':
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><Strong>Fuel Returned</Strong>: <span style="color: #3a8fbf">+${2 * level}%</span></li>
-            <li><Strong>Fuel Drain</Strong>: <span style="color: #3a8fbf">-${10 * level}%</span></li>
-        </ul>
-      `;
+      return ul(
+        li('Fuel Returned', dw(`Up to +${2 * level}`)),
+        li('Fuel Drain',    dw(`Up to -${12 * level}`))
+      );
 
     case 'dw_grizzled':
-      return `
-        <ul style="margin: 0; padding-left: 1em;">
-          <li><strong>Iron Bear/Iron Cub Cooldown</strong>: <span style="color:#3a8fbf">-${1 * level}</span> sec</li>
-        </ul>
-      `;
+      return ul(
+        li('Action Skill Cooldown Time', `${dw(`-${1 * level}`, '')} sec`)
+      );
+
+    case 'dw_means':
+      return ul(
+        li('Ammo Chance',   dw(`+${(3.33 * level).toFixed(2)}`)),
+        li('Grenade Chance',dw(`+${(2.0  * level).toFixed(1)}`))
+      );
+
+    case 'dw_torguecrosspromotion':
+      return ul(
+        li('Splash Damage',                    dw(`+${6 * level}`)),
+        li('Chance to double Splash Damage Radius', dw(`+${3 * level}`))
+      );
+
+    case 'dw_ssb': 
+      return ul(
+        li('Iron Bear/Iron Cub Armor',   dw(`+${4 * level}`)),
+        li('Maximum Fuel',               dw(`+${5 * level}`)),
+        li('Iron Bear/Iron Cub Damage',  dw(`+${4 * level}`))
+      );
+
+    case 'dw_pullthepins':
+      return ul(
+        li('Critical Hit Chance',  dw(`+${10 * level}`)),
+        li('Critical Hit Damage',  dw('+100'))
+      );
+
+    case 'dw_vampyr':
+      return ul(
+        li('Restored Health',                 dw(`+${(4.0 * level).toFixed(1)}`)),
+        li('Iron Bear/Iron Cub Restored Health', dw(`+${(2.0 * level).toFixed(1)}`))
+      );
+
+    case 'dw_carrygrenades':
+      return ul(
+        li('Grenade Capacity', dw(`+${1 * level}`, ''))
+      );
+
+    case 'dw_explosive_punct':
+      return ul(
+        li('Action Skill Cooldown Rate', dw(`+${4 * level}`))
+      );
+
+    // shield of retribution
+    case 'sor_selfless':
+      return ul(
+        li('Bonus Incendiary Damage', sor(`+${3 * level}`) + ' of gun damage dealt'),
+        li('Current Health Removed',  sor(`${1 * level}`))
+      );
+
+    case 'sor_armored':
+      return ul(
+        li('Gun Damage',       sor(`+${3 * level}`)),
+        li('Damage Reduction', `Roughly ${sor(`+${3 * level}`)}`)
+      );
+
+    case 'sor_drowning': {
+      return ul(
+        li('Gun Damage',         sor(`+${4 * level}`) + ' per stack'),
+        li('Iron Bear/Iron Cub Damage', sor(`+${4 * level}`) + ' per stack'),
+        li('Moze Fire Rate',     sor(`-${(0.5 * level).toFixed(1)}`) + ' per stack'),
+        li('Max Stacks',         sor('3', '')),
+        li('Duration',           sor('15', '') + ' seconds')
+      );
+    }
+
+    case 'sor_thin':
+      return ul(
+        li('Max Health Reserved and Added to Max Shields', sor(`+${20 * level}`))
+      );
+
+    case 'sor_vladof': {
+      const shockResist = ['0', '+15', '+26', '+35', '+42', '+47', '+52'];
+      return ul(
+        li('Shield Recharge Rate',   sor(`+${4 * level}`)),
+        li('Max Shield',             sor(`+${6 * level}`)),
+        li('Shock Damage Resistance',sor(shockResist[level]))
+      );
+    }
+
+    case 'sor_behindcurtain': {
+      const delay = ['0', '-12', '-21', '-28'];
+      return ul(
+        li('Shield Recharge Rate',  sor(`+${11 * level}`)),
+        li('Shield Recharge Delay', sor(delay[level]))
+      );
+    }
+
+    case 'sor_desperate': {
+      const vals = ['0', '+17', '+33', '+50'];
+      return ul(
+        li('Gun Damage',                 sor(vals[level])),
+        li('Iron Bear/Iron Cub Damage',  sor(vals[level]))
+      );
+    }
+
+    case 'sor_phalanx':
+      return ul(
+        li('Gun Damage',                sor(`+${2 * level}`) + ' per stack'),
+        li('Iron Bear/Iron Cub Damage', sor(`+${2 * level}`) + ' per stack'),
+        li('Max Shields',               sor(`+${3 * level}`) + ' per stack'),
+        li('Duration',                  sor('30', '') + ' seconds')
+      );
+
+    // bear mother
+    case 'ic_biofuel':
+      return ul(
+        li('Health Regeneration',           `Up to ${ic(`+${(0.7 * level).toFixed(1)}`)} of max health / sec`),
+        li('Iron Bear/Iron Cub Armor Regen',`Up to ${ic(`+${(0.5 * level).toFixed(1)}`)} of max armor / sec`),
+        li('Duration',                      ic('8', '') + ' seconds')
+      );
+
+    case 'ic_bigsurplus':
+      return ul(
+        li('Bonus Damage', ic(`+${5 * level}`) + ' of Gun Damage')
+      );
+
+    case 'ic_reallybig':
+      return ul(
+        li('Iron Bear/Iron Cub Damage', ic(`+${(4.0 * level).toFixed(1)}`))
+      );
+
+    case 'ic_doubletime':
+      return ul(
+        li('Movement Speed', ic(`+${4 * level}`))
+      );
+
+    case 'ic_harmhavoc':
+      return ul(
+        li('Gun Damage per Matching Item', ic(`+${2 * level}`))
+      );
+
+    case 'ic_explosivefury':
+      return ul(
+        li('Status Effect Chance',  ic(`+${9 * level}`)),
+        li('Status Effect Damage',  ic(`+${5 * level}`))
+      );
+
+    case 'ic_fire_rate':
+      return ul(
+        li('Fire Rate',        ic(`+${5 * level}`)),
+        li('Burst Fire Delay', ic(`-${5 * level}`)),
+        li('Duration',         ic('12', '') + ' seconds'),
+        li('Max Stacks',       ic('5', ''))
+      );
+
+    case 'ic_nitro':
+      return ul(
+        li('Maximum Fuel',               ic(`+${5 * level}`)),
+        li('Action Skill Cooldown Rate', ic(`+${4 * level}`))
+      );
+
+    case 'ic_neverlet':
+      return ul(
+        li('Fuel Returned', ic(`Up to +${5 * level}`))
+      );
+
+    case 'ic_limitbreak':
+      return ul(
+        li('Cooldown Rate', ic(`+${4 * level}`)),
+        li('Duration',      ic('12', '') + ' seconds'),
+        li('Max Stacks',    ic('10', ''))
+      );
 
     default:
       return skill.desc;
