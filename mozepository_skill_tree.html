@@ -364,6 +364,203 @@
   .info-hint { font-size: 0.68rem; color: #3a3a3a; margin-left: auto; font-style: italic; }
 
   .tree-body { overflow-y: auto; flex: 1; }
+  body { background: #0e0e0e; margin: 0; font-family: 'Barlow', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap');
+  .mayhem-bar {
+    background: linear-gradient(180deg, #120e04 0%, #0e0e0e 100%);
+    border-bottom: 1px solid #2a1e08;
+    padding: 0.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+  .mayhem-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #1e1408;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .mayhem-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mayhem-label-group { display: flex; flex-direction: column; gap: 1px; flex-shrink: 0; }
+  .mayhem-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .mayhem-level-display {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    color: #f0a020;
+    line-height: 1;
+    min-width: 3ch;
+  }
+  .mayhem-level-display.m0  { color: #7a7a7a; } 
+  .mayhem-level-display.m1  { color: #6dbb4d; } 
+  .mayhem-level-display.m2  { color: #4caf50; }
+
+  .mayhem-level-display.m3  { color: #4db6e5; } 
+  .mayhem-level-display.m4  { color: #2196f3; } 
+
+  .mayhem-level-display.m5  { color: #f2b01e; }
+  .mayhem-level-display.m6  { color: #ff9800; } 
+
+  .mayhem-level-display.m7  { color: #f57c00; } 
+  .mayhem-level-display.m8  { color: #ef6c00; }
+
+  .mayhem-level-display.m9  { color: #e64a19; }
+  .mayhem-level-display.m10 { color: #d32f2f; } 
+
+  .mayhem-level-display.m11 { color: #ff1744; } 
+
+  .mayhem-slider-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mayhem-track-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  input[type='range']#mayhem-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: #2a2218;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type='range']#mayhem-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background: #f0a020;
+    border: 2px solid #0e0e0e;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  input[type='range']#mayhem-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #f0a020;
+    border: 2px solid #0e0e0e;
+    cursor: pointer;
+  }
+  .mayhem-pips {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px; 
+  }
+  .mayhem-pips span {
+    font-size: 0.55rem; 
+    color: #3a3a3a;
+    font-family: 'Barlow Condensed', 
+    sans-serif; font-weight: 600;
+    letter-spacing: 0.04em; 
+    text-align: center; 
+    width: 14px;
+    cursor: pointer; 
+    transition: color 0.1s;
+    transform: translateX(0); 
+  }
+  .mayhem-pips span:hover { color: #888; }
+  .mayhem-pips span.active { color: #ff0206; }
+  .mayhem-pips span.tier-normal { color: #88c05080; }
+  .mayhem-pips span.tier-normal.active { color: #88c050; }
+  .mayhem-pips span.tier-hard.active { color: #5bb8e8; }
+  .mayhem-pips span.tier-medium.active { color: #f0a020; }
+  .mayhem-pips span.tier-high.active { color: #f07030; }
+  .mayhem-pips span.tier-very-high.active { color: #d44f30; }
+  .mayhem-pips span.tier-max.active { color: #c060e0; }
+
+  .mayhem-desc {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #555;
+    flex-shrink: 0;
+    min-width: 90px;
+    text-align: right;
+    transition: color 0.15s;
+  }
+
+  /* ─── Mayhem Modifiers Panel ─────────────────────────────── */
+  .mayhem-mods-panel {
+    display: none;
+    background: #0b0b08;
+    border-bottom: 1px solid #2a1e08;
+    padding: 0.6rem 1.25rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .mayhem-mods-panel.visible { display: flex; }
+  .mod-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 160px;
+    flex: 1;
+  }
+  .mod-slot-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .mod-slot-label.easy     { color: #88c050; }
+  .mod-slot-label.medium   { color: #5bb8e8; }
+  .mod-slot-label.hard     { color: #f0a020; }
+  .mod-slot-label.veryhard { color: #d44f30; }
+
+  .mod-select {
+    background: #131310;
+    border: 1px solid #2a2a22;
+    color: #c0b898;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.4rem;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .mod-select:focus { border-color: #c97b12; }
+  .mod-select.easy     { border-left: 2px solid #6a9e3a; }
+  .mod-select.medium   { border-left: 2px solid #3a8fbf; }
+  .mod-select.hard     { border-left: 2px solid #c97b12; }
+  .mod-select.veryhard { border-left: 2px solid #d44f30; }
+
+  .mod-desc-line {
+    font-size: 0.62rem;
+    color: #555;
+    line-height: 1.3;
+    min-height: 2.4em;
+  }
 </style>
 </head>
 <body>
@@ -378,6 +575,24 @@
     <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
   </div>
 </div>
+
+<div class="mayhem-bar">
+  <div class="mayhem-icon">
+    <img src="images/mayhem.jpg" alt="Mayhem" />
+  </div>
+  <div class="mayhem-label-group">
+    <div class="mayhem-title">Mayhem Level</div>
+    <div class="mayhem-level-display m0" id="mayhem-num">M0</div>
+  </div>
+  <div class="mayhem-slider-wrap">
+    <div class="mayhem-track-row">
+      <input type="range" id="mayhem-slider" min="0" max="11" step="1" value="0" />
+      <div class="mayhem-desc" id="mayhem-desc">No Mayhem</div>
+    </div>
+    <div class="mayhem-pips" id="mayhem-pips"></div>
+  </div>
+</div>
+<div class="mayhem-mods-panel" id="mayhem-mods-panel"></div>
 
 <div class="trees-container" id="trees"></div>
 
@@ -398,6 +613,161 @@
 
 
 <script>
+// ─── Mayhem slider ────────────────────────────────────────
+const MAYHEM_DATA = [
+  { label: 'No Mayhem', cls: 'm0' }, { label: 'Mayhem 1', cls: 'm1' },
+  { label: 'Mayhem 2',  cls: 'm2' }, { label: 'Mayhem 3', cls: 'm3' },
+  { label: 'Mayhem 4',  cls: 'm4' }, { label: 'Mayhem 5', cls: 'm5' },
+  { label: 'Mayhem 6',  cls: 'm6' }, { label: 'Mayhem 7', cls: 'm7' },
+  { label: 'Mayhem 8',  cls: 'm8' }, { label: 'Mayhem 9', cls: 'm9' },
+  { label: 'Mayhem 10', cls: 'm10'}, { label: 'Mayhem 11', cls: 'm11'},
+];
+
+const MAYHEM_THUMB = [
+  '#7a7a7a', '#6dbb4d', '#4caf50',
+  '#4db6e5', '#2196f3', '#f2b01e',
+  '#ff9800', '#f57c00', '#ef6c00',
+  '#e64a19', '#d32f2f', '#ff1744'
+];
+
+const MAYHEM_TRACK = [
+  '#2c2c2c', '#1d2b18', '#183314',
+  '#102634', '#0b2d42', '#3a2b10',
+  '#4a2d08', '#4a2208', '#541d08',
+  '#4a140c', '#520909', '#5a0018'
+];
+
+let mayhemLevel = 0;
+
+// ─── Mayhem Modifiers Data ────────────────────────────────
+const MAYHEM_MODS = {
+  easy: [
+    { id: 'speed_demon',   name: 'Speed Demon',          desc: 'After killing an enemy, movement speed +50% for 10s. Stacks ×3.' },
+    { id: 'lootsplosion',  name: 'Lootsplosion',         desc: 'Kills give 10% chance of a Lootsplosion; critical kills give 100%.' },
+    { id: 'big_kick',      name: 'Big Kick Energy',      desc: 'Gun damage +25%, but recoil and weapon spread +100%.' },
+    { id: 'boomer',        name: 'More Than Okay Boomer',desc: 'Grenade damage +25%. Enemies drop (possibly live) grenades on death.' },
+    { id: 'slayer',        name: 'Slayer',               desc: 'Non-boss enemies below 15% bars glow blue and explode into boosters on melee.' },
+    { id: 'galaxy_brain',  name: 'Galaxy Brain',         desc: 'Enemy head sizes increased by +100%. Great for crit builds.' },
+  ],
+  medium: [
+    { id: 'floor_lava',    name: 'Floor is Lava',        desc: 'Standing still in combat spawns an incendiary pool beneath you.' },
+    { id: 'mob_ment',      name: 'Mob Mentality',        desc: 'Enemy damage and fire rate +30% when near other enemies.' },
+    { id: 'freeze_tag',    name: 'Freeze Tag',           desc: 'Enemies may leave a Cryo orb on death that pulses Cryo Novas.' },
+    { id: 'pain_tol',      name: 'Pain Tolerance',       desc: 'Enemies gain 3% damage reduction vs. received damage type when hit. Stacks ×20.' },
+    { id: 'healy_av',      name: 'Healy Avenger',        desc: 'On death, enemies may release a healing power-up for nearby enemies.' },
+    { id: 'chilling',      name: 'Elemental Infusion',   desc: 'Enemies may be infused with one element, becoming immune to it and releasing a nova on death. (Chilling Them Softly / High Voltage / Acid Reign / Charred Mode / Totally Radical)' },
+  ],
+  hard: [
+    { id: 'laser_fare',    name: 'Laser Fare',           desc: 'Damaged enemies may drop a Spinner trap projecting a rotating elemental laser.' },
+    { id: 'ticked_off',    name: 'Ticked Off',           desc: 'Status Effect Damage against enemies reduced by 90%.' },
+    { id: 'chain_gang',    name: 'Chain Gang',           desc: 'Nearby enemies are linked by a damaging elemental beam.' },
+    { id: 'pool_parties',  name: 'Pool Parties',         desc: 'Enemies drop elemental pools when armor, shields, or health is depleted.' },
+    { id: 'boundary',      name: 'Boundary Issues',      desc: 'At close range enemies will attach a damaging elemental beam to you.' },
+    { id: 'drone_ranger',  name: 'Drone Ranger',         desc: 'Enemies may spawn a healing drone. Drone hops to a new target when destroyed.' },
+  ],
+  veryhard: [
+    { id: 'post_mortem',   name: 'Post Mortem',          desc: 'Killing an enemy has a chance to release DEATH. If DEATH touches you, instant FFYL.' },
+    { id: 'rogue_lite',    name: 'Rogue Lite',           desc: 'No FFYL. All enemies drop health on death.' },
+    { id: 'holy_crit',     name: 'Holy Crit',            desc: 'Critical Hit damage +25%, but non-Critical Hit damage −50%.' },
+    { id: 'not_face',      name: 'Not the Face',         desc: 'Critical Hit damage −75%.' },
+    { id: 'buddy_sys',     name: 'Buddy System',         desc: 'Enemies may spawn an invulnerability drone. Enemies are immune until drone is destroyed.' },
+    { id: 'dazed',         name: 'Dazed and Infused',    desc: 'Enemies randomly infused with an element, immune to it, and release novas on death.' },
+  ],
+};
+
+// Slot layout per mayhem level (0 = no slots, 11 = no modifiers)
+// Format: array of tier strings in order
+const MAYHEM_SLOTS = {
+  0:  [],
+  1:  ['easy'],
+  2:  ['easy','medium'],
+  3:  ['easy','medium','medium'],
+  4:  ['easy','hard'],
+  5:  ['easy','medium','hard'],
+  6:  ['easy','medium','medium','hard'],
+  7:  ['easy','hard','hard'],
+  8:  ['easy','veryhard'],
+  9:  ['easy','medium','veryhard'],
+  10: ['easy','medium','hard','veryhard'],
+  11: [],
+};
+
+const SLOT_LABELS = {
+  easy:     'Easy',
+  medium:   'Medium',
+  hard:     'Hard',
+  veryhard: 'Very Hard',
+};
+
+function initMayhemSlider() {
+  const slider   = document.getElementById('mayhem-slider');
+  const numEl    = document.getElementById('mayhem-num');
+  const descEl   = document.getElementById('mayhem-desc');
+  const pipsEl   = document.getElementById('mayhem-pips');
+  const modsEl   = document.getElementById('mayhem-mods-panel');
+  const styleEl  = document.createElement('style');
+  styleEl.id = 'mayhem-thumb-style';
+  document.head.appendChild(styleEl);
+
+  pipsEl.innerHTML = MAYHEM_DATA.map((d, i) =>
+    `<span class="${d.cls}" data-i="${i}">${i}</span>`
+  ).join('');
+
+  function buildModsPanel(level) {
+    const slots = MAYHEM_SLOTS[level] || [];
+    modsEl.classList.toggle('visible', slots.length > 0);
+    if (!slots.length) { modsEl.innerHTML = ''; return; }
+
+    modsEl.innerHTML = slots.map((tier, idx) => {
+      const mods = MAYHEM_MODS[tier];
+      const opts = mods.map(m =>
+        `<option value="${m.id}">${m.name}</option>`
+      ).join('');
+      return `
+        <div class="mod-slot" data-slot="${idx}" data-tier="${tier}">
+          <div class="mod-slot-label ${tier}">${SLOT_LABELS[tier]} Modifier</div>
+          <select class="mod-select ${tier}" data-slot="${idx}">
+            ${opts}
+          </select>
+          <div class="mod-desc-line" id="mod-desc-${idx}">${mods[0].desc}</div>
+        </div>`;
+    }).join('');
+
+    modsEl.querySelectorAll('.mod-select').forEach(sel => {
+      const slotIdx = sel.dataset.slot;
+      const tier    = sel.closest('.mod-slot').dataset.tier;
+      sel.addEventListener('change', () => {
+        const chosen = MAYHEM_MODS[tier].find(m => m.id === sel.value);
+        document.getElementById(`mod-desc-${slotIdx}`).textContent = chosen ? chosen.desc : '';
+      });
+    });
+  }
+
+  function applyMayhem(val) {
+    mayhemLevel = val;
+    const d = MAYHEM_DATA[val];
+    numEl.textContent   = val === 0 ? 'M0' : `M${val}`;
+    numEl.className     = `mayhem-level-display ${d.cls}`;
+    descEl.textContent  = d.label;
+    descEl.style.color  = MAYHEM_THUMB[val];
+    slider.style.background = MAYHEM_TRACK[val];
+    styleEl.textContent = `#mayhem-slider::-webkit-slider-thumb{background:${MAYHEM_THUMB[val]}!important}#mayhem-slider::-moz-range-thumb{background:${MAYHEM_THUMB[val]}!important}`;
+    pipsEl.querySelectorAll('span').forEach((s, i) => s.classList.toggle('active', i <= val));
+    buildModsPanel(val);
+  }
+
+  slider.addEventListener('input', () => applyMayhem(+slider.value));
+  pipsEl.addEventListener('click', e => {
+    if (e.target.dataset.i !== undefined) {
+      slider.value = e.target.dataset.i;
+      applyMayhem(+e.target.dataset.i);
+    }
+  });
+
+  applyMayhem(0);
+}
+
+document.addEventListener('DOMContentLoaded', initMayhemSlider);
 const TREES = [
   {
     id: 'bm',
